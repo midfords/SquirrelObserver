@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.project.squirrelobserver">
+
+<!-- these will come in later for import/export. Version numbers are WRONG!
+
+    <android:
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="19" />
+    <android:
+        android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="19" />
+-->
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".squirrelObserver.MainActivity"
+            android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".squirrelObserver.RecordActivity"
+            android:label="Tab Activity"
+            android:parentActivityName=".squirrelObserver.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".squirrelObserver.MainActivity" />
+        </activity>
+        <activity
+            android:name=".squirrelObserver.RecordActorTabActivity"
+            android:label="Actors Tab"
+            android:parentActivityName=".squirrelObserver.RecordActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".squirrelObserver.RecordActivity" />
+        </activity>
+        <activity
+            android:name=".squirrelObserver.RecordBehaviorTabActivity"
+            android:label="Behaviors Tab"
+            android:parentActivityName=".squirrelObserver.RecordActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".squirrelObserver.RecordActivity" />
+        </activity>
+    </application>
+
+</manifest>
