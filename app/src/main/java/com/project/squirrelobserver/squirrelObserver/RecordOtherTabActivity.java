@@ -8,13 +8,13 @@ import com.project.squirrelobserver.R;
 /**
  * Created by sean on 2/9/16.
  */
-public  class RecordBehaviorTabActivity
+public  class RecordOtherTabActivity
         extends Activity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_record_behaviors_tab);
+        setContentView(R.layout.activity_record_other_tab);
     }
 
 }
