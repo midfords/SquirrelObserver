@@ -1,6 +1,8 @@
 package com.project.squirrelobserver.squirrelObserver;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
@@ -16,11 +18,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.Spinner;
 
 import com.project.squirrelobserver.fragments.ImportExportFragment;
 import com.project.squirrelobserver.fragments.SetupFragment;
 import com.project.squirrelobserver.fragments.NavigationDrawerFragment;
 import com.project.squirrelobserver.R;
+import com.project.squirrelobserver.util.GlobalVariables;
 
 public class MainActivity extends ActionBarActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks,
@@ -82,6 +88,53 @@ public class MainActivity extends ActionBarActivity
                 break;
         }
     }
+
+
+    public void onScanIntervalFieldClicked (final View view) {
+
+        View intervalPickerView = View.inflate(view.getContext(), R.layout.dialog_interval_picker, null);
+        final EditText minuteText = (EditText) intervalPickerView.findViewById(R.id.minuteEditText);
+        final EditText secondText = (EditText) intervalPickerView.findViewById(R.id.secondEditText);
+
+        minuteText.setText("" + GlobalVariables.scanIntervalMinutes);
+        secondText.setText("" + GlobalVariables.scanIntervalSeconds);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+        builder.setTitle("Select Interval");
+        builder.setView(intervalPickerView)
+                .setCancelable(false)
+                .setPositiveButton("Set", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+
+                        int minute = GlobalVariables.scanIntervalMinutes;
+                        int second = GlobalVariables.scanIntervalSeconds;
+
+                        if (!minuteText.getText().toString().isEmpty()
+                                && !secondText.getText().toString().isEmpty()) {
+
+                            minute = Integer.parseInt(minuteText.getText().toString());
+                            second = Integer.parseInt(secondText.getText().toString());
+
+                            if (minute >= 60)
+                                minute = 59;
+                            if (second >= 60)
+                                second = 59;
+                        }
+
+                        // Put values in text field
+                        EditText scanIntervalEditText = (EditText) findViewById(R.id.scanIntervalInput);
+
+                        GlobalVariables.scanIntervalMinutes = minute;
+                        GlobalVariables.scanIntervalSeconds = second;
+
+                        scanIntervalEditText.setText(
+                                (minute < 10 ? "0" : "") + minute + ":"
+                                        + (second < 10 ? "0" : "") + second);
+                    }
+                })
+                .show();
+    }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
