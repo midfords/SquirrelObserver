@@ -49,6 +49,30 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".squirrelObserver.RecordActivity" />
         </activity>
+        <activity
+            android:name=".squirrelObserver.RecordActeeTabActivity"
+            android:label="Actee Tab"
+            android:parentActivityName=".squirrelObserver.RecordActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".squirrelObserver.RecordActivity" />
+        </activity>
+        <activity
+            android:name=".squirrelObserver.RecordModifierTabActivity"
+            android:label="Modifiers Tab"
+            android:parentActivityName=".squirrelObserver.RecordActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".squirrelObserver.RecordActivity" />
+        </activity>
+        <activity
+            android:name=".squirrelObserver.RecordOtherTabActivity"
+            android:label="Other Tab"
+            android:parentActivityName=".squirrelObserver.RecordActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".squirrelObserver.RecordActivity" />
+        </activity>
     </application>
 
 </manifest>
