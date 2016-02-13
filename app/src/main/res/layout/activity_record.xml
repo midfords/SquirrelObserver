@@ -11,12 +11,58 @@
         android:layout_height="fill_parent"
         android:layout_width="fill_parent">
 
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Overall Text"
-            android:id="@+id/textView3" />
+            android:orientation="horizontal"
+            android:padding="5dp">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="End"
+                android:textSize="15dp"
+                android:id="@+id/endButton"
+                android:background="#ff3300" />
+
+            <!-- Hacky shit to right align button -->
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
+
+            <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="center_vertical">
+
+                <RadioButton android:id="@+id/radio_scan"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Scan"
+                    android:onClick="onRadioButtonClicked"/>
+
+                <RadioButton android:id="@+id/radio_all_occurrences"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="A-O"
+                    android:onClick="onRadioButtonClicked"/>
+
+            </RadioGroup>
+
+            <!-- Hacky shit to right align button -->
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
+
+            <TextClock
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textClock" />
+
+        </LinearLayout>
 
         <TabWidget
             android:id="@android:id/tabs"
