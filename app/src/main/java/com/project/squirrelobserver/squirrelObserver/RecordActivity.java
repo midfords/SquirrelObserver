@@ -1,16 +1,27 @@
 package com.project.squirrelobserver.squirrelObserver;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.TabActivity;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.TabHost;
 
 import com.project.squirrelobserver.R;
+import com.project.squirrelobserver.util.Utils;
+
+import java.util.zip.Inflater;
 
 public  class RecordActivity
         extends TabActivity {
@@ -20,6 +31,7 @@ public  class RecordActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_record);
 
+        // Setup tabs
         TabHost tabHost = (TabHost)findViewById(android.R.id.tabhost);
 
         Intent intent1 = new Intent().setClass(this, RecordActorTabActivity.class);
@@ -41,6 +53,12 @@ public  class RecordActivity
         tabHost.addTab(tab5);
 
         tabHost.setCurrentTab(0);
+    }
+
+    public void onEndButtonClicked(View view) {
+
+        // Close current activity after verify dialogue
+        Utils.endRecordingSessionVerifyMessage(view.getContext(), this);
     }
 
     public void onRadioButtonClicked(View view) {
