@@ -1,4 +1,13 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".squirrelObserver.MainActivity"/>
+    tools:context=".squirrelObserver.MainActivity">
+
+    <item
+        android:id="@+id/action_add_all_occurrences"
+        android:icon="@drawable/ic_add_white_24dp"
+        android:title="All-Occurances"
+        android:orderInCategory="100"
+        app:showAsAction="always"/>
+
+</menu>
