@@ -18,23 +18,18 @@ public  class RecordActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_record);
 
-        // create the TabHost that will contain the Tabs
         TabHost tabHost = (TabHost)findViewById(android.R.id.tabhost);
 
-        TabHost.TabSpec tab1 = tabHost.newTabSpec("Actor");
-        TabHost.TabSpec tab2 = tabHost.newTabSpec("Behaviors");
+        Intent intent1 = new Intent().setClass(this, RecordActorTabActivity.class);
+        Intent intent2 = new Intent().setClass(this, RecordBehaviorTabActivity.class);
 
-        // Set the Tab name and Activity
-        // that will be opened when particular Tab will be selected
-        tab1.setIndicator("Actor");
-        tab1.setContent(new Intent(this,RecordActorTabActivity.class));
+        TabHost.TabSpec tab1 = tabHost.newTabSpec("RecordActorTab").setIndicator("Actor").setContent(intent1);
+        TabHost.TabSpec tab2 = tabHost.newTabSpec("RecordBehaviorTab").setIndicator("Behaviors").setContent(intent2);
 
-        tab2.setIndicator("Behaviors");
-        tab2.setContent(new Intent(this,RecordBehaviorTabActivity.class));
-
-        /** Add the tabs  to the TabHost to display. */
         tabHost.addTab(tab1);
         tabHost.addTab(tab2);
+
+        tabHost.setCurrentTab(0);
     }
 
     @Override

@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.project.squirrelobserver.R;
+import com.project.squirrelobserver.squirrelObserver.MainActivity;
 import com.project.squirrelobserver.squirrelObserver.RecordActivity;
 
 /**
@@ -47,23 +48,26 @@ public  class SetupFragment
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-// TODO: broken
-//        Button startButton = (Button) getView().findViewById(R.id.startButton);
-//        startButton.setOnClickListener(new View.OnClickListener() {
-//            public void onClick(View v) {
-
-                // Start Record Activity
-//                Intent intent = new Intent(getActivity(), RecordActivity.class);
-//                startActivity(intent);
-//            }
-//        });
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
+
+        final View contentView = inflater.inflate(R.layout.fragment_setup, container, false);
+        Button startButton = (Button) contentView.findViewById(R.id.startButton);
+
+        startButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+
+                // Start Record Activity
+                Intent intent = new Intent(getActivity(), RecordActivity.class);
+                getActivity().startActivity(intent);
+            }
+        });
+
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_setup, container, false);
+        return contentView;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
