@@ -1,6 +1,6 @@
 package com.project.squirrelobserver.squirrelObserver;
 
-import android.app.TabActivity;
+import android.app.Activity;
 import android.os.Bundle;
 
 import com.project.squirrelobserver.R;
@@ -9,7 +9,7 @@ import com.project.squirrelobserver.R;
  * Created by sean on 2/9/16.
  */
 public  class RecordBehaviorTabActivity
-        extends TabActivity {
+        extends Activity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
