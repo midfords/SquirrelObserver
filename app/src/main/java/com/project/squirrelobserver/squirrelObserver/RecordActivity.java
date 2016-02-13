@@ -1,16 +1,25 @@
 package com.project.squirrelobserver.squirrelObserver;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.TabActivity;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.TabHost;
 
 import com.project.squirrelobserver.R;
+
+import java.util.zip.Inflater;
 
 public  class RecordActivity
         extends TabActivity {
@@ -20,6 +29,7 @@ public  class RecordActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_record);
 
+        // Setup tabs
         TabHost tabHost = (TabHost)findViewById(android.R.id.tabhost);
 
         Intent intent1 = new Intent().setClass(this, RecordActorTabActivity.class);
@@ -41,6 +51,28 @@ public  class RecordActivity
         tabHost.addTab(tab5);
 
         tabHost.setCurrentTab(0);
+    }
+
+    public void onEndButtonClicked(View view) {
+
+        // Close current activity after verify dialogue
+        new AlertDialog.Builder(view.getContext())
+            .setTitle("End Recording Session")
+            .setMessage("Are you sure you want to end the recording session? All observations are already saved.")
+            .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    // Close current record activity
+                    finish();
+                }
+            })
+                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Do nothing
+                    }
+                })
+                .setIcon(android.R.drawable.ic_dialog_alert)
+            .show();
+
     }
 
     public void onRadioButtonClicked(View view) {
