@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,6 +19,7 @@ import android.widget.RadioButton;
 import android.widget.TabHost;
 
 import com.project.squirrelobserver.R;
+import com.project.squirrelobserver.util.Utils;
 
 import java.util.zip.Inflater;
 
@@ -56,23 +58,7 @@ public  class RecordActivity
     public void onEndButtonClicked(View view) {
 
         // Close current activity after verify dialogue
-        new AlertDialog.Builder(view.getContext())
-            .setTitle("End Recording Session")
-            .setMessage("Are you sure you want to end the recording session? All observations are already saved.")
-            .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int which) {
-                    // Close current record activity
-                    finish();
-                }
-            })
-                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        // Do nothing
-                    }
-                })
-                .setIcon(android.R.drawable.ic_dialog_alert)
-            .show();
-
+        Utils.endRecordingSessionVerifyMessage(view.getContext(), this);
     }
 
     public void onRadioButtonClicked(View view) {
