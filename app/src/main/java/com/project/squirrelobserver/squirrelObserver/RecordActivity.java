@@ -6,6 +6,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.RadioButton;
 import android.widget.TabHost;
 
 import com.project.squirrelobserver.R;
@@ -39,6 +41,29 @@ public  class RecordActivity
         tabHost.addTab(tab5);
 
         tabHost.setCurrentTab(0);
+    }
+
+    public void onRadioButtonClicked(View view) {
+
+        // Is the button now checked?
+        boolean checked = ((RadioButton) view).isChecked();
+
+        // Check which radio button was clicked
+        switch(view.getId()) {
+
+            case R.id.radio_scan:
+                if (checked)
+
+                    // Scan radio was clicked
+
+                    break;
+            case R.id.radio_all_occurrences:
+                if (checked)
+
+                    // AO radio was clicked
+
+                    break;
+        }
     }
 
     @Override
