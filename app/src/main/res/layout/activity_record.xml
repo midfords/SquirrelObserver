@@ -23,7 +23,8 @@
                 android:text="End"
                 android:textSize="15dp"
                 android:id="@+id/endButton"
-                android:background="#ff3300" />
+                android:background="#ff3300"
+                android:onClick="onEndButtonClicked"/>
 
             <!-- Hacky shit to right align button -->
             <View
