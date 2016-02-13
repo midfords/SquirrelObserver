@@ -101,14 +101,17 @@
                     android:layout_alignParentStart="true"
                     android:layout_marginTop="53dp" />
 
-                <TimePicker
+                <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/scanIntervalInput"
-                    android:textSize="20dp"
-                    android:timePickerMode="spinner"
+                    android:ems="10"
+                    android:text="10:00"
                     android:textAlignment="center"
-                    android:layout_gravity="center_horizontal" />
+                    android:cursorVisible="false"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:onClick="onScanIntervalFieldClicked"
+                    android:id="@+id/scanIntervalInput" />
 
                 <TextView
                     android:layout_width="match_parent"
