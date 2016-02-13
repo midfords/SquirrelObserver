@@ -22,12 +22,21 @@ public  class RecordActivity
 
         Intent intent1 = new Intent().setClass(this, RecordActorTabActivity.class);
         Intent intent2 = new Intent().setClass(this, RecordBehaviorTabActivity.class);
+        Intent intent3 = new Intent().setClass(this, RecordActeeTabActivity.class);
+        Intent intent4 = new Intent().setClass(this, RecordModifierTabActivity.class);
+        Intent intent5 = new Intent().setClass(this, RecordOtherTabActivity.class);
 
         TabHost.TabSpec tab1 = tabHost.newTabSpec("RecordActorTab").setIndicator("Actor").setContent(intent1);
         TabHost.TabSpec tab2 = tabHost.newTabSpec("RecordBehaviorTab").setIndicator("Behaviors").setContent(intent2);
+        TabHost.TabSpec tab3 = tabHost.newTabSpec("RecordActeeTab").setIndicator("Actee").setContent(intent3);
+        TabHost.TabSpec tab4 = tabHost.newTabSpec("RecordModifierTab").setIndicator("Modifier").setContent(intent4);
+        TabHost.TabSpec tab5 = tabHost.newTabSpec("RecordOtherTab").setIndicator("Other").setContent(intent5);
 
         tabHost.addTab(tab1);
         tabHost.addTab(tab2);
+        tabHost.addTab(tab3);
+        tabHost.addTab(tab4);
+        tabHost.addTab(tab5);
 
         tabHost.setCurrentTab(0);
     }
