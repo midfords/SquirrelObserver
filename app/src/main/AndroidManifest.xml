@@ -2,15 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.project.squirrelobserver">
 
-<!-- these will come in later for import/export. Version numbers are WRONG!
-
-    <android:
-        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
-        android:maxSdkVersion="19" />
-    <android:
-        android:name="android.permission.READ_EXTERNAL_STORAGE"
-        android:maxSdkVersion="19" />
--->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
