@@ -7,14 +7,21 @@
 
     <LinearLayout
         android:id="@+id/LinearLayout01"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:layout_height="fill_parent"
         android:layout_width="fill_parent">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Overall Text"
+            android:id="@+id/textView3" />
 
         <TabWidget
             android:id="@android:id/tabs"
             android:layout_height="wrap_content"
-            android:layout_width="wrap_content">
+            android:layout_width="match_parent">
         </TabWidget>
 
         <FrameLayout
