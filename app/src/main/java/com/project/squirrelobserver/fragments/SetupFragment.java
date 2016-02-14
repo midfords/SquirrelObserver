@@ -8,11 +8,14 @@ import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -61,7 +64,10 @@ public  class SetupFragment
                              Bundle savedInstanceState) {
 
         final View contentView = inflater.inflate(R.layout.fragment_setup, container, false);
-        Button startButton = (Button) contentView.findViewById(R.id.startButton);
+        final Button startButton = (Button) contentView.findViewById(R.id.startButton);
+        final EditText editTextX = (EditText) contentView.findViewById(R.id.locationX);
+        final EditText editTextY = (EditText) contentView.findViewById(R.id.locationY);
+        final EditText editTextID = (EditText) contentView.findViewById(R.id.observerIDInput);
 
         startButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -72,8 +78,62 @@ public  class SetupFragment
             }
         });
 
+        editTextX.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void afterTextChanged(Editable arg0) {
+                enableStartButtonIfReady(editTextX, editTextY, editTextID, startButton);
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) { }
+        });
+
+        editTextY.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void afterTextChanged(Editable arg0) {
+                enableStartButtonIfReady(editTextX, editTextY, editTextID, startButton);
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) { }
+        });
+
+        editTextID.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void afterTextChanged(Editable arg0) {
+                enableStartButtonIfReady(editTextX, editTextY, editTextID, startButton);
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) { }
+        });
+
         // Inflate the layout for this fragment
         return contentView;
+    }
+
+    public void enableStartButtonIfReady(final EditText editTextX,
+                                         final EditText editTextY,
+                                         final EditText editTextID,
+                                         final Button startButton) {
+
+        boolean isXFieldReady = !editTextX.getText().toString().isEmpty();
+        boolean isYFieldReady = !editTextY.getText().toString().isEmpty();
+        boolean isIDFieldReady = !editTextID.getText().toString().isEmpty();
+
+        startButton.setEnabled(isXFieldReady && isYFieldReady && isIDFieldReady);
     }
 
 //    // TODO: Rename method, update argument and hook method into UI event
