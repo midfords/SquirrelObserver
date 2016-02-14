@@ -1,0 +1,5 @@
+Behavior Code (int),Behavior Description,Modifiers,
+1,Feed,,
+2,Run,>5m,<5m
+3,Walk,>5m,<5m
+4,Lope,,
