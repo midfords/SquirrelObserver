@@ -14,12 +14,12 @@ import java.util.ArrayList;
  */
 public class DataAccessor {
 
-    public ArrayList<LocationPoint> locationPointsX; // List of all points in x coordinate system
-    public ArrayList<LocationPoint> locationPointsY; // List of all points in y coordinate system
-    public ArrayList<Behavior> behaviors;   // List of all behaviors
-    public ArrayList<Actor> actors;     // List of all actors
+    public static ArrayList<LocationPoint> locationPointsX; // List of all points in x coordinate system
+    public static ArrayList<LocationPoint> locationPointsY; // List of all points in y coordinate system
+    public static ArrayList<Behavior> behaviors;   // List of all behaviors
+    public static ArrayList<Actor> actors;     // List of all actors
 
-    public boolean generateListOfLocationPoints (String csvFileLocation) {
+    public static boolean generateListOfLocationPoints (String csvFileLocation) {
 
         if (csvFileLocation == null)
             return false;
@@ -95,7 +95,7 @@ public class DataAccessor {
         }
     }
 
-    public boolean generateListOfBehaviors (String csvFileLocation) {
+    public static boolean generateListOfBehaviors (String csvFileLocation) {
 
         if (csvFileLocation == null)
             return false;
@@ -168,7 +168,7 @@ public class DataAccessor {
         }
     }
 
-    public boolean generateListOfActors (String csvFileLocation) {
+    public static boolean generateListOfActors (String csvFileLocation) {
 
         if (csvFileLocation == null)
             return false;
