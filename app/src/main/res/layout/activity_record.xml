@@ -22,7 +22,7 @@
                 android:text="@string/record_activity_end_button"
                 android:textSize="15dp"
                 android:id="@+id/endButton"
-                android:background="#ff3300"
+                android:background="@color/record_activity_end_button"
                 android:onClick="onEndButtonClicked"/>
 
             <!-- Hacky shit to right align button -->
