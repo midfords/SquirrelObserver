@@ -9,11 +9,17 @@
         android:hint="Filter"
         android:id="@+id/acteeFilterText" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Actee Tab"
-        android:id="@+id/textView" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal"
+            android:stretchColumns="0,1,2,3"
+            android:id="@+id/acteeTableLayout" />
+
+    </ScrollView>
 
 </LinearLayout>

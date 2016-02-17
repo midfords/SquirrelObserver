@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:id="@+id/behaviorsTabLinearLayout"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <EditText
@@ -9,10 +11,17 @@
         android:hint="Filter"
         android:id="@+id/behaviorsFilterText" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Behaviors Tab"
-        android:id="@+id/textView2" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal"
+            android:stretchColumns="0,1,2,3"
+            android:id="@+id/behaviorsTableLayout" />
+
+    </ScrollView>
+
 </LinearLayout>

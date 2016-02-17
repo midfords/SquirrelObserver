@@ -49,11 +49,6 @@ public class DataAccessor {
                     x = dataRow[1];
                     y = dataRow[2];
 
-                    // Clean Strings (remove quotes)
-                    label = label.replaceAll("^\"|\"$", "");
-                    x = x.replaceAll("^\"|\"$", "");
-                    y = y.replaceAll("^\"|\"$", "");
-
                     // Parse x and y integers
                     int x_parsed = Integer.parseInt(x);
                     int y_parsed = Integer.parseInt(y);
@@ -95,9 +90,9 @@ public class DataAccessor {
         }
     }
 
-    public static boolean generateListOfBehaviors (String csvFileLocation) {
+    public static boolean generateListOfBehaviors (String csvFileBehaviors) {
 
-        if (csvFileLocation == null)
+        if (csvFileBehaviors == null)
             return false;
 
         behaviors = new ArrayList<Behavior>();    // Initialize our list of behaviors
@@ -105,7 +100,7 @@ public class DataAccessor {
         String code, desc, modif;   // Code, Description and Modifier
 
         try {
-            File file = new File(csvFileLocation);
+            File file = new File(csvFileBehaviors);
             inputStream = new BufferedInputStream(new FileInputStream(file));
 
             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
@@ -123,19 +118,11 @@ public class DataAccessor {
                     code = dataRow[0];
                     desc = dataRow[1];
 
-                    // Clean Strings (remove quotes)
-                    code = code.replaceAll("^\"|\"$", "");
-                    desc = desc.replaceAll("^\"|\"$", "");
-
                     // Generate list of modifiers
                     ArrayList<String> modifiers = new ArrayList<String>();
                     for (int i = 2; i < dataRow.length; i++) {
 
                         modif = dataRow[i];
-
-                        // Clean String
-                        modif = modif.replaceAll("^\"|\"$", "");
-
                         modifiers.add(modif);
                     }
 
@@ -143,6 +130,7 @@ public class DataAccessor {
                     int code_parsed = Integer.parseInt(code);
 
                     Behavior behavior = new Behavior(code_parsed, desc, modifiers);
+                    behaviors.add(behavior);
                 }
             }
 
@@ -168,9 +156,9 @@ public class DataAccessor {
         }
     }
 
-    public static boolean generateListOfActors (String csvFileLocation) {
+    public static boolean generateListOfActors (String csvFileActors) {
 
-        if (csvFileLocation == null)
+        if (csvFileActors == null)
             return false;
 
         actors = new ArrayList<Actor>();    // Initialize our list of actors
@@ -178,7 +166,7 @@ public class DataAccessor {
         String name, abb, tag, col, sex, age; // Name, Abbreviation, Tag no, Colony, Sex, Age
 
         try {
-            File file = new File(csvFileLocation);
+            File file = new File(csvFileActors);
             inputStream = new BufferedInputStream(new FileInputStream(file));
 
             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
@@ -200,20 +188,13 @@ public class DataAccessor {
                     sex = dataRow[4];
                     age = dataRow[5];
 
-                    // Clean Strings (remove quotes)
-                    name = name.replaceAll("^\"|\"$", "");
-                    abb = abb.replaceAll("^\"|\"$", "");
-                    tag = tag.replaceAll("^\"|\"$", "");
-                    col = col.replaceAll("^\"|\"$", "");
-                    sex = sex.replaceAll("^\"|\"$", "");
-                    age = age.replaceAll("^\"|\"$", "");
-
                     // Parse x and y integers
                     int tag_parsed = Integer.parseInt(tag);
                     int sex_parsed = Integer.parseInt(sex);
                     int age_parsed = Integer.parseInt(age);
 
                     Actor actor = new Actor(name, abb, tag_parsed, col, sex_parsed, age_parsed);
+                    actors.add(actor);
                 }
             }
 
