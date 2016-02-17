@@ -6,13 +6,14 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Filter"
+        android:hint="@string/record_activity_filter_hint"
         android:id="@+id/actorFilterText" />
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <!-- stretchColumns value is to evenly space buttons in table -->
         <TableLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"

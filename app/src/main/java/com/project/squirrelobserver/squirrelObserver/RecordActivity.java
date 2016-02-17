@@ -50,11 +50,21 @@ public  class RecordActivity
         Intent intent5 = new Intent().setClass(this, RecordOtherTabActivity.class);
 //        intent5.putExtra("Record", record);
 
-        TabHost.TabSpec tab1 = tabHost.newTabSpec("RecordActorTab").setIndicator("Actor").setContent(intent1);
-        TabHost.TabSpec tab2 = tabHost.newTabSpec("RecordBehaviorTab").setIndicator("Behaviors").setContent(intent2);
-        TabHost.TabSpec tab3 = tabHost.newTabSpec("RecordActeeTab").setIndicator("Actee").setContent(intent3);
-        TabHost.TabSpec tab4 = tabHost.newTabSpec("RecordModifierTab").setIndicator("Modifier").setContent(intent4);
-        TabHost.TabSpec tab5 = tabHost.newTabSpec("RecordOtherTab").setIndicator("Other").setContent(intent5);
+        TabHost.TabSpec tab1 = tabHost.newTabSpec("RecordActorTab")
+                .setIndicator(getResources().getString(R.string.actor_tab_indicator))
+                .setContent(intent1);
+        TabHost.TabSpec tab2 = tabHost.newTabSpec("RecordBehaviorTab")
+                .setIndicator(getResources().getString(R.string.behaviors_tab_indicator))
+                .setContent(intent2);
+        TabHost.TabSpec tab3 = tabHost.newTabSpec("RecordActeeTab")
+                .setIndicator(getResources().getString(R.string.actee_tab_indicator))
+                .setContent(intent3);
+        TabHost.TabSpec tab4 = tabHost.newTabSpec("RecordModifierTab")
+                .setIndicator(getResources().getString(R.string.modifier_tab_indicator))
+                .setContent(intent4);
+        TabHost.TabSpec tab5 = tabHost.newTabSpec("RecordOtherTab")
+                .setIndicator(getResources().getString(R.string.other_tab_indicator))
+                .setContent(intent5);
 
         tabHost.addTab(tab1);
         tabHost.addTab(tab2);

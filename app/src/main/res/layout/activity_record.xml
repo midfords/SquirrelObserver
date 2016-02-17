@@ -6,7 +6,6 @@
     android:id="@android:id/tabhost">
 
     <LinearLayout
-        android:id="@+id/LinearLayout01"
         android:orientation="vertical"
         android:layout_height="fill_parent"
         android:layout_width="fill_parent">
@@ -20,7 +19,7 @@
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="End"
+                android:text="@string/record_activity_end_button"
                 android:textSize="15dp"
                 android:id="@+id/endButton"
                 android:background="#ff3300"
@@ -41,14 +40,14 @@
                 <RadioButton android:id="@+id/radio_scan"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Scan"
+                    android:text="@string/record_activity_scan_radio"
                     android:checked="true"
                     android:onClick="onRadioButtonClicked"/>
 
                 <RadioButton android:id="@+id/radio_all_occurrences"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="A-O"
+                    android:text="@string/record_activity_all_occurrences_radio"
                     android:onClick="onRadioButtonClicked"/>
 
             </RadioGroup>
