@@ -128,13 +128,17 @@ public class MainActivity extends ActionBarActivity
                         if (!GlobalVariables.locationCSVPath.isEmpty()) {
 
                             // Import File Contents
-                            FileParser.generateListOfLocationPoints(GlobalVariables.locationCSVPath);
+                            if (FileParser.generateListOfLocationPoints(GlobalVariables.locationCSVPath)) {
 
-                            // Set Label
-                            TextView locationLabel = (TextView) findViewById(R.id.locationFileName);
-                            locationLabel.setText(
-                                    GlobalVariables.locationCSVPath.substring(
-                                            GlobalVariables.locationCSVPath.lastIndexOf("/")+1));
+                                // Set Label
+                                TextView locationLabel = (TextView) findViewById(R.id.locationFileName);
+                                locationLabel.setText(
+                                        GlobalVariables.locationCSVPath.substring(
+                                                GlobalVariables.locationCSVPath.lastIndexOf("/") + 1));
+                            } else {
+
+                                Utils.importButtonErrorMessage(this);
+                            }
                         }
 
                     }
@@ -149,13 +153,17 @@ public class MainActivity extends ActionBarActivity
                         if (!GlobalVariables.actorsCSVPath.isEmpty()) {
 
                             // Import File Contents
-                            FileParser.generateListOfActors(GlobalVariables.actorsCSVPath);
+                            if (FileParser.generateListOfActors(GlobalVariables.actorsCSVPath)) {
 
-                            // Set Label
-                            TextView actorsLabel = (TextView) findViewById(R.id.actorsFileName);
-                            actorsLabel.setText(
-                                    GlobalVariables.actorsCSVPath.substring(
-                                            GlobalVariables.actorsCSVPath.lastIndexOf("/")+1));
+                                // Set Label
+                                TextView actorsLabel = (TextView) findViewById(R.id.actorsFileName);
+                                actorsLabel.setText(
+                                        GlobalVariables.actorsCSVPath.substring(
+                                                GlobalVariables.actorsCSVPath.lastIndexOf("/")+1));
+                            } else {
+
+                                Utils.importButtonErrorMessage(this);
+                            }
                         }
                     }
                     break;
@@ -169,13 +177,17 @@ public class MainActivity extends ActionBarActivity
                         if (!GlobalVariables.behaviorsCSVPath.isEmpty()) {
 
                             // Import File Contents
-                            FileParser.generateListOfBehaviors(GlobalVariables.behaviorsCSVPath);
+                            if (FileParser.generateListOfBehaviors(GlobalVariables.behaviorsCSVPath)) {
 
-                            // Set Label
-                            TextView behaviorsLabel = (TextView) findViewById(R.id.behaviorsFileName);
-                            behaviorsLabel.setText(
-                                    GlobalVariables.behaviorsCSVPath.substring(
-                                            GlobalVariables.behaviorsCSVPath.lastIndexOf("/")+1));
+                                // Set Label
+                                TextView behaviorsLabel = (TextView) findViewById(R.id.behaviorsFileName);
+                                behaviorsLabel.setText(
+                                        GlobalVariables.behaviorsCSVPath.substring(
+                                                GlobalVariables.behaviorsCSVPath.lastIndexOf("/")+1));
+                            } else {
+
+                                Utils.importButtonErrorMessage(this);
+                            }
                         }
                     }
                     break;
