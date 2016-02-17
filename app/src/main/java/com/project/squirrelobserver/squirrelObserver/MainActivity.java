@@ -355,14 +355,45 @@ public class MainActivity extends ActionBarActivity
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_add_all_occurrences:
-                // Start Record Activity
-                Intent intent = new Intent(this, RecordActivity.class);
-                Record record = new Record("", false);
 
-                GlobalVariables.currentRecord = record;
-//                intent.putExtra("Record", record);
+                final ActionBarActivity activity = this;
 
-                startActivity(intent);
+                // Prompt user for observer ID
+                View aoObserverPromptView =
+                        View.inflate(this, R.layout.dialog_ao_observer_id_prompt, null);
+                final EditText observerIDEditText =
+                        (EditText) aoObserverPromptView.findViewById(R.id.observerIDEditText);
+
+                // Generate dialog
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle(getResources().getString(R.string.ao_observer_id_picker_dialog_title));
+                builder.setView(aoObserverPromptView)
+                        .setCancelable(true)
+                        .setPositiveButton(
+                                getResources().getString(R.string.ao_observer_id_picker_dialog_confirm),
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+
+                                        // Start Record Activity
+                                        Intent intent = new Intent(activity, RecordActivity.class);
+                                        Record record = new Record(observerIDEditText.getText().toString(), false);
+
+                                        GlobalVariables.currentRecord = record;
+//                                        intent.putExtra("Record", record);
+
+                                        startActivity(intent);
+                                    }
+                                })
+                        .setNegativeButton(
+                                getResources().getString(R.string.ao_observer_id_picker_dialog_cancel),
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+
+                                        // Do nothing
+                                    }
+                                })
+                        .show();
+
                 return true;
 
             default:
