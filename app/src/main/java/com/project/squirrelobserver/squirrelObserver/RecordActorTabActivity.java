@@ -94,10 +94,12 @@ public  class RecordActorTabActivity
 
                             if (actor.sex == 1) {
 
-                                button.setBackgroundColor(Color.parseColor("#99ccff"));
+                                button.setBackgroundColor(
+                                        getResources().getColor(R.color.actor_button_male_selected));
                             } else {
 
-                                button.setBackgroundColor(Color.parseColor("#ffb3ff"));
+                                button.setBackgroundColor(
+                                        getResources().getColor(R.color.actor_button_female_selected));
                             }
                         } else {
 
@@ -108,10 +110,12 @@ public  class RecordActorTabActivity
 
                             if (actor.sex == 1) {
 
-                                button.setBackgroundColor(Color.parseColor("#e6f2ff"));
+                                button.setBackgroundColor(
+                                        getResources().getColor(R.color.actor_button_male_not_selected));
                             } else {
 
-                                button.setBackgroundColor(Color.parseColor("#ffe6ff"));
+                                button.setBackgroundColor(
+                                        getResources().getColor(R.color.actor_button_female_not_selected));
                             }
                         }
                     }
@@ -119,10 +123,12 @@ public  class RecordActorTabActivity
 
                 if (actor.sex == 1) {
 
-                    button.setBackgroundColor(Color.parseColor("#e6f2ff"));
+                    button.setBackgroundColor(
+                            getResources().getColor(R.color.actor_button_male_not_selected));
                 } else {
 
-                    button.setBackgroundColor(Color.parseColor("#ffe6ff"));
+                    button.setBackgroundColor(
+                            getResources().getColor(R.color.actor_button_female_not_selected));
                 }
 
                 // If we have run through 4 elements, or if we're on the last button
