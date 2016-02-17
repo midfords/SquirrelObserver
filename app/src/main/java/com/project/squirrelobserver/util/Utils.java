@@ -7,6 +7,8 @@ import android.content.DialogInterface;
 import android.database.Cursor;
 import android.net.Uri;
 
+import com.project.squirrelobserver.R;
+
 import java.net.URISyntaxException;
 
 /**
@@ -18,8 +20,8 @@ public class Utils {
 
         // Close current activity after verify dialogue
         new AlertDialog.Builder(context)
-                .setTitle("End Recording Session")
-                .setMessage("Are you sure you want to end the recording session? All observations are already saved.")
+                .setTitle(context.getResources().getString(R.string.end_session_dialog_title))
+                .setMessage(context.getResources().getString(R.string.end_session_dialog_message))
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         // Close current record activity
