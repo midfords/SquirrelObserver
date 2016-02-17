@@ -1,5 +1,7 @@
 package com.project.squirrelobserver.util;
 
+import com.project.squirrelobserver.data.Record;
+
 /**
  * Created by sean on 2/13/16.
  */
@@ -18,4 +20,6 @@ public class GlobalVariables {
     public static String locationCSVPath = "";
     public static String actorsCSVPath = "";
     public static String behaviorsCSVPath = "";
+
+    public static Record currentRecord = null;
 }

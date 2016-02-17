@@ -21,8 +21,10 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 
 import com.project.squirrelobserver.R;
+import com.project.squirrelobserver.data.Record;
 import com.project.squirrelobserver.squirrelObserver.MainActivity;
 import com.project.squirrelobserver.squirrelObserver.RecordActivity;
+import com.project.squirrelobserver.util.GlobalVariables;
 
 /**
  * A simple {@link android.app.Fragment} subclass.
@@ -74,6 +76,11 @@ public  class SetupFragment
 
                 // Start Record Activity
                 Intent intent = new Intent(getActivity(), RecordActivity.class);
+                Record record = new Record(editTextID.getText().toString(), false);
+
+                GlobalVariables.currentRecord = record;
+//                intent.putExtra("Record", record);
+
                 getActivity().startActivity(intent);
             }
         });
@@ -135,13 +142,6 @@ public  class SetupFragment
 
         startButton.setEnabled(isXFieldReady && isYFieldReady && isIDFieldReady);
     }
-
-//    // TODO: Rename method, update argument and hook method into UI event
-//    public void onButtonPressed(Uri uri) {
-//        if (mListener != null) {
-//            mListener.onSetupFragmentInteraction(uri);
-//        }
-//    }
 
     @Override
     public void onAttach(Activity activity) {

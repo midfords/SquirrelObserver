@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.TypedValue;
@@ -18,6 +19,8 @@ import android.widget.ToggleButton;
 import com.project.squirrelobserver.R;
 import com.project.squirrelobserver.data.Actor;
 import com.project.squirrelobserver.data.DataAccessor;
+import com.project.squirrelobserver.data.Record;
+import com.project.squirrelobserver.util.GlobalVariables;
 import com.project.squirrelobserver.util.Utils;
 
 /**
@@ -27,11 +30,17 @@ public  class RecordActeeTabActivity
         extends Activity {
 
     private ToggleButton previousButton = null;
+//    private Record record = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_record_actee_tab);
+
+        // Get Record from Intent
+//        Intent intent = getIntent();
+//        final Record intentRecord = (Record) intent.getSerializableExtra("Record");
+//        record = intentRecord;
 
         // Create buttons for every behavior and place on activity
         if (DataAccessor.actors != null && !DataAccessor.actors.isEmpty()) {
@@ -46,14 +55,17 @@ public  class RecordActeeTabActivity
             // Loop to run through all buttons
             for (int i = 0; i < DataAccessor.actors.size(); i++) {
 
-                final Actor actor = DataAccessor.actors.get(i);
+                final Actor actee = DataAccessor.actors.get(i);
 
                 final ToggleButton button = new ToggleButton(tableLayout.getContext());
-                button.setText(actor.name);
-                button.setTextOn(actor.name);
-                button.setTextOff(actor.name);
+                button.setText(actee.name);
+                button.setTextOn(actee.name);
+                button.setTextOff(actee.name);
                 button.setTextSize(TypedValue.COMPLEX_UNIT_PX, 15);
                 button.setLayoutParams(params);
+
+                // Attach the actee to the button
+                button.setTag(actee);
 
                 button.setOnClickListener(new View.OnClickListener() {
 
@@ -62,6 +74,7 @@ public  class RecordActeeTabActivity
 
                         if (button.isChecked()) {
 
+                            // Button is ON
                             if (previousButton != null && button != previousButton) {
 
                                 previousButton.setChecked(false);
@@ -69,8 +82,10 @@ public  class RecordActeeTabActivity
                             }
                             previousButton = button;
 
-                            // Button is ON
-                            if (actor.sex == 1) {
+                            GlobalVariables.currentRecord.actee = (Actor) button.getTag();
+//                            intentRecord.actee = (Actor) button.getTag();
+
+                            if (actee.sex == 1) {
 
                                 button.setBackgroundColor(Color.parseColor("#99ccff"));
                             } else {
@@ -79,10 +94,12 @@ public  class RecordActeeTabActivity
                             }
                         } else {
 
-                            previousButton = null;
-
                             // Button is OFF
-                            if (actor.sex == 1) {
+                            previousButton = null;
+                            GlobalVariables.currentRecord.actee = null;
+//                            intentRecord.actee = null;
+
+                            if (actee.sex == 1) {
 
                                 button.setBackgroundColor(Color.parseColor("#e6f2ff"));
                             } else {
@@ -93,7 +110,7 @@ public  class RecordActeeTabActivity
                     }
                 });
 
-                if (actor.sex == 1) {
+                if (actee.sex == 1) {
 
                     button.setBackgroundColor(Color.parseColor("#e6f2ff"));
                 } else {
