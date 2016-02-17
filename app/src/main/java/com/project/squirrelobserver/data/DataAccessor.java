@@ -219,4 +219,12 @@ public class DataAccessor {
             } catch (IOException e) { }
         }
     }
+
+    public static void writeLineToScanRecords(Record record) {
+
+    }
+
+    public static void writeLineToAORecords(Record record) {
+
+    }
 }

@@ -25,6 +25,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.project.squirrelobserver.data.DataAccessor;
+import com.project.squirrelobserver.data.Record;
 import com.project.squirrelobserver.fragments.ImportExportFragment;
 import com.project.squirrelobserver.fragments.SetupFragment;
 import com.project.squirrelobserver.fragments.NavigationDrawerFragment;
@@ -254,6 +255,11 @@ public class MainActivity extends ActionBarActivity
             case R.id.action_add_all_occurrences:
                 // Start Record Activity
                 Intent intent = new Intent(this, RecordActivity.class);
+                Record record = new Record("", false);
+
+                GlobalVariables.currentRecord = record;
+//                intent.putExtra("Record", record);
+
                 startActivity(intent);
                 return true;
 
