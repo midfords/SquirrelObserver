@@ -3,8 +3,11 @@ package com.project.squirrelobserver.squirrelObserver;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.TypedValue;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.ToggleButton;
@@ -14,6 +17,8 @@ import com.project.squirrelobserver.util.Actor;
 import com.project.squirrelobserver.util.FileParser;
 import com.project.squirrelobserver.util.GlobalVariables;
 import com.project.squirrelobserver.util.Utils;
+
+import java.util.ArrayList;
 
 /**
  * Created by sean on 2/9/16.
@@ -125,8 +130,39 @@ public  class RecordActeeTabActivity
 
                 tableRow.addView(button);
             }
-        }
 
+            // Setup filter field
+            final EditText filter = (EditText) findViewById(R.id.acteeFilterText);
+            filter.addTextChangedListener(new TextWatcher() {
+
+                @Override
+                public void afterTextChanged(Editable arg0) {
+                    hideButtons(filter.getText().toString(), GlobalVariables.actors);
+                }
+
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) { }
+            });
+        }
+    }
+
+    private void hideButtons(String filter, ArrayList<Actor> actors) {
+
+        for (int i = 0; i < actors.size(); i++) {
+
+            Actor actor = actors.get(i);
+            if (!actor.abb.toLowerCase().contains(filter.toLowerCase())
+                    && !actor.name.toLowerCase().contains(filter.toLowerCase())) {
+
+                actor.button.setVisibility(View.GONE);
+            } else {
+
+                actor.button.setVisibility(View.VISIBLE);
+            }
+        }
     }
 
     // This is a listener for the physical back button, so we can display the verification dialog here too
