@@ -204,6 +204,14 @@ public class MainActivity extends ActionBarActivity
         showFileChooser(GlobalVariables.BEHAVIORS_CSV_SELECT_CODE);
     }
 
+    public void onScanExportButtonClicked(View view) {
+
+    }
+
+    public void onAOExportButtonClicked(View view) {
+
+    }
+
     public void onScanIntervalFieldClicked (final View view) {
 
         View intervalPickerView = View.inflate(view.getContext(), R.layout.dialog_interval_picker, null);
