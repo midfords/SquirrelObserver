@@ -1,4 +1,5 @@
 <resources>
+
     <string name="app_name">Squirrel Observer</string>
 
     <string name="title_section_setup">Setup</string>
@@ -7,4 +8,42 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
+    <string name="file_import_dialog_title">Select a File to Import</string>
+
+    <string name="interval_picker_dialog_title">Select Interval</string>
+    <string name="interval_picker_dialog_confirm">Set</string>
+    <string name="interval_picker_dialog_minutes_label">Minutes</string>
+    <string name="interval_picker_dialog_seconds_label">Seconds</string>
+
+    <string name="end_session_dialog_title">End Recording Session</string>
+    <string name="end_session_dialog_message">Are you sure you want to end the recording session? All observations are already saved.</string>
+
+    <string name="actor_tab_indicator">Actor</string>
+    <string name="behaviors_tab_indicator">Behaviors</string>
+    <string name="actee_tab_indicator">Actee</string>
+    <string name="modifier_tab_indicator">Modifier</string>
+    <string name="other_tab_indicator">Other</string>
+
+    <string name="record_activity_end_button">End</string>
+    <string name="record_activity_scan_radio">Scan</string>
+    <string name="record_activity_all_occurrences_radio">A-O</string>
+    <string name="record_activity_filter_hint">Filter</string>
+
+    <string name="import_export_location_label">Location File:</string>
+    <string name="import_export_actors_label">Actors File:</string>
+    <string name="import_export_behaviors_label">Behaviors File:</string>
+    <string name="import_export_scan_label">Export Scan Data:</string>
+    <string name="import_export_all_occurrences_label">Export All-Occurrences Data:</string>
+    <string name="import_export_no_file_label">No File Selected.</string>
+    <string name="import_export_import_button">Import</string>
+    <string name="import_export_export_button">Export</string>
+
+    <string name="setup_start_button">Start</string>
+    <string name="setup_location_label">Location:</string>
+    <string name="setup_scan_interval_label">Scan Interval:</string>
+    <string name="setup_observer_id_label">Observer ID:</string>
+    <string name="setup_all_occurrences_label">All-Occurrences Behaviors:</string>
+    <string name="setup_default_time">10:00</string>
+    <string name="setup_x_hint">X</string>
+    <string name="setup_y_hint">Y</string>
 </resources>

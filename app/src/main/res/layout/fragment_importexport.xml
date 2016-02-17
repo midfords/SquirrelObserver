@@ -15,176 +15,116 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingBottom="20dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="Location File:"
-                    android:textSize="20dp" />
+                android:layout_height="match_parent">
 
                 <LinearLayout
-                    android:orientation="horizontal"
+                    android:orientation="vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <ImageView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_gravity="center_vertical"
-                        android:id="@+id/spreadsheetIcon"
-                        android:src="@drawable/spreadsheet_icon" />
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="20dp">
 
                     <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="@string/import_export_location_label"
+                        android:textSize="20dp" />
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_gravity="center_vertical"
+                            android:id="@+id/spreadsheetIcon"
+                            android:src="@drawable/spreadsheet_icon" />
+
+                        <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:textAppearance="?android:attr/textAppearanceMedium"
+                                android:text="@string/import_export_no_file_label"
+                                android:id="@+id/locationFileName"
+                                android:maxLength="22"
+                                android:gravity="center_vertical"
+                                android:textSize="15dp" />
+
+                        <!-- Hacky shit to right align button -->
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"/>
+
+                        <Button
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/import_export_import_button"
+                            android:id="@+id/locationImportButton"
+                            android:onClick="onLocationImportButtonClicked"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="20dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="@string/import_export_actors_label"
+                        android:textSize="20dp" />
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_gravity="center_vertical"
+                            android:src="@drawable/spreadsheet_icon" />
+
+                        <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:textAppearance="?android:attr/textAppearanceMedium"
-                            android:text="No File Selected."
-                            android:id="@+id/locationFileName"
+                            android:text="@string/import_export_no_file_label"
+                            android:id="@+id/actorsFileName"
                             android:maxLength="22"
                             android:gravity="center_vertical"
                             android:textSize="15dp" />
 
-                    <!-- Hacky shit to right align button -->
-                    <View
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"/>
+                        <!-- Hacky shit to right align button -->
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"/>
 
-                    <Button
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Import"
-                        android:id="@+id/locationImportButton"
-                        android:onClick="onLocationImportButtonClicked"/>
+                        <Button
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/import_export_import_button"
+                            android:id="@+id/actorsImportButton"
+                            android:onClick="onActorsImportButtonClicked" />
 
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingBottom="20dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="Actors File:"
-                    android:textSize="20dp" />
-
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <ImageView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_gravity="center_vertical"
-                        android:src="@drawable/spreadsheet_icon" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="No File Selected."
-                        android:id="@+id/actorsFileName"
-                        android:maxLength="22"
-                        android:gravity="center_vertical"
-                        android:textSize="15dp" />
-
-                    <!-- Hacky shit to right align button -->
-                    <View
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"/>
-
-                    <Button
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Import"
-                        android:id="@+id/actorsImportButton"
-                        android:onClick="onActorsImportButtonClicked" />
+                    </LinearLayout>
 
                 </LinearLayout>
 
-            </LinearLayout>
-
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingBottom="20dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="Behaviors File:"
-                    android:textSize="20dp" />
-
                 <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <ImageView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_gravity="center_vertical"
-                        android:src="@drawable/spreadsheet_icon" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="No File Selected."
-                        android:id="@+id/behaviorsFileName"
-                        android:maxLength="22"
-                        android:gravity="center_vertical"
-                        android:textSize="15dp" />
-
-                    <!-- Hacky shit to right align button -->
-                    <View
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"/>
-
-                    <Button
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Import"
-                        android:id="@+id/behaviorsImportButton"
-                        android:onClick="onBehaviorsImportButtonClicked" />
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-
-            <!-- Divider for import/export sections -->
-
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="40dp">
-
-                <LinearLayout
-                    android:orientation="horizontal"
+                    android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingBottom="20dp">
@@ -193,55 +133,115 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="Export Scan Data:"
-                        android:id="@+id/scanFileLabel"
-                        android:textSize="15dp" />
+                        android:text="@string/import_export_behaviors_label"
+                        android:textSize="20dp" />
 
-                    <!-- Hacky shit to right align button -->
-                    <View
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"/>
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
 
-                    <Button
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Export"
-                        android:id="@+id/scanExportButton" />
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_gravity="center_vertical"
+                            android:src="@drawable/spreadsheet_icon" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:text="@string/import_export_no_file_label"
+                            android:id="@+id/behaviorsFileName"
+                            android:maxLength="22"
+                            android:gravity="center_vertical"
+                            android:textSize="15dp" />
+
+                        <!-- Hacky shit to right align button -->
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"/>
+
+                        <Button
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/import_export_import_button"
+                            android:id="@+id/behaviorsImportButton"
+                            android:onClick="onBehaviorsImportButtonClicked" />
+
+                    </LinearLayout>
 
                 </LinearLayout>
 
+
+                <!-- Divider for import/export sections -->
+
                 <LinearLayout
-                    android:orientation="horizontal"
+                    android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingBottom="20dp">
+                    android:paddingTop="40dp">
 
-                    <TextView
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="Export All-Occurances Data:"
-                        android:id="@+id/aoFileLabel"
-                        android:textSize="15dp" />
+                        android:paddingBottom="20dp">
 
-                    <!-- Hacky shit to right align button -->
-                    <View
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:text="@string/import_export_scan_label"
+                            android:id="@+id/scanFileLabel"
+                            android:textSize="15dp" />
 
-                    <Button
-                        android:layout_width="wrap_content"
+                        <!-- Hacky shit to right align button -->
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"/>
+
+                        <Button
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/import_export_export_button"
+                            android:id="@+id/scanExportButton" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Export"
-                        android:id="@+id/aoExportButton" />
+                        android:paddingBottom="20dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:text="@string/import_export_all_occurrences_label"
+                            android:id="@+id/aoFileLabel"
+                            android:textSize="15dp" />
+
+                        <!-- Hacky shit to right align button -->
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"/>
+
+                        <Button
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/import_export_export_button"
+                            android:id="@+id/aoExportButton" />
+
+                    </LinearLayout>
 
                 </LinearLayout>
 
             </LinearLayout>
-
-        </LinearLayout>
 
         </ScrollView>
 

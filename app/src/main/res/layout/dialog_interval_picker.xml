@@ -15,7 +15,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Minutes"/>
+            android:text="@string/interval_picker_dialog_minutes_label"/>
 
         <EditText
             android:layout_width="140dp"
@@ -45,7 +45,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Seconds"/>
+            android:text="@string/interval_picker_dialog_seconds_label"/>
 
         <EditText
             android:layout_width="140dp"
