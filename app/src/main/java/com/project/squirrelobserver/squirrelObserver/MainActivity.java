@@ -127,17 +127,20 @@ public class MainActivity extends ActionBarActivity
 
                         if (!GlobalVariables.locationCSVPath.isEmpty()) {
 
+                            TextView locationLabel = (TextView) findViewById(R.id.locationFileName);
+
                             // Import File Contents
                             if (FileParser.generateListOfLocationPoints(GlobalVariables.locationCSVPath)) {
 
                                 // Set Label
-                                TextView locationLabel = (TextView) findViewById(R.id.locationFileName);
                                 locationLabel.setText(
                                         GlobalVariables.locationCSVPath.substring(
                                                 GlobalVariables.locationCSVPath.lastIndexOf("/") + 1));
                             } else {
 
                                 Utils.importButtonErrorMessage(this);
+                                locationLabel.setText(
+                                        getResources().getString(R.string.import_export_no_file_label));
                             }
                         }
 
@@ -152,17 +155,20 @@ public class MainActivity extends ActionBarActivity
 
                         if (!GlobalVariables.actorsCSVPath.isEmpty()) {
 
+                            TextView actorsLabel = (TextView) findViewById(R.id.actorsFileName);
+
                             // Import File Contents
                             if (FileParser.generateListOfActors(GlobalVariables.actorsCSVPath)) {
 
                                 // Set Label
-                                TextView actorsLabel = (TextView) findViewById(R.id.actorsFileName);
                                 actorsLabel.setText(
                                         GlobalVariables.actorsCSVPath.substring(
                                                 GlobalVariables.actorsCSVPath.lastIndexOf("/")+1));
                             } else {
 
                                 Utils.importButtonErrorMessage(this);
+                                actorsLabel.setText(
+                                        getResources().getString(R.string.import_export_no_file_label));
                             }
                         }
                     }
@@ -176,17 +182,20 @@ public class MainActivity extends ActionBarActivity
 
                         if (!GlobalVariables.behaviorsCSVPath.isEmpty()) {
 
+                            TextView behaviorsLabel = (TextView) findViewById(R.id.behaviorsFileName);
+
                             // Import File Contents
                             if (FileParser.generateListOfBehaviors(GlobalVariables.behaviorsCSVPath)) {
 
                                 // Set Label
-                                TextView behaviorsLabel = (TextView) findViewById(R.id.behaviorsFileName);
                                 behaviorsLabel.setText(
                                         GlobalVariables.behaviorsCSVPath.substring(
                                                 GlobalVariables.behaviorsCSVPath.lastIndexOf("/")+1));
                             } else {
 
                                 Utils.importButtonErrorMessage(this);
+                                behaviorsLabel.setText(
+                                        getResources().getString(R.string.import_export_no_file_label));
                             }
                         }
                     }
