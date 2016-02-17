@@ -27,7 +27,7 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Start"
+            android:text="@string/setup_start_button"
             android:enabled="false"
             android:id="@+id/startButton"
             android:layout_alignParentBottom="true"
@@ -50,7 +50,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="Location:"
+                    android:text="@string/setup_location_label"
                     android:layout_below="@+id/section_label"
                     android:layout_alignParentStart="true" />
 
@@ -68,7 +68,7 @@
                         android:ems="10"
                         android:id="@+id/locationX"
                         android:textSize="15dp"
-                        android:hint="X"/>
+                        android:hint="@string/setup_x_hint"/>
 
                     <View
                         android:layout_width="0dp"
@@ -83,7 +83,7 @@
                         android:ems="10"
                         android:id="@+id/locationY"
                         android:textSize="15dp"
-                        android:hint="Y"/>
+                        android:hint="@string/setup_y_hint"/>
 
                 </LinearLayout>
 
@@ -91,7 +91,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="Scan Interval:"
+                    android:text="@string/setup_scan_interval_label"
                     android:layout_below="@+id/locationFieldLayout"
                     android:layout_alignParentStart="true"
                     android:layout_marginTop="53dp" />
@@ -100,7 +100,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:text="10:00"
+                    android:text="@string/setup_default_time"
                     android:textAlignment="center"
                     android:cursorVisible="false"
                     android:focusable="false"
@@ -112,7 +112,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="Observer ID:"
+                    android:text="@string/setup_observer_id_label"
                     android:layout_alignParentStart="true"
                     android:layout_marginTop="53dp" />
 
@@ -130,7 +130,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="All-Occurrences Behaviors:"
+                    android:text="@string/setup_all_occurrences_label"
                     android:layout_alignParentStart="true"
                     android:layout_marginTop="53dp" />
 

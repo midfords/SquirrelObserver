@@ -104,7 +104,8 @@ public class MainActivity extends ActionBarActivity
 
         try {
             startActivityForResult(
-                    Intent.createChooser(intent, "Select a File to Import"),
+                    Intent.createChooser(intent,
+                            getResources().getString(R.string.file_import_dialog_title)),
                     selectCode);
 
         } catch (android.content.ActivityNotFoundException ex) { }
@@ -213,39 +214,43 @@ public class MainActivity extends ActionBarActivity
         secondText.setText("" + GlobalVariables.scanIntervalSeconds);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
-        builder.setTitle("Select Interval");
+        builder.setTitle(getResources().getString(R.string.interval_picker_dialog_title));
         builder.setView(intervalPickerView)
                 .setCancelable(false)
-                .setPositiveButton("Set", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
+                .setPositiveButton(getResources().getString(R.string.interval_picker_dialog_confirm),
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
 
-                        int minute = GlobalVariables.scanIntervalMinutes;
-                        int second = GlobalVariables.scanIntervalSeconds;
+                                int minute = GlobalVariables.scanIntervalMinutes;
+                                int second = GlobalVariables.scanIntervalSeconds;
 
-                        if (!minuteText.getText().toString().isEmpty()
-                                && !secondText.getText().toString().isEmpty()) {
+                                if (!minuteText.getText().toString().isEmpty()
+                                        && !secondText.getText().toString().isEmpty()) {
 
-                            minute = Integer.parseInt(minuteText.getText().toString());
-                            second = Integer.parseInt(secondText.getText().toString());
+                                    minute = Integer.parseInt(minuteText.getText().toString());
+                                    second = Integer.parseInt(secondText.getText().toString());
 
-                            if (minute >= 60)
-                                minute = 59;
-                            if (second >= 60)
-                                second = 59;
-                        }
+                                    if (minute >= 60)
+                                        minute = 59;
+                                    if (second >= 60)
+                                        second = 59;
+                                }
 
-                        // Put values in text field
-                        EditText scanIntervalEditText = (EditText) findViewById(R.id.scanIntervalInput);
+                                // Put values in text field
+                                EditText scanIntervalEditText =
+                                        (EditText) findViewById(R.id.scanIntervalInput);
 
-                        GlobalVariables.scanIntervalMinutes = minute;
-                        GlobalVariables.scanIntervalSeconds = second;
+                                GlobalVariables.scanIntervalMinutes = minute;
+                                GlobalVariables.scanIntervalSeconds = second;
 
-                        scanIntervalEditText.setText(
-                                (minute < 10 ? "0" : "") + minute + ":"
-                                        + (second < 10 ? "0" : "") + second);
-                    }
-                })
-                .show();
+                                String secondsString = (second < 10 ? "0" : "") + second;
+                                String minutesString = (minute < 10 ? "0" : "") + minute;
+                                String timeString = minutesString + ":" + secondsString;
+
+                                scanIntervalEditText.setText(timeString);
+                            }
+                        })
+                        .show();
     }
 
 
