@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="actor_button_male_not_selected">#e6f2ff</color>
+    <color name="actor_button_female_not_selected">#ffe6ff</color>
+    <color name="actor_button_male_selected">#99ccff</color>
+    <color name="actor_button_female_selected">#ffb3ff</color>
+
+    <color name="record_activity_end_button">#ff3300</color>
+
+</resources>
