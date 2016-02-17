@@ -25,6 +25,9 @@
     <string name="ao_observer_id_picker_dialog_confirm">Continue</string>
     <string name="ao_observer_id_picker_dialog_cancel">Cancel</string>
 
+    <string name="import_error_dialog_title">Import Error</string>
+    <string name="import_error_dialog_message">There was an error while importing the file. Please make sure that you upload a \'.csv\' file and that all fields are correctly filled.</string>
+
     <string name="actor_tab_indicator">Actor</string>
     <string name="behaviors_tab_indicator">Behaviors</string>
     <string name="actee_tab_indicator">Actee</string>
