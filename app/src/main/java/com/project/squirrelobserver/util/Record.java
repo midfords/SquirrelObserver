@@ -1,10 +1,5 @@
-package com.project.squirrelobserver.data;
+package com.project.squirrelobserver.util;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-import android.widget.ArrayAdapter;
-
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;

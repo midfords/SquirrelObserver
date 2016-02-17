@@ -1,4 +1,4 @@
-package com.project.squirrelobserver.data;
+package com.project.squirrelobserver.util;
 
 import android.widget.ToggleButton;
 

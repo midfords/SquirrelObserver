@@ -1,4 +1,4 @@
-package com.project.squirrelobserver.data;
+package com.project.squirrelobserver.util;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -12,20 +12,19 @@ import java.util.ArrayList;
 /**
  * Created by sean on 2/12/16.
  */
-public class DataAccessor {
-
-    public static ArrayList<LocationPoint> locationPointsX; // List of all points in x coordinate system
-    public static ArrayList<LocationPoint> locationPointsY; // List of all points in y coordinate system
-    public static ArrayList<Behavior> behaviors;   // List of all behaviors
-    public static ArrayList<Actor> actors;     // List of all actors
+public class FileParser {
 
     public static boolean generateListOfLocationPoints (String csvFileLocation) {
 
         if (csvFileLocation == null)
             return false;
+        String extension = csvFileLocation.substring(
+                csvFileLocation.lastIndexOf(".") + 1, csvFileLocation.length());
+        if (!extension.equalsIgnoreCase("csv"))
+            return false;
 
-        locationPointsX = new ArrayList<LocationPoint>();    // Initialize our list of points
-        locationPointsY = new ArrayList<LocationPoint>();    // Initialize our list of points
+        GlobalVariables.locationPointsX = new ArrayList<LocationPoint>();    // Initialize our list of points
+        GlobalVariables.locationPointsY = new ArrayList<LocationPoint>();    // Initialize our list of points
         InputStream inputStream = null;
         String label, x, y;
 
@@ -57,11 +56,11 @@ public class DataAccessor {
 
                     if (x_parsed == 0) { // TODO verify that points will always have one zero value and one non-zero value
 
-                        locationPointsY.add(locationPoint);
+                        GlobalVariables.locationPointsY.add(locationPoint);
 
                     } else {
 
-                        locationPointsX.add(locationPoint);
+                        GlobalVariables.locationPointsX.add(locationPoint);
                     }
                 }
             }
@@ -70,14 +69,14 @@ public class DataAccessor {
 
         } catch (IOException e) {
 
-            locationPointsX = null;
-            locationPointsY = null;
+            GlobalVariables.locationPointsX = null;
+            GlobalVariables.locationPointsY = null;
             return false;
 
         } catch (Exception e) {
 
-            locationPointsX = null;
-            locationPointsY = null;
+            GlobalVariables.locationPointsX = null;
+            GlobalVariables.locationPointsY = null;
             return false;
 
         } finally {
@@ -94,8 +93,12 @@ public class DataAccessor {
 
         if (csvFileBehaviors == null)
             return false;
+        String extension = csvFileBehaviors.substring(
+                csvFileBehaviors.lastIndexOf(".") + 1, csvFileBehaviors.length());
+        if (!extension.equalsIgnoreCase("csv"))
+            return false;
 
-        behaviors = new ArrayList<Behavior>();    // Initialize our list of behaviors
+        GlobalVariables.behaviors = new ArrayList<Behavior>();    // Initialize our list of behaviors
         InputStream inputStream = null;
         String code, desc, modif;   // Code, Description and Modifier
 
@@ -130,7 +133,7 @@ public class DataAccessor {
                     int code_parsed = Integer.parseInt(code);
 
                     Behavior behavior = new Behavior(code_parsed, desc, modifiers);
-                    behaviors.add(behavior);
+                    GlobalVariables.behaviors.add(behavior);
                 }
             }
 
@@ -138,12 +141,12 @@ public class DataAccessor {
 
         } catch (IOException e) {
 
-            behaviors = null;
+            GlobalVariables.behaviors = null;
             return false;
 
         } catch (Exception e) {
 
-            behaviors = null;
+            GlobalVariables.behaviors = null;
             return false;
 
         } finally {
@@ -160,8 +163,12 @@ public class DataAccessor {
 
         if (csvFileActors == null)
             return false;
+        String extension = csvFileActors.substring(
+                csvFileActors.lastIndexOf(".") + 1, csvFileActors.length());
+        if (!extension.equalsIgnoreCase("csv"))
+            return false;
 
-        actors = new ArrayList<Actor>();    // Initialize our list of actors
+        GlobalVariables.actors = new ArrayList<Actor>();    // Initialize our list of actors
         InputStream inputStream = null;
         String name, abb, tag, col, sex, age; // Name, Abbreviation, Tag no, Colony, Sex, Age
 
@@ -194,7 +201,7 @@ public class DataAccessor {
                     int age_parsed = Integer.parseInt(age);
 
                     Actor actor = new Actor(name, abb, tag_parsed, col, sex_parsed, age_parsed);
-                    actors.add(actor);
+                    GlobalVariables.actors.add(actor);
                 }
             }
 
@@ -202,12 +209,12 @@ public class DataAccessor {
 
         } catch (IOException e) {
 
-            actors = null;
+            GlobalVariables.actors = null;
             return false;
 
         } catch (Exception e) {
 
-            actors = null;
+            GlobalVariables.actors = null;
             return false;
 
         } finally {
