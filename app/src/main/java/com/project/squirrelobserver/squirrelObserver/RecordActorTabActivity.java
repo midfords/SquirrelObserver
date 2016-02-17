@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.provider.ContactsContract;
@@ -22,6 +23,8 @@ import android.widget.ToggleButton;
 import com.project.squirrelobserver.R;
 import com.project.squirrelobserver.data.Actor;
 import com.project.squirrelobserver.data.DataAccessor;
+import com.project.squirrelobserver.data.Record;
+import com.project.squirrelobserver.util.GlobalVariables;
 import com.project.squirrelobserver.util.Utils;
 
 import java.util.ArrayList;
@@ -34,11 +37,17 @@ public  class RecordActorTabActivity
         extends Activity {
 
     private ToggleButton previousButton = null;
+//    private Record record = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_record_actor_tab);
+
+        // Get Record from Intent
+//        Intent intent = getIntent();
+//        final Record intentRecord = (Record) intent.getSerializableExtra("Record");
+//        record = intentRecord;
 
         // Create buttons for every behavior and place on activity
         if (DataAccessor.actors != null && !DataAccessor.actors.isEmpty()) {
@@ -62,6 +71,9 @@ public  class RecordActorTabActivity
                 button.setTextSize(TypedValue.COMPLEX_UNIT_PX, 15);
                 button.setLayoutParams(params);
 
+                // Attach the actor to the button
+                button.setTag(actor);
+
                 button.setOnClickListener(new View.OnClickListener() {
 
                     @Override
@@ -69,6 +81,7 @@ public  class RecordActorTabActivity
 
                         if (button.isChecked()) {
 
+                            // Button is ON
                             if (previousButton != null && button != previousButton) {
 
                                 previousButton.setChecked(false);
@@ -76,7 +89,9 @@ public  class RecordActorTabActivity
                             }
                             previousButton = button;
 
-                            // Button is ON
+                            GlobalVariables.currentRecord.actor = (Actor) button.getTag();
+//                            intentRecord.actor = (Actor) button.getTag();
+
                             if (actor.sex == 1) {
 
                                 button.setBackgroundColor(Color.parseColor("#99ccff"));
@@ -86,9 +101,11 @@ public  class RecordActorTabActivity
                             }
                         } else {
 
-                            previousButton = null;
-
                             // Button is OFF
+                            previousButton = null;
+                            GlobalVariables.currentRecord.actor = null;
+//                            intentRecord.actor = null;
+
                             if (actor.sex == 1) {
 
                                 button.setBackgroundColor(Color.parseColor("#e6f2ff"));

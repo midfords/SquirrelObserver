@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.util.TypedValue;
@@ -20,6 +21,8 @@ import com.project.squirrelobserver.R;
 import com.project.squirrelobserver.data.Actor;
 import com.project.squirrelobserver.data.Behavior;
 import com.project.squirrelobserver.data.DataAccessor;
+import com.project.squirrelobserver.data.Record;
+import com.project.squirrelobserver.util.GlobalVariables;
 import com.project.squirrelobserver.util.Utils;
 
 /**
@@ -28,10 +31,17 @@ import com.project.squirrelobserver.util.Utils;
 public  class RecordBehaviorTabActivity
         extends Activity {
 
+//    private Record record = null;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_record_behaviors_tab);
+
+        // Get Record from Intent
+//        Intent intent = getIntent();
+//        final Record intentRecord = (Record) intent.getSerializableExtra("Record");
+//        record = intentRecord;
 
         // Create buttons for every behavior and place on activity
         if (DataAccessor.behaviors != null && !DataAccessor.behaviors.isEmpty()) {
@@ -43,7 +53,7 @@ public  class RecordBehaviorTabActivity
             // Loop to run through all buttons
             for (int i = 0; i < DataAccessor.behaviors.size(); i++) {
 
-                Behavior behavior = DataAccessor.behaviors.get(i);
+                final Behavior behavior = DataAccessor.behaviors.get(i);
 
                 final ToggleButton button = new ToggleButton(tableLayout.getContext());
                 button.setText(behavior.desc);
@@ -51,18 +61,36 @@ public  class RecordBehaviorTabActivity
                 button.setTextOff(behavior.desc);
                 button.setTextSize(TypedValue.COMPLEX_UNIT_PX, 15);
 
+                // Keep a pointer to the button in the behavior
+                behavior.button = button;
+
+                // Attach the behavior to the button
+                button.setTag(behavior);
+
                 button.setOnClickListener(new View.OnClickListener() {
 
                     @Override
                     public void onClick(View arg0) {
 
-
                         if (button.isChecked()) {
+
                             // Button is ON
+                            Behavior removedBehavior =
+                                    GlobalVariables.currentRecord
+                                            .addBehavior((Behavior) button.getTag());
+//                            Behavior removedBehavior =
+//                                    intentRecord.addBehavior((Behavior) button.getTag());
 
+                            if (removedBehavior != null && removedBehavior.button != null) {
+
+                                removedBehavior.button.setChecked(false);
+                                removedBehavior.button.callOnClick();
+                            }
                         } else {
-                            // Button is OFF
 
+                            // Button is OFF
+                            GlobalVariables.currentRecord.removeBehavior(behavior);
+//                            intentRecord.removeBehavior(behavior);
                         }
                     }
                 });
