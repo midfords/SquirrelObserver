@@ -1,6 +1,9 @@
 package com.project.squirrelobserver.util;
 
+import com.project.squirrelobserver.data.Behavior;
 import com.project.squirrelobserver.data.Record;
+
+import java.util.ArrayList;
 
 /**
  * Created by sean on 2/13/16.
@@ -22,4 +25,5 @@ public class GlobalVariables {
     public static String behaviorsCSVPath = "";
 
     public static Record currentRecord = null;
+    public static ArrayList<Behavior> aoBehaviors = null;
 }
