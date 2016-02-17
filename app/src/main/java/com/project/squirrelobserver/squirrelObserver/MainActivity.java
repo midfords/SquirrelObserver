@@ -1,44 +1,33 @@
 package com.project.squirrelobserver.squirrelObserver;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Parcelable;
-import android.provider.ContactsContract;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentActivity;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
-import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.project.squirrelobserver.data.Behavior;
-import com.project.squirrelobserver.data.DataAccessor;
-import com.project.squirrelobserver.data.Record;
+import com.project.squirrelobserver.util.Behavior;
+import com.project.squirrelobserver.util.FileParser;
+import com.project.squirrelobserver.util.Record;
 import com.project.squirrelobserver.fragments.ImportExportFragment;
 import com.project.squirrelobserver.fragments.SetupFragment;
 import com.project.squirrelobserver.fragments.NavigationDrawerFragment;
 import com.project.squirrelobserver.R;
 import com.project.squirrelobserver.util.GlobalVariables;
 import com.project.squirrelobserver.util.Utils;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -139,7 +128,7 @@ public class MainActivity extends ActionBarActivity
                         if (!GlobalVariables.locationCSVPath.isEmpty()) {
 
                             // Import File Contents
-                            DataAccessor.generateListOfLocationPoints(GlobalVariables.locationCSVPath);
+                            FileParser.generateListOfLocationPoints(GlobalVariables.locationCSVPath);
 
                             // Set Label
                             TextView locationLabel = (TextView) findViewById(R.id.locationFileName);
@@ -160,7 +149,7 @@ public class MainActivity extends ActionBarActivity
                         if (!GlobalVariables.actorsCSVPath.isEmpty()) {
 
                             // Import File Contents
-                            DataAccessor.generateListOfActors(GlobalVariables.actorsCSVPath);
+                            FileParser.generateListOfActors(GlobalVariables.actorsCSVPath);
 
                             // Set Label
                             TextView actorsLabel = (TextView) findViewById(R.id.actorsFileName);
@@ -180,7 +169,7 @@ public class MainActivity extends ActionBarActivity
                         if (!GlobalVariables.behaviorsCSVPath.isEmpty()) {
 
                             // Import File Contents
-                            DataAccessor.generateListOfBehaviors(GlobalVariables.behaviorsCSVPath);
+                            FileParser.generateListOfBehaviors(GlobalVariables.behaviorsCSVPath);
 
                             // Set Label
                             TextView behaviorsLabel = (TextView) findViewById(R.id.behaviorsFileName);
@@ -281,11 +270,11 @@ public class MainActivity extends ActionBarActivity
                 (LinearLayout) aoBehaviorPickerView.findViewById(R.id.behaviorListLayout);
 
         // Add all behaviors to list
-        if (DataAccessor.behaviors != null && DataAccessor.behaviors.size() > 0) {
+        if (GlobalVariables.behaviors != null && GlobalVariables.behaviors.size() > 0) {
 
-            for (int i = 0; i < DataAccessor.behaviors.size(); i++) {
+            for (int i = 0; i < GlobalVariables.behaviors.size(); i++) {
 
-                Behavior behavior = DataAccessor.behaviors.get(i);
+                Behavior behavior = GlobalVariables.behaviors.get(i);
 
                 final CheckBox checkBox = new CheckBox(linearLayout.getContext());
                 checkBox.setText(behavior.desc);

@@ -1,14 +1,16 @@
 package com.project.squirrelobserver.util;
 
-import com.project.squirrelobserver.data.Behavior;
-import com.project.squirrelobserver.data.Record;
-
 import java.util.ArrayList;
 
 /**
  * Created by sean on 2/13/16.
  */
 public class GlobalVariables {
+
+    public static ArrayList<LocationPoint> locationPointsX; // List of all points in x coordinate system
+    public static ArrayList<LocationPoint> locationPointsY; // List of all points in y coordinate system
+    public static ArrayList<Behavior> behaviors;   // List of all behaviors
+    public static ArrayList<Actor> actors;     // List of all actors
 
     public static final int SCAN_INTERVAL_DEFAULT_MINUTES = 10;
     public static final int SCAN_INTERVAL_DEFAULT_SECONDS = 0;

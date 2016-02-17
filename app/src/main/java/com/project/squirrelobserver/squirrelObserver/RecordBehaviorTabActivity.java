@@ -1,27 +1,17 @@
 package com.project.squirrelobserver.squirrelObserver;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.util.TypedValue;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.GridLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.ToggleButton;
 
 import com.project.squirrelobserver.R;
-import com.project.squirrelobserver.data.Actor;
-import com.project.squirrelobserver.data.Behavior;
-import com.project.squirrelobserver.data.DataAccessor;
-import com.project.squirrelobserver.data.Record;
+import com.project.squirrelobserver.util.Behavior;
+import com.project.squirrelobserver.util.FileParser;
 import com.project.squirrelobserver.util.GlobalVariables;
 import com.project.squirrelobserver.util.Utils;
 
@@ -44,16 +34,16 @@ public  class RecordBehaviorTabActivity
 //        record = intentRecord;
 
         // Create buttons for every behavior and place on activity
-        if (DataAccessor.behaviors != null && !DataAccessor.behaviors.isEmpty()) {
+        if (GlobalVariables.behaviors != null && !GlobalVariables.behaviors.isEmpty()) {
 
             // Layout for grid
             TableLayout tableLayout = (TableLayout) findViewById(R.id.behaviorsTableLayout);
             TableRow tableRow = (TableRow) new TableRow(tableLayout.getContext());
 
             // Loop to run through all buttons
-            for (int i = 0; i < DataAccessor.behaviors.size(); i++) {
+            for (int i = 0; i < GlobalVariables.behaviors.size(); i++) {
 
-                final Behavior behavior = DataAccessor.behaviors.get(i);
+                final Behavior behavior = GlobalVariables.behaviors.get(i);
 
                 final ToggleButton button = new ToggleButton(tableLayout.getContext());
                 button.setText(behavior.desc);
@@ -96,7 +86,7 @@ public  class RecordBehaviorTabActivity
                 });
 
                 // If we have run through 4 elements, or if we're on the last button
-                if ((i != 0 && i % 4 == 0) || i == DataAccessor.behaviors.size() - 1) {
+                if ((i != 0 && i % 4 == 0) || i == GlobalVariables.behaviors.size() - 1) {
 
                     tableLayout.addView(tableRow);
                     tableRow = new TableRow(tableLayout.getContext());

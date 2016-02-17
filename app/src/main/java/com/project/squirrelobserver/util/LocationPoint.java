@@ -1,4 +1,4 @@
-package com.project.squirrelobserver.data;
+package com.project.squirrelobserver.util;
 
 /**
  * Created by sean on 2/12/16.

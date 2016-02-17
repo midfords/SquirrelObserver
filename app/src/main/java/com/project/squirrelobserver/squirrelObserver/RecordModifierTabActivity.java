@@ -1,16 +1,10 @@
 package com.project.squirrelobserver.squirrelObserver;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Bundle;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.GridLayout;
 
 import com.project.squirrelobserver.R;
-import com.project.squirrelobserver.data.DataAccessor;
 import com.project.squirrelobserver.util.Utils;
 
 /**
