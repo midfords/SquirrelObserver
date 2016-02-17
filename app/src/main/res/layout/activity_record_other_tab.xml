@@ -9,4 +9,5 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Other Tab"
         android:id="@+id/textView" />
+
 </LinearLayout>
