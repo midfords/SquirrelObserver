@@ -49,16 +49,22 @@ public class FileParser {
                     y = dataRow[2];
 
                     // Parse x and y integers
-                    int x_parsed = Integer.parseInt(x);
-                    int y_parsed = Integer.parseInt(y);
+                    int x_parsed = 0;
+                    int y_parsed = 0;
+
+                    // Attempt to parse the int
+                    try { x_parsed = Integer.parseInt(x); }
+                    catch (Exception e) { }
+                    try { y_parsed = Integer.parseInt(y); }
+                    catch (Exception e) { }
 
                     LocationPoint locationPoint = new LocationPoint(label, x_parsed, y_parsed);
 
-                    if (x_parsed == 0) { // TODO verify that points will always have one zero value and one non-zero value
+                    if (x_parsed == 0) {
 
                         GlobalVariables.locationPointsY.add(locationPoint);
 
-                    } else {
+                    } else if (y_parsed == 0) {
 
                         GlobalVariables.locationPointsX.add(locationPoint);
                     }
@@ -129,11 +135,14 @@ public class FileParser {
                         modifiers.add(modif);
                     }
 
-                    // Parse code integers
-                    int code_parsed = Integer.parseInt(code);
+                    try {
+                        // Parse code integer
+                        int code_parsed = Integer.parseInt(code);
 
-                    Behavior behavior = new Behavior(code_parsed, desc, modifiers);
-                    GlobalVariables.behaviors.add(behavior);
+                        Behavior behavior = new Behavior(code_parsed, desc, modifiers);
+                        GlobalVariables.behaviors.add(behavior);
+
+                    } catch (Exception e) { }
                 }
             }
 
@@ -195,10 +204,17 @@ public class FileParser {
                     sex = dataRow[4];
                     age = dataRow[5];
 
-                    // Parse x and y integers
-                    int tag_parsed = Integer.parseInt(tag);
-                    int sex_parsed = Integer.parseInt(sex);
-                    int age_parsed = Integer.parseInt(age);
+                    // Parse integers
+                    int tag_parsed = -1;
+                    int sex_parsed = -1;
+                    int age_parsed = -1;
+
+                    try { tag_parsed = Integer.parseInt(tag); }
+                    catch (Exception e) { }
+                    try { sex_parsed = Integer.parseInt(sex); }
+                    catch (Exception e) { }
+                    try { age_parsed = Integer.parseInt(age); }
+                    catch (Exception e) { }
 
                     Actor actor = new Actor(name, abb, tag_parsed, col, sex_parsed, age_parsed);
                     GlobalVariables.actors.add(actor);
