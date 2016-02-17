@@ -3,17 +3,23 @@ package com.project.squirrelobserver.squirrelObserver;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.TypedValue;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.ToggleButton;
 
 import com.project.squirrelobserver.R;
+import com.project.squirrelobserver.util.Actor;
 import com.project.squirrelobserver.util.Behavior;
 import com.project.squirrelobserver.util.FileParser;
 import com.project.squirrelobserver.util.GlobalVariables;
 import com.project.squirrelobserver.util.Utils;
+
+import java.util.ArrayList;
 
 /**
  * Created by sean on 2/9/16.
@@ -93,6 +99,37 @@ public  class RecordBehaviorTabActivity
                 }
 
                 tableRow.addView(button);
+            }
+
+            // Setup filter field
+            final EditText filter = (EditText) findViewById(R.id.behaviorsFilterText);
+            filter.addTextChangedListener(new TextWatcher() {
+
+                @Override
+                public void afterTextChanged(Editable arg0) {
+                    hideButtons(filter.getText().toString(), GlobalVariables.behaviors);
+                }
+
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) { }
+            });
+        }
+    }
+
+    private void hideButtons(String filter, ArrayList<Behavior> behaviors) {
+
+        for (int i = 0; i < behaviors.size(); i++) {
+
+            Behavior behavior = behaviors.get(i);
+            if (!behavior.desc.toLowerCase().contains(filter.toLowerCase())) {
+
+                behavior.button.setVisibility(View.GONE);
+            } else {
+
+                behavior.button.setVisibility(View.VISIBLE);
             }
         }
     }
