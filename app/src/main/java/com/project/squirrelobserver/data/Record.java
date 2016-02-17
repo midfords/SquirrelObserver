@@ -13,7 +13,7 @@ import java.util.Queue;
 /**
  * Created by sean on 2/16/16.
  */
-public class Record implements Serializable {
+public class Record{
 
     public Actor actor;
     public Actor actee;

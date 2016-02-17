@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Parcelable;
 import android.provider.ContactsContract;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
@@ -20,10 +21,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.project.squirrelobserver.data.Behavior;
 import com.project.squirrelobserver.data.DataAccessor;
 import com.project.squirrelobserver.data.Record;
 import com.project.squirrelobserver.fragments.ImportExportFragment;
@@ -34,6 +39,8 @@ import com.project.squirrelobserver.util.GlobalVariables;
 import com.project.squirrelobserver.util.Utils;
 
 import org.w3c.dom.Text;
+
+import java.util.ArrayList;
 
 public class MainActivity extends ActionBarActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks,
@@ -261,6 +268,88 @@ public class MainActivity extends ActionBarActivity
                         .show();
     }
 
+    public void onAOBehaviorsFieldClicked (final View view) {
+
+        if (GlobalVariables.aoBehaviors == null) {
+
+            GlobalVariables.aoBehaviors = new ArrayList<Behavior>();
+        }
+
+        View aoBehaviorPickerView =
+                View.inflate(view.getContext(), R.layout.dialog_ao_behavior_picker, null);
+        final LinearLayout linearLayout =
+                (LinearLayout) aoBehaviorPickerView.findViewById(R.id.behaviorListLayout);
+
+        // Add all behaviors to list
+        if (DataAccessor.behaviors != null && DataAccessor.behaviors.size() > 0) {
+
+            for (int i = 0; i < DataAccessor.behaviors.size(); i++) {
+
+                Behavior behavior = DataAccessor.behaviors.get(i);
+
+                final CheckBox checkBox = new CheckBox(linearLayout.getContext());
+                checkBox.setText(behavior.desc);
+
+                // Recheck previously checked elements
+                if (GlobalVariables.aoBehaviors != null
+                        && GlobalVariables.aoBehaviors.contains(behavior)) {
+
+                    checkBox.setChecked(true);
+                }
+
+                checkBox.setTag(behavior);
+                checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                        if (isChecked) {
+
+                            Behavior behavior = (Behavior) checkBox.getTag();
+                            GlobalVariables.aoBehaviors.add(behavior);
+                        } else {
+
+                            Behavior behavior = (Behavior) checkBox.getTag();
+                            GlobalVariables.aoBehaviors.remove(behavior);
+                        }
+                    }
+                });
+
+                linearLayout.addView(checkBox);
+            }
+
+            // Generate dialog
+            AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+            builder.setTitle(getResources().getString(R.string.ao_behavior_picker_dialog_title));
+            builder.setView(aoBehaviorPickerView)
+                    .setCancelable(true)
+                    .setPositiveButton(
+                            getResources().getString(R.string.ao_behavior_picker_dialog_confirm),
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+
+                                    // Set text in text field
+                                    if (GlobalVariables.aoBehaviors != null) {
+
+                                        String list = "";
+
+                                        for (int i = 0; i < GlobalVariables.aoBehaviors.size(); i++) {
+
+                                            list += GlobalVariables.aoBehaviors.get(i).desc
+                                                    + ((i == GlobalVariables.aoBehaviors.size() - 1)
+                                                    ? "" : ", ");
+                                        }
+
+                                        EditText aoBehaviorsEditText =
+                                                (EditText) findViewById(R.id.aoBehaviorsInput);
+
+                                        aoBehaviorsEditText.setText(list);
+                                    }
+                                }
+                            })
+                    .show();
+        }
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

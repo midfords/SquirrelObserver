@@ -18,6 +18,9 @@
     <string name="end_session_dialog_title">End Recording Session</string>
     <string name="end_session_dialog_message">Are you sure you want to end the recording session? All observations are already saved.</string>
 
+    <string name="ao_behavior_picker_dialog_title">Select All-Occurrences Behaviors</string>
+    <string name="ao_behavior_picker_dialog_confirm">Done</string>
+
     <string name="actor_tab_indicator">Actor</string>
     <string name="behaviors_tab_indicator">Behaviors</string>
     <string name="actee_tab_indicator">Actee</string>
