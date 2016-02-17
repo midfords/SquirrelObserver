@@ -207,7 +207,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/import_export_export_button"
-                            android:id="@+id/scanExportButton" />
+                            android:id="@+id/scanExportButton"
+                            android:onClick="onScanExportButtonClicked"/>
 
                     </LinearLayout>
 
@@ -235,7 +236,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/import_export_export_button"
-                            android:id="@+id/aoExportButton" />
+                            android:id="@+id/aoExportButton"
+                            android:onClick="onAOExportButtonClicked"/>
 
                     </LinearLayout>
 
