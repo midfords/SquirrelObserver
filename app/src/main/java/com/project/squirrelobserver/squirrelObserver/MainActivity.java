@@ -229,6 +229,14 @@ public class MainActivity extends ActionBarActivity
 
     }
 
+    public void onScanClearButtonClicked(View view) {
+
+    }
+
+    public void onAOClearButtonClicked(View view) {
+
+    }
+
     public void onScanIntervalFieldClicked (final View view) {
 
         View intervalPickerView = View.inflate(view.getContext(), R.layout.dialog_interval_picker, null);
