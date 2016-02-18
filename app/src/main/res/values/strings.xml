@@ -22,6 +22,7 @@
     <string name="ao_behavior_picker_dialog_confirm">Done</string>
 
     <string name="ao_observer_id_picker_dialog_title">Enter your Observer ID</string>
+    <string name="ao_observer_id_picker_dialog_hint">Observer ID</string>
     <string name="ao_observer_id_picker_dialog_confirm">Continue</string>
     <string name="ao_observer_id_picker_dialog_cancel">Cancel</string>
 
