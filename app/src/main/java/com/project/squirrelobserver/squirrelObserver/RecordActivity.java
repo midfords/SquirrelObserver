@@ -20,23 +20,14 @@ public  class RecordActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_record);
 
-        // Get Record from Intent
-//        Intent intent = getIntent();
-//        Record record = (Record) intent.getSerializableExtra("Record");
-
         // Setup tabs
         TabHost tabHost = (TabHost)findViewById(android.R.id.tabhost);
 
         Intent intent1 = new Intent().setClass(this, RecordActorTabActivity.class);
-//        intent1.putExtra("Record", record);
         Intent intent2 = new Intent().setClass(this, RecordBehaviorTabActivity.class);
-//        intent2.putExtra("Record", record);
         Intent intent3 = new Intent().setClass(this, RecordActeeTabActivity.class);
-//        intent3.putExtra("Record", record);
         Intent intent4 = new Intent().setClass(this, RecordModifierTabActivity.class);
-//        intent4.putExtra("Record", record);
         Intent intent5 = new Intent().setClass(this, RecordOtherTabActivity.class);
-//        intent5.putExtra("Record", record);
 
         TabHost.TabSpec tab1 = tabHost.newTabSpec("RecordActorTab")
                 .setIndicator(getResources().getString(R.string.actor_tab_indicator))

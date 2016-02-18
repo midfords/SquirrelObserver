@@ -6,15 +6,18 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.EditText;
-import android.widget.TableLayout;
-import android.widget.TableRow;
+import android.widget.GridView;
+import android.widget.RelativeLayout;
 import android.widget.ToggleButton;
 
 import com.project.squirrelobserver.R;
+import com.project.squirrelobserver.adapters.ButtonAdapter;
 import com.project.squirrelobserver.util.Actor;
-import com.project.squirrelobserver.util.FileParser;
 import com.project.squirrelobserver.util.GlobalVariables;
 import com.project.squirrelobserver.util.Utils;
 
@@ -27,39 +30,29 @@ public  class RecordActeeTabActivity
         extends Activity {
 
     private ToggleButton previousButton = null;
-//    private Record record = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_record_actee_tab);
 
-        // Get Record from Intent
-//        Intent intent = getIntent();
-//        final Record intentRecord = (Record) intent.getSerializableExtra("Record");
-//        record = intentRecord;
-
         // Create buttons for every behavior and place on activity
         if (GlobalVariables.actors != null && !GlobalVariables.actors.isEmpty()) {
 
-            // Layout for grid
-            TableLayout tableLayout = (TableLayout) findViewById(R.id.acteeTableLayout);
-            TableRow tableRow = (TableRow) new TableRow(tableLayout.getContext());
-
-            TableRow.LayoutParams params = new TableRow.LayoutParams();
-            params.setMargins(5, 5, 5, 5);
+            RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.acteeTabRelativeLayout);
+            final GridView gridView = new GridView(RecordActeeTabActivity.this);
+            final ArrayList<ToggleButton> list = new ArrayList<ToggleButton>();
 
             // Loop to run through all buttons
             for (int i = 0; i < GlobalVariables.actors.size(); i++) {
 
                 final Actor actee = GlobalVariables.actors.get(i);
 
-                final ToggleButton button = new ToggleButton(tableLayout.getContext());
+                final ToggleButton button = new ToggleButton(gridView.getContext());
                 button.setText(actee.name);
                 button.setTextOn(actee.name);
                 button.setTextOff(actee.name);
                 button.setTextSize(TypedValue.COMPLEX_UNIT_PX, 15);
-                button.setLayoutParams(params);
 
                 // Attach the actee to the button
                 button.setTag(actee);
@@ -73,21 +66,18 @@ public  class RecordActeeTabActivity
 
                             // Button is ON
                             if (previousButton != null && button != previousButton) {
-
                                 previousButton.setChecked(false);
                                 previousButton.callOnClick();
                             }
                             previousButton = button;
 
                             GlobalVariables.currentRecord.actee = (Actor) button.getTag();
-//                            intentRecord.actee = (Actor) button.getTag();
 
+                            // Set button colour based on actor sex (selected)
                             if (actee.sex == 1) {
-
                                 button.setBackgroundColor(
                                         getResources().getColor(R.color.actor_button_male_selected));
                             } else {
-
                                 button.setBackgroundColor(
                                         getResources().getColor(R.color.actor_button_female_selected));
                             }
@@ -96,40 +86,58 @@ public  class RecordActeeTabActivity
                             // Button is OFF
                             previousButton = null;
                             GlobalVariables.currentRecord.actee = null;
-//                            intentRecord.actee = null;
 
+                            // Set button colour based on actor sex (not selected)
                             if (actee.sex == 1) {
-
                                 button.setBackgroundColor(
                                         getResources().getColor(R.color.actor_button_male_not_selected));
                             } else {
-
                                 button.setBackgroundColor(
                                         getResources().getColor(R.color.actor_button_female_not_selected));
                             }
                         }
+
+                        gridView.invalidateViews();
                     }
                 });
 
+                // Set button colour
                 if (actee.sex == 1) {
-
                     button.setBackgroundColor(
                             getResources().getColor(R.color.actor_button_male_not_selected));
                 } else {
-
                     button.setBackgroundColor(
                             getResources().getColor(R.color.actor_button_female_not_selected));
                 }
 
-                // If we have run through 4 elements, or if we're on the last button
-                if ((i != 0 && i % 4 == 0) || i == GlobalVariables.actors.size() - 1) {
-
-                    tableLayout.addView(tableRow);
-                    tableRow = new TableRow(tableLayout.getContext());
-                }
-
-                tableRow.addView(button);
+                list.add(button);
             }
+
+            final ButtonAdapter adapter =
+                    new ButtonAdapter(
+                            this, android.R.layout.simple_dropdown_item_1line, list);
+
+            gridView.setNumColumns(4);
+            gridView.setLayoutParams(
+                    new ViewGroup.LayoutParams(
+                            ViewGroup.LayoutParams.MATCH_PARENT,
+                            ViewGroup.LayoutParams.MATCH_PARENT));
+            gridView.setVerticalSpacing(5);
+            gridView.setHorizontalSpacing(5);
+            gridView.setGravity(Gravity.TOP);
+            gridView.setAdapter(adapter);
+            relativeLayout.addView(gridView);
+
+            gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+                @Override
+                public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+
+                    ToggleButton button = (ToggleButton) adapter.getItem(arg2);
+                    button.callOnClick();
+                    gridView.invalidateViews();
+                }
+            });
 
             // Setup filter field
             final EditText filter = (EditText) findViewById(R.id.acteeFilterText);
@@ -137,7 +145,8 @@ public  class RecordActeeTabActivity
 
                 @Override
                 public void afterTextChanged(Editable arg0) {
-                    hideButtons(filter.getText().toString(), GlobalVariables.actors);
+                    hideButtons(filter.getText().toString(), GlobalVariables.actors, list);
+                    gridView.invalidateViews();
                 }
 
                 @Override
@@ -149,18 +158,20 @@ public  class RecordActeeTabActivity
         }
     }
 
-    private void hideButtons(String filter, ArrayList<Actor> actors) {
+    private void hideButtons(String filter, ArrayList<Actor> actors, ArrayList<ToggleButton> buttons) {
 
         for (int i = 0; i < actors.size(); i++) {
 
             Actor actor = actors.get(i);
+            ToggleButton button = buttons.get(i);
+
             if (!actor.abb.toLowerCase().contains(filter.toLowerCase())
                     && !actor.name.toLowerCase().contains(filter.toLowerCase())) {
 
-                actor.button.setVisibility(View.GONE);
+                button.setVisibility(View.GONE);
             } else {
 
-                actor.button.setVisibility(View.VISIBLE);
+                button.setVisibility(View.VISIBLE);
             }
         }
     }

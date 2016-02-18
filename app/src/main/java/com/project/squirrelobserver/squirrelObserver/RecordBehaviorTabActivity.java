@@ -6,13 +6,19 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.GridView;
+import android.widget.RelativeLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.ToggleButton;
 
 import com.project.squirrelobserver.R;
+import com.project.squirrelobserver.adapters.ButtonAdapter;
 import com.project.squirrelobserver.util.Actor;
 import com.project.squirrelobserver.util.Behavior;
 import com.project.squirrelobserver.util.FileParser;
@@ -27,37 +33,30 @@ import java.util.ArrayList;
 public  class RecordBehaviorTabActivity
         extends Activity {
 
-//    private Record record = null;
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_record_behaviors_tab);
 
-        // Get Record from Intent
-//        Intent intent = getIntent();
-//        final Record intentRecord = (Record) intent.getSerializableExtra("Record");
-//        record = intentRecord;
-
         // Create buttons for every behavior and place on activity
         if (GlobalVariables.behaviors != null && !GlobalVariables.behaviors.isEmpty()) {
 
-            // Layout for grid
-            TableLayout tableLayout = (TableLayout) findViewById(R.id.behaviorsTableLayout);
-            TableRow tableRow = (TableRow) new TableRow(tableLayout.getContext());
+            RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.behaviorsTabRelativeLayout);
+            final GridView gridView = new GridView(RecordBehaviorTabActivity.this);
+            final ArrayList<ToggleButton> list = new ArrayList<ToggleButton>();
 
             // Loop to run through all buttons
             for (int i = 0; i < GlobalVariables.behaviors.size(); i++) {
 
                 final Behavior behavior = GlobalVariables.behaviors.get(i);
 
-                final ToggleButton button = new ToggleButton(tableLayout.getContext());
+                final ToggleButton button = new ToggleButton(gridView.getContext());
                 button.setText(behavior.desc);
                 button.setTextOn(behavior.desc);
                 button.setTextOff(behavior.desc);
                 button.setTextSize(TypedValue.COMPLEX_UNIT_PX, 15);
 
-                // Keep a pointer to the button in the behavior
+                // Keep pointer to button in behavior
                 behavior.button = button;
 
                 // Attach the behavior to the button
@@ -74,8 +73,6 @@ public  class RecordBehaviorTabActivity
                             Behavior removedBehavior =
                                     GlobalVariables.currentRecord
                                             .addBehavior((Behavior) button.getTag());
-//                            Behavior removedBehavior =
-//                                    intentRecord.addBehavior((Behavior) button.getTag());
 
                             if (removedBehavior != null && removedBehavior.button != null) {
 
@@ -86,20 +83,40 @@ public  class RecordBehaviorTabActivity
 
                             // Button is OFF
                             GlobalVariables.currentRecord.removeBehavior(behavior);
-//                            intentRecord.removeBehavior(behavior);
                         }
+
+                        gridView.invalidateViews();
                     }
                 });
 
-                // If we have run through 4 elements, or if we're on the last button
-                if ((i != 0 && i % 4 == 0) || i == GlobalVariables.behaviors.size() - 1) {
-
-                    tableLayout.addView(tableRow);
-                    tableRow = new TableRow(tableLayout.getContext());
-                }
-
-                tableRow.addView(button);
+                list.add(button);
             }
+
+            final ButtonAdapter adapter =
+                    new ButtonAdapter(
+                            this, android.R.layout.simple_dropdown_item_1line, list);
+
+            gridView.setNumColumns(4);
+            gridView.setLayoutParams(
+                    new ViewGroup.LayoutParams(
+                            ViewGroup.LayoutParams.MATCH_PARENT,
+                            ViewGroup.LayoutParams.MATCH_PARENT));
+            gridView.setVerticalSpacing(5);
+            gridView.setHorizontalSpacing(5);
+            gridView.setGravity(Gravity.TOP);
+            gridView.setAdapter(adapter);
+            relativeLayout.addView(gridView);
+
+            gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+                @Override
+                public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+
+                    ToggleButton button = (ToggleButton) adapter.getItem(arg2);
+                    button.callOnClick();
+                    gridView.invalidateViews();
+                }
+            });
 
             // Setup filter field
             final EditText filter = (EditText) findViewById(R.id.behaviorsFilterText);
@@ -107,7 +124,8 @@ public  class RecordBehaviorTabActivity
 
                 @Override
                 public void afterTextChanged(Editable arg0) {
-                    hideButtons(filter.getText().toString(), GlobalVariables.behaviors);
+                    hideButtons(filter.getText().toString(), GlobalVariables.behaviors, list);
+                    gridView.invalidateViews();
                 }
 
                 @Override
@@ -119,17 +137,19 @@ public  class RecordBehaviorTabActivity
         }
     }
 
-    private void hideButtons(String filter, ArrayList<Behavior> behaviors) {
+    private void hideButtons(String filter, ArrayList<Behavior> behaviors, ArrayList<ToggleButton> buttons) {
 
         for (int i = 0; i < behaviors.size(); i++) {
 
             Behavior behavior = behaviors.get(i);
+            ToggleButton button = buttons.get(i);
+
             if (!behavior.desc.toLowerCase().contains(filter.toLowerCase())) {
 
-                behavior.button.setVisibility(View.GONE);
+                button.setVisibility(View.GONE);
             } else {
 
-                behavior.button.setVisibility(View.VISIBLE);
+                button.setVisibility(View.VISIBLE);
             }
         }
     }
