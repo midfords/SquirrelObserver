@@ -45,9 +45,12 @@
     <string name="import_export_behaviors_label">Behaviors File:</string>
     <string name="import_export_scan_label">Export Scan Data:</string>
     <string name="import_export_all_occurrences_label">Export All-Occurrences Data:</string>
+    <string name="import_export_scan_clear_label">Clear Scan Data:</string>
+    <string name="import_export_all_occurrences_clear_label">Clear All-Occurrences Data:</string>
     <string name="import_export_no_file_label">No File Selected.</string>
     <string name="import_export_import_button">Import</string>
     <string name="import_export_export_button">Export</string>
+    <string name="import_export_clear_button">Clear</string>
 
     <string name="setup_start_button">Start</string>
     <string name="setup_location_label">Location:</string>

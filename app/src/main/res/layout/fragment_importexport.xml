@@ -194,7 +194,6 @@
                             android:layout_height="wrap_content"
                             android:textAppearance="?android:attr/textAppearanceMedium"
                             android:text="@string/import_export_scan_label"
-                            android:id="@+id/scanFileLabel"
                             android:textSize="15dp" />
 
                         <!-- Hacky shit to right align button -->
@@ -223,7 +222,6 @@
                             android:layout_height="wrap_content"
                             android:textAppearance="?android:attr/textAppearanceMedium"
                             android:text="@string/import_export_all_occurrences_label"
-                            android:id="@+id/aoFileLabel"
                             android:textSize="15dp" />
 
                         <!-- Hacky shit to right align button -->
@@ -238,6 +236,70 @@
                             android:text="@string/import_export_export_button"
                             android:id="@+id/aoExportButton"
                             android:onClick="onAOExportButtonClicked"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="40dp">
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="20dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:text="@string/import_export_scan_clear_label"
+                            android:textSize="15dp" />
+
+                        <!-- Hacky shit to right align button -->
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"/>
+
+                        <Button
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/import_export_clear_button"
+                            android:id="@+id/scanClearButton"
+                            android:onClick="onScanClearButtonClicked"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="20dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:text="@string/import_export_all_occurrences_clear_label"
+                            android:textSize="15dp" />
+
+                        <!-- Hacky shit to right align button -->
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"/>
+
+                        <Button
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/import_export_clear_button"
+                            android:id="@+id/aoClearButton"
+                            android:onClick="onAOClearButtonClicked"/>
 
                     </LinearLayout>
 
