@@ -10,18 +10,10 @@
         android:hint="@string/record_activity_filter_hint"
         android:id="@+id/acteeFilterText" />
 
-    <ScrollView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <!-- stretchColumns value is to evenly space buttons in table -->
-        <TableLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center_horizontal"
-            android:stretchColumns="0,1,2,3"
-            android:id="@+id/acteeTableLayout" />
-
-    </ScrollView>
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:id="@+id/acteeTabRelativeLayout" />
 
 </LinearLayout>

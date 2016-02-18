@@ -1,5 +1,7 @@
 package com.project.squirrelobserver.util;
 
+import android.widget.ToggleButton;
+
 /**
  * Created by sean on 2/12/16.
  */
