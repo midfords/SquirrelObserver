@@ -389,7 +389,6 @@ public class MainActivity extends ActionBarActivity
                                         Record record = new Record(observerIDEditText.getText().toString(), false);
 
                                         GlobalVariables.currentRecord = record;
-//                                        intent.putExtra("Record", record);
 
                                         startActivity(intent);
                                     }

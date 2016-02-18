@@ -5,15 +5,24 @@
     android:layout_height="match_parent"
     android:gravity="center_vertical">
 
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="30dp"/>
+
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/observerIDEditText"
         android:inputType="text"
+        android:hint="@string/ao_observer_id_picker_dialog_hint"
         android:textSize="15dp"
         android:textAlignment="center"
         android:paddingTop="20dp"
         android:padding="30dp"
         android:layout_weight="1" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="30dp"/>
 
 </LinearLayout>
