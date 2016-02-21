@@ -168,7 +168,6 @@ public  class RecordActeeTabActivity
 
                     ToggleButton button = (ToggleButton) adapter.getItem(arg2);
                     button.callOnClick();
-//                    gridView.invalidateViews();
                 }
             });
 
