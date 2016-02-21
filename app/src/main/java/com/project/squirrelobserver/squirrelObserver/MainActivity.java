@@ -291,10 +291,12 @@ public class MainActivity extends ActionBarActivity
 
     public void onScanClearButtonClicked(View view) {
 
+        Utils.clearButtonWarningMessage(view.getContext(), GlobalVariables.csvScanPath);
     }
 
     public void onAOClearButtonClicked(View view) {
 
+        Utils.clearButtonWarningMessage(view.getContext(), GlobalVariables.csvAOPath);
     }
 
     public void onScanIntervalFieldClicked (final View view) {

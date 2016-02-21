@@ -30,6 +30,55 @@ public class Utils {
                 .show();
     }
 
+    public static void exportButtonErrorMessage(Context context) {
+
+        new AlertDialog.Builder(context)
+                .setTitle(context.getResources().getString(R.string.export_error_dialog_title))
+                .setMessage(context.getResources().getString(R.string.export_error_dialog_message))
+                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        // Do nothing
+                    }
+                })
+                .show();
+    }
+
+    public static void clearButtonSuccessMessage(Context context) {
+
+        new AlertDialog.Builder(context)
+                .setTitle(context.getResources().getString(R.string.clear_successful_title))
+                .setMessage(context.getResources().getString(R.string.clear_successful_message))
+                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        // Do nothing
+                    }
+                })
+                .show();
+    }
+
+    public static void clearButtonWarningMessage(Context context, String csvPath) {
+
+        // Close current activity after verify dialogue
+        new AlertDialog.Builder(context)
+                .setTitle(context.getResources().getString(R.string.clear_warning_title))
+                .setMessage(context.getResources().getString(R.string.clear_warning_message))
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        // Clear file
+                    }
+                })
+                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Do nothing
+                    }
+                })
+                .show();
+
+    }
+
     public static void endRecordingSessionVerifyMessage(Context context, final Activity activity) {
 
         // Close current activity after verify dialogue

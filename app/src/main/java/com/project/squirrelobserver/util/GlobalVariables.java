@@ -34,6 +34,8 @@ public class GlobalVariables {
     public static String locationCSVPath = "";
     public static String actorsCSVPath = "";
     public static String behaviorsCSVPath = "";
+    public static String csvAOPath = "";
+    public static String csvScanPath = "";
 
     public static String csvScanDataHeader =
             "Tag," +
