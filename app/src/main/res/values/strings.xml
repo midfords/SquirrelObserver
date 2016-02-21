@@ -35,16 +35,15 @@
     <string name="export_path_picker_dialog_confirm">Export</string>
     <string name="export_path_picker_dialog_cancel">Cancel</string>
 
-    <!-- Not Implemented Yet -->
     <string name="export_error_dialog_title">Export Error</string>
     <string name="export_error_dialog_message">There was an error while exporting the file. Please make sure the file path and name are valid.</string>
 
     <string name="clear_warning_title">Clear Data?</string>
     <string name="clear_warning_message">This action will clear the entire csv file and reset it. This cannot be undone.</string>
-
-    <!-- Not Implemented Yet -->
     <string name="clear_successful_title">Clear Successful</string>
     <string name="clear_successful_message">The csv file was successfully cleared and reset.</string>
+    <string name="clear_error_title">Error</string>
+    <string name="clear_error_message">There was a problem while clearing the csv file. The file may not have cleared correctly.</string>
 
     <string name="actor_tab_indicator">Actor</string>
     <string name="behaviors_tab_indicator">Behav</string>
