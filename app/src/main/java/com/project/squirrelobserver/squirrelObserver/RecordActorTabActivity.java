@@ -10,18 +10,25 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.ToggleButton;
 
 import com.project.squirrelobserver.R;
 import com.project.squirrelobserver.adapters.ButtonAdapter;
 import com.project.squirrelobserver.util.Actor;
 import com.project.squirrelobserver.util.GlobalVariables;
+import com.project.squirrelobserver.util.Record;
 import com.project.squirrelobserver.util.Utils;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
 
 /**
  * Created by sean on 2/9/16.
@@ -39,16 +46,20 @@ public  class RecordActorTabActivity
         // Create buttons for every behavior and place on activity
         if (GlobalVariables.actors != null && !GlobalVariables.actors.isEmpty()) {
 
-            RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.actorTabRelativeLayout);
+            LinearLayout linearLayout = (LinearLayout) findViewById(R.id.actorTabLinearLayout);
+
             final GridView gridView = new GridView(RecordActorTabActivity.this);
+            final GridView gridViewRecent = new GridView(RecordActorTabActivity.this);
+
             final ArrayList<ToggleButton> list = new ArrayList<ToggleButton>();
+            final ArrayList<ToggleButton> listRecent = new ArrayList<ToggleButton>();
 
             // Loop to run through all buttons
             for (int i = 0; i < GlobalVariables.actors.size(); i++) {
 
                 final Actor actor = GlobalVariables.actors.get(i);
+                final ToggleButton button = new ToggleButton(linearLayout.getContext());
 
-                final ToggleButton button = new ToggleButton(gridView.getContext());
                 button.setText(actor.name);
                 button.setTextOn(actor.name);
                 button.setTextOff(actor.name);
@@ -97,6 +108,7 @@ public  class RecordActorTabActivity
                             }
                         }
 
+                        gridViewRecent.invalidateViews();
                         gridView.invalidateViews();
                     }
                 });
@@ -110,23 +122,50 @@ public  class RecordActorTabActivity
                             getResources().getColor(R.color.actor_button_female_not_selected));
                 }
 
-                list.add(button);
+                // Add the first four buttons to the recentLayout
+                if (i < 4) {
+
+                    GlobalVariables.actorRecentButtons.add(button);
+                    listRecent.add(button);
+                } else {
+
+                    list.add(button);
+                }
             }
 
             final ButtonAdapter adapter =
                     new ButtonAdapter(
                             this, android.R.layout.simple_dropdown_item_1line, list);
 
+            final ButtonAdapter adapterRecent =
+                    new ButtonAdapter(
+                            this, android.R.layout.simple_dropdown_item_1line, listRecent);
+
             gridView.setNumColumns(4);
             gridView.setLayoutParams(
                     new ViewGroup.LayoutParams(
                             ViewGroup.LayoutParams.MATCH_PARENT,
                             ViewGroup.LayoutParams.MATCH_PARENT));
+            gridView.setGravity(1);
             gridView.setVerticalSpacing(5);
             gridView.setHorizontalSpacing(5);
-            gridView.setGravity(Gravity.TOP);
             gridView.setAdapter(adapter);
-            relativeLayout.addView(gridView);
+
+            gridViewRecent.setNumColumns(4);
+            gridViewRecent.setGravity(Gravity.TOP);
+            gridViewRecent.setVerticalSpacing(5);
+            gridViewRecent.setHorizontalSpacing(5);
+            gridViewRecent.setPadding(5, 5, 5, 5);
+            gridViewRecent.setBackgroundColor(
+                    getResources().getColor(R.color.record_activity_recent_layout));
+            gridViewRecent.setLayoutParams(
+                    new ViewGroup.LayoutParams(
+                            ViewGroup.LayoutParams.MATCH_PARENT,
+                            ViewGroup.LayoutParams.WRAP_CONTENT));
+            gridViewRecent.setAdapter(adapterRecent);
+
+            linearLayout.addView(gridViewRecent);
+            linearLayout.addView(gridView);
 
             gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -135,7 +174,7 @@ public  class RecordActorTabActivity
 
                     ToggleButton button = (ToggleButton) adapter.getItem(arg2);
                     button.callOnClick();
-                    gridView.invalidateViews();
+//                    gridView.invalidateViews();
                 }
             });
 
@@ -145,7 +184,8 @@ public  class RecordActorTabActivity
 
                 @Override
                 public void afterTextChanged(Editable arg0) {
-                    hideButtons(filter.getText().toString(), GlobalVariables.actors, list);
+                    hideButtons(filter.getText().toString(), list);
+                    gridViewRecent.invalidateViews();
                     gridView.invalidateViews();
                 }
 
@@ -160,12 +200,20 @@ public  class RecordActorTabActivity
         }
     }
 
-    private void hideButtons(String filter, ArrayList<Actor> actors, ArrayList<ToggleButton> buttons) {
+    private void hideButtons(String filter, ArrayList<ToggleButton> buttons) {
 
-        for (int i = 0; i < actors.size(); i++) {
+        if (buttons == null)
+            return;
 
-            Actor actor = actors.get(i);
+        for (int i = 0; i < buttons.size(); i++) {
+
             ToggleButton button = buttons.get(i);
+            if (button == null)
+                return;
+
+            Actor actor = (Actor) button.getTag();
+            if (actor == null)
+                return;
 
             if (!actor.abb.toLowerCase().contains(filter.toLowerCase())
                     && !actor.name.toLowerCase().contains(filter.toLowerCase())) {
