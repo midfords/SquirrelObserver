@@ -58,7 +58,21 @@ public class Utils {
                 .show();
     }
 
-    public static void clearButtonWarningMessage(Context context, String csvPath) {
+    public static void clearButtonErrorMessage(Context context) {
+
+        new AlertDialog.Builder(context)
+                .setTitle(context.getResources().getString(R.string.clear_error_title))
+                .setMessage(context.getResources().getString(R.string.clear_error_message))
+                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        // Do nothing
+                    }
+                })
+                .show();
+    }
+
+    public static void clearButtonWarningMessage(final Context context, final String csvPath) {
 
         // Close current activity after verify dialogue
         new AlertDialog.Builder(context)
@@ -68,6 +82,13 @@ public class Utils {
                     public void onClick(DialogInterface dialog, int which) {
 
                         // Clear file
+                        if (FileParser.clearRecordCSV(csvPath)) {
+
+                            Utils.clearButtonSuccessMessage(context);
+                        } else {
+
+                            Utils.clearButtonErrorMessage(context);
+                        }
                     }
                 })
                 .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
@@ -76,7 +97,6 @@ public class Utils {
                     }
                 })
                 .show();
-
     }
 
     public static void endRecordingSessionVerifyMessage(Context context, final Activity activity) {
