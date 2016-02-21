@@ -71,7 +71,6 @@ public  class SetupFragment
                 Record record = new Record(editTextID.getText().toString(), false);
 
                 GlobalVariables.currentRecord = record;
-//                intent.putExtra("Record", record);
 
                 getActivity().startActivity(intent);
             }
