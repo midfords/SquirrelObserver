@@ -1,6 +1,10 @@
 package com.project.squirrelobserver.util;
 
+import android.widget.ToggleButton;
+
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
 
 /**
  * Created by sean on 2/13/16.
@@ -11,6 +15,11 @@ public class GlobalVariables {
     public static ArrayList<LocationPoint> locationPointsY; // List of all points in y coordinate system
     public static ArrayList<Behavior> behaviors;   // List of all behaviors
     public static ArrayList<Actor> actors;     // List of all actors
+
+    // Used to keep track of recent button lists
+    public static Queue<ToggleButton> actorRecentButtons = new LinkedList<ToggleButton>();
+    public static Queue<ToggleButton> acteeRecentButtons = new LinkedList<ToggleButton>();
+    public static ArrayList<ToggleButton> behaviorFrequentButtons = new ArrayList<ToggleButton>();
 
     public static final int SCAN_INTERVAL_DEFAULT_MINUTES = 10;
     public static final int SCAN_INTERVAL_DEFAULT_SECONDS = 0;

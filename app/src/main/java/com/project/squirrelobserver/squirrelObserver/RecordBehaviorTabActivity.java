@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -41,16 +42,20 @@ public  class RecordBehaviorTabActivity
         // Create buttons for every behavior and place on activity
         if (GlobalVariables.behaviors != null && !GlobalVariables.behaviors.isEmpty()) {
 
-            RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.behaviorsTabRelativeLayout);
+            LinearLayout linearLayout = (LinearLayout) findViewById(R.id.behaviorsTabLinearLayout);
+
             final GridView gridView = new GridView(RecordBehaviorTabActivity.this);
+            final GridView gridViewFrequent = new GridView(RecordBehaviorTabActivity.this);
+
             final ArrayList<ToggleButton> list = new ArrayList<ToggleButton>();
+            final ArrayList<ToggleButton> listFrequent = new ArrayList<ToggleButton>();
 
             // Loop to run through all buttons
             for (int i = 0; i < GlobalVariables.behaviors.size(); i++) {
 
                 final Behavior behavior = GlobalVariables.behaviors.get(i);
+                final ToggleButton button = new ToggleButton(linearLayout.getContext());
 
-                final ToggleButton button = new ToggleButton(gridView.getContext());
                 button.setText(behavior.desc);
                 button.setTextOn(behavior.desc);
                 button.setTextOff(behavior.desc);
@@ -85,27 +90,55 @@ public  class RecordBehaviorTabActivity
                             GlobalVariables.currentRecord.removeBehavior(behavior);
                         }
 
+                        gridViewFrequent.invalidateViews();
                         gridView.invalidateViews();
                     }
                 });
 
-                list.add(button);
+                // Add the first four buttons to the frequentLayout
+                if (i < 4) {
+
+                    GlobalVariables.behaviorFrequentButtons.add(button);
+                    listFrequent.add(button);
+                } else {
+
+                    list.add(button);
+                }
             }
 
             final ButtonAdapter adapter =
                     new ButtonAdapter(
                             this, android.R.layout.simple_dropdown_item_1line, list);
 
+            final ButtonAdapter adapterFrequent =
+                    new ButtonAdapter(
+                            this, android.R.layout.simple_dropdown_item_1line, listFrequent);
+
             gridView.setNumColumns(4);
             gridView.setLayoutParams(
                     new ViewGroup.LayoutParams(
                             ViewGroup.LayoutParams.MATCH_PARENT,
                             ViewGroup.LayoutParams.MATCH_PARENT));
+            gridView.setGravity(1);
             gridView.setVerticalSpacing(5);
             gridView.setHorizontalSpacing(5);
-            gridView.setGravity(Gravity.TOP);
             gridView.setAdapter(adapter);
-            relativeLayout.addView(gridView);
+
+            gridViewFrequent.setNumColumns(4);
+            gridViewFrequent.setGravity(Gravity.TOP);
+            gridViewFrequent.setVerticalSpacing(5);
+            gridViewFrequent.setHorizontalSpacing(5);
+            gridViewFrequent.setPadding(5, 5, 5, 5);
+            gridViewFrequent.setBackgroundColor(
+                    getResources().getColor(R.color.record_activity_recent_layout));
+            gridViewFrequent.setLayoutParams(
+                    new ViewGroup.LayoutParams(
+                            ViewGroup.LayoutParams.MATCH_PARENT,
+                            ViewGroup.LayoutParams.WRAP_CONTENT));
+            gridViewFrequent.setAdapter(adapterFrequent);
+
+            linearLayout.addView(gridViewFrequent);
+            linearLayout.addView(gridView);
 
             gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -114,7 +147,7 @@ public  class RecordBehaviorTabActivity
 
                     ToggleButton button = (ToggleButton) adapter.getItem(arg2);
                     button.callOnClick();
-                    gridView.invalidateViews();
+//                    gridView.invalidateViews();
                 }
             });
 
@@ -124,7 +157,8 @@ public  class RecordBehaviorTabActivity
 
                 @Override
                 public void afterTextChanged(Editable arg0) {
-                    hideButtons(filter.getText().toString(), GlobalVariables.behaviors, list);
+                    hideButtons(filter.getText().toString(), list);
+                    gridViewFrequent.invalidateViews();
                     gridView.invalidateViews();
                 }
 
@@ -137,12 +171,20 @@ public  class RecordBehaviorTabActivity
         }
     }
 
-    private void hideButtons(String filter, ArrayList<Behavior> behaviors, ArrayList<ToggleButton> buttons) {
+    private void hideButtons(String filter, ArrayList<ToggleButton> buttons) {
 
-        for (int i = 0; i < behaviors.size(); i++) {
+        if (buttons == null)
+            return;
 
-            Behavior behavior = behaviors.get(i);
+        for (int i = 0; i < buttons.size(); i++) {
+
             ToggleButton button = buttons.get(i);
+            if (button == null)
+                return;
+
+            Behavior behavior = (Behavior) button.getTag();
+            if (behavior == null)
+                return;
 
             if (!behavior.desc.toLowerCase().contains(filter.toLowerCase())) {
 
