@@ -8,6 +8,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.RadioButton;
 import android.widget.TabHost;
+import android.widget.TabWidget;
+import android.widget.TextView;
 
 import com.project.squirrelobserver.R;
 import com.project.squirrelobserver.util.Utils;
@@ -50,6 +52,23 @@ public  class RecordActivity
         tabHost.addTab(tab3);
         tabHost.addTab(tab4);
         tabHost.addTab(tab5);
+
+        // Set tab text size
+        TextView tabView1 = (TextView) tabHost.getTabWidget().getChildAt(0).findViewById(android.R.id.title);
+        tabView1.setTextSize(9);
+        tabView1.setPadding(0, 0, 0, 0);
+        TextView tabView2 = (TextView) tabHost.getTabWidget().getChildAt(1).findViewById(android.R.id.title);
+        tabView2.setTextSize(9);
+        tabView2.setPadding(0, 0, 0, 0);
+        TextView tabView3 = (TextView) tabHost.getTabWidget().getChildAt(2).findViewById(android.R.id.title);
+        tabView3.setTextSize(9);
+        tabView3.setPadding(0, 0, 0, 0);
+        TextView tabView4 = (TextView) tabHost.getTabWidget().getChildAt(3).findViewById(android.R.id.title);
+        tabView4.setTextSize(9);
+        tabView4.setPadding(0, 0, 0, 0);
+        TextView tabView5 = (TextView) tabHost.getTabWidget().getChildAt(4).findViewById(android.R.id.title);
+        tabView5.setTextSize(9);
+        tabView5.setPadding(0, 0, 0, 0);
 
         tabHost.setCurrentTab(0);
     }
