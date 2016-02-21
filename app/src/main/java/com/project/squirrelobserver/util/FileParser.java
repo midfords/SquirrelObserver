@@ -4,9 +4,11 @@ import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 /**
@@ -243,11 +245,125 @@ public class FileParser {
         }
     }
 
-    public static void writeLineToScanRecords(Record record) {
+    public static boolean writeLineToRecordCSV(String csvRecordFile, Record record) {
 
-    }
+        if (csvRecordFile == null || record == null)
+            return false;
+        if (record.actor == null)
+            return false;
 
-    public static void writeLineToAORecords(Record record) {
+        PrintWriter csvWriter = null;
 
+        try {
+
+            File file = new File(csvRecordFile);
+
+            if (!file.exists()){
+
+                file = new File(csvRecordFile);
+                csvWriter = new  PrintWriter(new FileWriter(file, true));
+
+                // Write header to new file
+                csvWriter.print(GlobalVariables.csvScanDataHeader);
+                csvWriter.append('\n');
+
+            } else {
+
+                csvWriter = new  PrintWriter(new FileWriter(file, true));
+            }
+
+            StringBuilder recordLine = new StringBuilder();
+
+            // Write actor information
+            recordLine.append(record.actor.tag);
+            recordLine.append(',');
+            recordLine.append(record.actor.sex);
+            recordLine.append(',');
+            recordLine.append(record.actor.age);
+            recordLine.append(',');
+            recordLine.append(record.actor.colony);
+            recordLine.append(',');
+
+            // Write the date
+            recordLine.append(record.date.toString());
+            recordLine.append(',');
+
+            // Write the location coordinates
+            recordLine.append(record.x);
+            recordLine.append(',');
+            recordLine.append(record.y);
+            recordLine.append(',');
+
+            // Write the behaviors
+            Behavior behavior0 = record.dequeueBehavior();
+            if (behavior0 != null)
+                recordLine.append(behavior0.code);
+            recordLine.append(',');
+
+            Behavior behavior1 = record.dequeueBehavior();
+            if (behavior1 != null)
+                recordLine.append(behavior1.code);
+            recordLine.append(',');
+
+            Behavior behavior2 = record.dequeueBehavior();
+            if (behavior2 != null)
+                recordLine.append(behavior2.code);
+            recordLine.append(',');
+
+            // Write all modifiers to single csv field. Surround in "" to avoid comma problems
+            String modifiersString = "\"";
+            for (int i = 0; i < record.modifiers.size(); i++) {
+
+                modifiersString += record.modifiers.get(i);
+                modifiersString += ",";
+            }
+            modifiersString += "\"";
+
+            recordLine.append(modifiersString);
+            recordLine.append(',');
+
+            // Write actee information if record contains an actee
+            if (record.actee != null) {
+
+                recordLine.append(record.actee.sex);
+                recordLine.append(',');
+                recordLine.append(record.actee.age);
+                recordLine.append(',');
+                recordLine.append(record.actee.tag);
+                recordLine.append(',');
+
+            } else {
+
+                recordLine.append(",,,");
+            }
+
+            // Write additional info
+            recordLine.append(record.relationship);
+            recordLine.append(',');
+
+            recordLine.append(record.date);
+            recordLine.append(',');
+
+            recordLine.append(record.groupSize);
+            recordLine.append(',');
+
+            recordLine.append(record.observerID);
+            recordLine.append(',');
+
+            // Finish line
+            csvWriter.print(recordLine.toString());
+            csvWriter.append('\n');
+            csvWriter.close();
+
+            return true;
+
+        } catch (Exception e) {
+
+            if (csvWriter != null) {
+                csvWriter.append('\n');
+                csvWriter.close();
+            }
+            return false;
+        }
     }
 }
