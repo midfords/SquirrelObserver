@@ -366,4 +366,43 @@ public class FileParser {
             return false;
         }
     }
+
+    public static boolean clearRecordCSV(String csvRecordFile) {
+
+        if (csvRecordFile == null || csvRecordFile.isEmpty())
+            return false;
+
+        PrintWriter csvWriter = null;
+
+        try {
+
+            File file = new File(csvRecordFile);
+
+            if (!file.exists()) {
+
+                file = new File(csvRecordFile);
+
+                // Delete contents
+                if (!file.delete())
+                    return false;
+
+                csvWriter = new PrintWriter(new FileWriter(file, true));
+
+                // Write header to new file
+                csvWriter.print(GlobalVariables.csvScanDataHeader);
+                csvWriter.append('\n');
+
+                return true;
+            }
+
+            return false;
+
+        } catch (Exception e) {
+
+            if (csvWriter != null) {
+                csvWriter.close();
+            }
+            return false;
+        }
+    }
 }
