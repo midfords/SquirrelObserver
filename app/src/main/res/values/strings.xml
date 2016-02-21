@@ -47,9 +47,9 @@
     <string name="clear_successful_message">The csv file was successfully cleared and reset.</string>
 
     <string name="actor_tab_indicator">Actor</string>
-    <string name="behaviors_tab_indicator">Behaviors</string>
+    <string name="behaviors_tab_indicator">Behav</string>
     <string name="actee_tab_indicator">Actee</string>
-    <string name="modifier_tab_indicator">Modifier</string>
+    <string name="modifier_tab_indicator">Modif</string>
     <string name="other_tab_indicator">Other</string>
 
     <string name="record_activity_end_button">End</string>
