@@ -26,6 +26,27 @@ public class GlobalVariables {
     public static String actorsCSVPath = "";
     public static String behaviorsCSVPath = "";
 
+    public static String csvScanDataHeader =
+            "Tag," +
+            "Sex," +
+            "Age," +
+            "Col#," +
+            "Date," +
+            "x," +
+            "y," +
+            "Behavior 1," +
+            "Behavior 2," +
+            "Behavior 3," +
+            "Modifier," +
+            "Sex of Interactor," +
+            "Age of Interactor," +
+            "Tag of Interactor," +
+            "Relationship," +
+            "Time," +
+            "# Squirrels in Group," +
+            "ID," +
+            "Comments";
+
     public static Record currentRecord = null;
     public static ArrayList<Behavior> aoBehaviors = null;
 }
