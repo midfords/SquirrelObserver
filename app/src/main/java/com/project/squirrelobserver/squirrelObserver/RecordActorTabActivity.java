@@ -174,7 +174,6 @@ public  class RecordActorTabActivity
 
                     ToggleButton button = (ToggleButton) adapter.getItem(arg2);
                     button.callOnClick();
-//                    gridView.invalidateViews();
                 }
             });
 
