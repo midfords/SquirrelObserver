@@ -223,10 +223,70 @@ public class MainActivity extends ActionBarActivity
 
     public void onScanExportButtonClicked(View view) {
 
+        // Prompt user for observer ID
+        View exportPromptView =
+                View.inflate(this, R.layout.dialog_export_path_picker, null);
+        final EditText exportPathEditText =
+                (EditText) exportPromptView.findViewById(R.id.filePathEditText);
+        final EditText exportNameEditText =
+                (EditText) exportPromptView.findViewById(R.id.fileNameEditText);
+
+        // Generate dialog
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(getResources().getString(R.string.export_path_picker_dialog_title));
+        builder.setView(exportPromptView)
+                .setCancelable(true)
+                .setPositiveButton(
+                        getResources().getString(R.string.export_path_picker_dialog_confirm),
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+
+                                // Export file
+                            }
+                        })
+                .setNegativeButton(
+                        getResources().getString(R.string.export_path_picker_dialog_cancel),
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+
+                                // Do nothing
+                            }
+                        })
+                .show();
     }
 
     public void onAOExportButtonClicked(View view) {
 
+        // Prompt user for observer ID
+        View exportPromptView =
+                View.inflate(this, R.layout.dialog_export_path_picker, null);
+        final EditText exportPathEditText =
+                (EditText) exportPromptView.findViewById(R.id.filePathEditText);
+        final EditText exportNameEditText =
+                (EditText) exportPromptView.findViewById(R.id.fileNameEditText);
+
+        // Generate dialog
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(getResources().getString(R.string.export_path_picker_dialog_title));
+        builder.setView(exportPromptView)
+                .setCancelable(true)
+                .setPositiveButton(
+                        getResources().getString(R.string.export_path_picker_dialog_confirm),
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+
+                                // Export file
+                            }
+                        })
+                .setNegativeButton(
+                        getResources().getString(R.string.export_path_picker_dialog_cancel),
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+
+                                // Do nothing
+                            }
+                        })
+                .show();
     }
 
     public void onScanClearButtonClicked(View view) {
