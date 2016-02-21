@@ -10,12 +10,14 @@ import java.util.Queue;
  */
 public class Record{
 
-    public Actor actor;
-    public Actor actee;
+    private final int MAX_BEHAVIORS_SIZE = 3;
+
+    public Actor actor = null;
+    public Actor actee = null;
     private Queue<Behavior> behaviors;
     public int behaviorsSize;
     public ArrayList<String> modifiers;
-    public Date date;
+    public Date date = null;
     public double x;
     public double y;
     public int relationship;
@@ -36,7 +38,7 @@ public class Record{
 
         Behavior removedBehavior = null;
 
-        if (behaviorsSize < 3) {
+        if (behaviorsSize < MAX_BEHAVIORS_SIZE) {
 
             behaviors.add(behavior);
             behaviorsSize++;
@@ -55,5 +57,16 @@ public class Record{
 
             behaviorsSize--;
         }
+    }
+
+    public Behavior dequeueBehavior() {
+
+        if (behaviorsSize <= 0)
+            return null;
+
+        Behavior behavior = (Behavior) behaviors.remove();
+        behaviorsSize--;
+
+        return behavior;
     }
 }
