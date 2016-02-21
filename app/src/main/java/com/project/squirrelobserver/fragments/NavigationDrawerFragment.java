@@ -11,6 +11,7 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -113,6 +114,16 @@ public class NavigationDrawerFragment extends Fragment {
 
     public boolean isDrawerOpen() {
         return mDrawerLayout != null && mDrawerLayout.isDrawerOpen(mFragmentContainerView);
+    }
+
+    public boolean toggleDrawer() {
+
+        if (isDrawerOpen())
+            mDrawerLayout.closeDrawer(Gravity.START);
+        else
+            mDrawerLayout.openDrawer(Gravity.START);
+
+        return true;
     }
 
     /**
