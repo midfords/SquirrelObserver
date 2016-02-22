@@ -14,4 +14,8 @@ public class LocationPoint {
         this.x = x;
         this.y = y;
     }
+
+    public String toString() {
+        return label;
+    }
 }
