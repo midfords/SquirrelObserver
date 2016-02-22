@@ -53,6 +53,36 @@ public class MainActivity extends ActionBarActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Import app settings
+        String path = this.getFilesDir().getPath() + "/" + GlobalVariables.settingsFileName;
+        FileParser.importAppSettings(path);
+
+        // Read in contents of files. If there is a problem reading in the file, set the settings file
+        //   to the empty string.
+        if (GlobalVariables.locationCSVPath != null
+                && !GlobalVariables.locationCSVPath.isEmpty()
+                && !FileParser.generateListOfLocationPoints(GlobalVariables.locationCSVPath)) {
+            GlobalVariables.locationCSVPath = "";
+            FileParser.removeValueFromAppSettings(
+                    path, GlobalVariables.settingsLocationTag);
+        }
+
+        if (GlobalVariables.actorsCSVPath != null
+                && !GlobalVariables.actorsCSVPath.isEmpty()
+                && !FileParser.generateListOfActors(GlobalVariables.actorsCSVPath)) {
+            GlobalVariables.actorsCSVPath = "";
+            FileParser.removeValueFromAppSettings(
+                    path, GlobalVariables.settingsActorTag);
+        }
+
+        if (GlobalVariables.behaviorsCSVPath != null
+                && !GlobalVariables.behaviorsCSVPath.isEmpty()
+                && !FileParser.generateListOfBehaviors(GlobalVariables.behaviorsCSVPath)) {
+            GlobalVariables.behaviorsCSVPath = "";
+            FileParser.removeValueFromAppSettings(
+                    path, GlobalVariables.settingsBehaviorTag);
+        }
+
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
         mTitle = getTitle();
@@ -134,6 +164,12 @@ public class MainActivity extends ActionBarActivity
                             // Import File Contents
                             if (FileParser.generateListOfLocationPoints(GlobalVariables.locationCSVPath)) {
 
+                                // Update settings with new file
+                                String settingsPath =
+                                        this.getFilesDir().getPath() + "/" + GlobalVariables.settingsFileName;
+                                FileParser.writeValueToAppSettings(
+                                        settingsPath, GlobalVariables.settingsLocationTag, GlobalVariables.locationCSVPath);
+
                                 // Set Label
                                 locationLabel.setText(
                                         GlobalVariables.locationCSVPath.substring(
@@ -162,6 +198,12 @@ public class MainActivity extends ActionBarActivity
                             // Import File Contents
                             if (FileParser.generateListOfActors(GlobalVariables.actorsCSVPath)) {
 
+                                // Update settings with new file
+                                String settingsPath =
+                                        this.getFilesDir().getPath() + "/" + GlobalVariables.settingsFileName;
+                                FileParser.writeValueToAppSettings(
+                                        settingsPath, GlobalVariables.settingsActorTag, GlobalVariables.actorsCSVPath);
+
                                 // Set Label
                                 actorsLabel.setText(
                                         GlobalVariables.actorsCSVPath.substring(
@@ -188,6 +230,12 @@ public class MainActivity extends ActionBarActivity
 
                             // Import File Contents
                             if (FileParser.generateListOfBehaviors(GlobalVariables.behaviorsCSVPath)) {
+
+                                // Update settings with new file
+                                String settingsPath =
+                                        this.getFilesDir().getPath() + "/" + GlobalVariables.settingsFileName;
+                                FileParser.writeValueToAppSettings(
+                                        settingsPath, GlobalVariables.settingsBehaviorTag, GlobalVariables.behaviorsCSVPath);
 
                                 // Set Label
                                 behaviorsLabel.setText(
