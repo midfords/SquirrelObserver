@@ -63,7 +63,7 @@ public  class RecordActorTabActivity
                 button.setText(actor.name);
                 button.setTextOn(actor.name);
                 button.setTextOff(actor.name);
-                button.setTextSize(TypedValue.COMPLEX_UNIT_PX, 15);
+                button.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12);
 
                 // Attach the actor to the button
                 button.setTag(actor);
