@@ -59,7 +59,7 @@ public  class RecordBehaviorTabActivity
                 button.setText(behavior.desc);
                 button.setTextOn(behavior.desc);
                 button.setTextOff(behavior.desc);
-                button.setTextSize(TypedValue.COMPLEX_UNIT_PX, 15);
+                button.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12);
 
                 // Keep pointer to button in behavior
                 behavior.button = button;
