@@ -105,7 +105,7 @@ public  class RecordOtherTabActivity
 
                 } else {
 
-                    // Reset button toggles
+                    // Reset button toggles, disable actor button
                     for (int i = 0; GlobalVariables.currentRecord != null && i < GlobalVariables.currentRecord.behaviorsSize; i++) {
 
                         Behavior b = GlobalVariables.currentRecord.getBehavior(i);
@@ -120,6 +120,10 @@ public  class RecordOtherTabActivity
                             && GlobalVariables.currentRecord.actor.actorButton != null
                             && GlobalVariables.currentRecord.actor.actorButton.isChecked()) {
                         GlobalVariables.currentRecord.actor.actorButton.setChecked(false);
+
+                        // Disable actor button that was used
+                        GlobalVariables.currentRecord.actor.actorButton.setEnabled(false);
+
                         GlobalVariables.currentRecord.actor.actorButton.callOnClick();
                     }
                     if (GlobalVariables.currentRecord != null
