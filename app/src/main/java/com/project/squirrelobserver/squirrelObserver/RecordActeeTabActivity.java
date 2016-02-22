@@ -57,7 +57,7 @@ public  class RecordActeeTabActivity
                 button.setText(actee.name);
                 button.setTextOn(actee.name);
                 button.setTextOff(actee.name);
-                button.setTextSize(TypedValue.COMPLEX_UNIT_PX, 15);
+                button.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12);
 
                 // Attach the actee to the button
                 button.setTag(actee);
