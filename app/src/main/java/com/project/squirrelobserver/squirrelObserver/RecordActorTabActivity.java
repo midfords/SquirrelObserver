@@ -67,6 +67,7 @@ public  class RecordActorTabActivity
 
                 // Attach the actor to the button
                 button.setTag(actor);
+                actor.actorButton = button;
 
                 button.setOnClickListener(new View.OnClickListener() {
 

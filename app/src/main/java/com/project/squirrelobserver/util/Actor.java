@@ -13,6 +13,8 @@ public class Actor {
     public String colony;   // Colony code
     public int sex;     // Sex (1-m, 2-f)
     public int age;     // Age
+    public ToggleButton actorButton = null;
+    public ToggleButton acteeButton = null;
 
     public Actor(String name, String abb, int tag, String colony, int sex, int age) {
         this.name = name;
