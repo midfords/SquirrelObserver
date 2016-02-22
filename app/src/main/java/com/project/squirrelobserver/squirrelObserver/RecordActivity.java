@@ -20,6 +20,7 @@ import com.project.squirrelobserver.util.Utils;
 public  class RecordActivity
         extends TabActivity {
 
+    private TabHost tabHost = null;
     private View tabView1 = null;
     private TextView tabTextView1 = null;
     private View tabView2 = null;
@@ -49,7 +50,7 @@ public  class RecordActivity
             timer.setText(String.format("%d:%02d", minutes, seconds));
         }
         // Setup tabs
-        TabHost tabHost = (TabHost)findViewById(android.R.id.tabhost);
+        tabHost = (TabHost)findViewById(android.R.id.tabhost);
 
         Intent intent1 = new Intent().setClass(this, RecordActorTabActivity.class);
         Intent intent2 = new Intent().setClass(this, RecordBehaviorTabActivity.class);
@@ -117,6 +118,13 @@ public  class RecordActivity
         tabHost.setCurrentTab(0);
     }
 
+    public void switchTabView(int position) {
+
+        if (tabHost != null) {
+            tabHost.setCurrentTab(position);
+        }
+    }
+
     public void updateTabEnabledState() {
 
         boolean enableActeeTab = false;
@@ -138,8 +146,11 @@ public  class RecordActivity
         // Activate if all required items are selected
         Actor actor = (Actor) GlobalVariables.currentRecord.actor;
         Actor actee = (Actor) GlobalVariables.currentRecord.actee;
-        if (actor != null && GlobalVariables.currentRecord.behaviorsSize > 0
-                && enableActeeTab && actee != null)
+        if (actor != null
+                && GlobalVariables.currentRecord.behaviorsSize > 0
+                && (enableActeeTab
+                    && actee != null
+                    || !enableActeeTab))
             enableOtherTab = true;
 
         // Update tab states
