@@ -102,6 +102,11 @@ public  class RecordActeeTabActivity
                             }
                         }
 
+                        // Update tab enabled states
+                        RecordActivity parentActivity = (RecordActivity) getParent();
+                        if (parentActivity != null)
+                            parentActivity.updateTabEnabledState();
+
                         gridViewRecent.invalidateViews();
                         gridView.invalidateViews();
                     }
