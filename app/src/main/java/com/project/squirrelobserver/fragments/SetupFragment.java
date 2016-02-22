@@ -62,6 +62,7 @@ public  class SetupFragment
         final EditText editTextX = (EditText) contentView.findViewById(R.id.locationX);
         final EditText editTextY = (EditText) contentView.findViewById(R.id.locationY);
         final EditText editTextID = (EditText) contentView.findViewById(R.id.observerIDInput);
+        final EditText editTextInterval = (EditText) contentView.findViewById(R.id.scanIntervalInput);
 
         startButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -69,6 +70,18 @@ public  class SetupFragment
                 // Start Record Activity
                 Intent intent = new Intent(getActivity(), RecordActivity.class);
                 Record record = new Record(editTextID.getText().toString(), false);
+
+                String intervalString = editTextInterval.getText().toString();
+                long intervalInMillis;
+                int minutes = Integer.parseInt(intervalString.substring(0, intervalString.indexOf(":")));
+                int seconds = Integer.parseInt(intervalString.substring(intervalString.indexOf(":")+1));
+
+                intervalInMillis = ((minutes*60) + seconds)*1000;
+
+                Bundle params = new Bundle();
+                params.putBoolean("startTimer", true);
+                params.putLong("scanInterval", intervalInMillis);
+                intent.putExtras(params);
 
                 GlobalVariables.currentRecord = record;
 
