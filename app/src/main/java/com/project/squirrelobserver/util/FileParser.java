@@ -301,17 +301,17 @@ public class FileParser {
             recordLine.append(',');
 
             // Write the behaviors
-            Behavior behavior0 = record.dequeueBehavior();
+            Behavior behavior0 = record.getBehavior(0);
             if (behavior0 != null)
                 recordLine.append(behavior0.code);
             recordLine.append(',');
 
-            Behavior behavior1 = record.dequeueBehavior();
+            Behavior behavior1 = record.getBehavior(1);
             if (behavior1 != null)
                 recordLine.append(behavior1.code);
             recordLine.append(',');
 
-            Behavior behavior2 = record.dequeueBehavior();
+            Behavior behavior2 = record.getBehavior(2);
             if (behavior2 != null)
                 recordLine.append(behavior2.code);
             recordLine.append(',');
