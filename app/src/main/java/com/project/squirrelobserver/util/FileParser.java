@@ -87,12 +87,6 @@ public class FileParser {
 
             return true;
 
-        } catch (IOException e) {
-
-            GlobalVariables.locationPointsX = null;
-            GlobalVariables.locationPointsY = null;
-            return false;
-
         } catch (Exception e) {
 
             GlobalVariables.locationPointsX = null;
@@ -120,7 +114,7 @@ public class FileParser {
 
         GlobalVariables.behaviors = new ArrayList<Behavior>();    // Initialize our list of behaviors
         InputStream inputStream = null;
-        String code, desc, modif;   // Code, Description and Modifier
+        String code, reqActee, desc, modif;   // Code, Requires Acee, Description and Modifier
 
         try {
             File file = new File(csvFileBehaviors);
@@ -139,14 +133,15 @@ public class FileParser {
             while ((line = reader.readLine()) != null) {
                 String[] dataRow = line.split(",");
 
-                if (dataRow.length >= 2) { // Don't use row if there are incomplete fields
+                if (dataRow.length >= 3) { // Don't use row if there are incomplete fields
 
                     code = dataRow[0];
                     desc = dataRow[1];
+                    reqActee = dataRow[2];
 
                     // Generate list of modifiers
                     ArrayList<String> modifiers = new ArrayList<String>();
-                    for (int i = 2; i < dataRow.length; i++) {
+                    for (int i = 3; i < dataRow.length; i++) {
 
                         modif = dataRow[i];
                         modifiers.add(modif);
@@ -155,8 +150,10 @@ public class FileParser {
                     try {
                         // Parse code integer
                         int code_parsed = Integer.parseInt(code);
+                        int reqActee_parsed = Integer.parseInt(reqActee);
+                        boolean reqActee_bool = reqActee_parsed == 1;
 
-                        Behavior behavior = new Behavior(code_parsed, desc, modifiers);
+                        Behavior behavior = new Behavior(code_parsed, reqActee_bool, desc, modifiers);
                         GlobalVariables.behaviors.add(behavior);
 
                     } catch (Exception e) { }
@@ -164,11 +161,6 @@ public class FileParser {
             }
 
             return true;
-
-        } catch (IOException e) {
-
-            GlobalVariables.behaviors = null;
-            return false;
 
         } catch (Exception e) {
 
@@ -242,11 +234,6 @@ public class FileParser {
             }
 
             return true;
-
-        } catch (IOException e) {
-
-            GlobalVariables.actors = null;
-            return false;
 
         } catch (Exception e) {
 
