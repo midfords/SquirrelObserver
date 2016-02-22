@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.project.squirrelobserver.R;
+import com.project.squirrelobserver.util.Behavior;
 import com.project.squirrelobserver.util.FileParser;
 import com.project.squirrelobserver.util.GlobalVariables;
 import com.project.squirrelobserver.util.LocationPoint;
@@ -104,10 +105,36 @@ public  class RecordOtherTabActivity
 
                 } else {
 
+                    // Reset button toggles
+                    for (int i = 0; GlobalVariables.currentRecord != null && i < GlobalVariables.currentRecord.behaviorsSize; i++) {
+
+                        Behavior b = GlobalVariables.currentRecord.getBehavior(i);
+
+                        if (b != null
+                                && b.button != null
+                                && b.button.isChecked())
+                            GlobalVariables.currentRecord.getBehavior(i).button.callOnClick();
+                    }
+                    if (GlobalVariables.currentRecord != null
+                            && GlobalVariables.currentRecord.actor != null
+                            && GlobalVariables.currentRecord.actor.actorButton != null
+                            && GlobalVariables.currentRecord.actor.actorButton.isChecked()) {
+                        GlobalVariables.currentRecord.actor.actorButton.setChecked(false);
+                        GlobalVariables.currentRecord.actor.actorButton.callOnClick();
+                    }
+                    if (GlobalVariables.currentRecord != null
+                            && GlobalVariables.currentRecord.actee != null
+                            && GlobalVariables.currentRecord.actee.acteeButton != null
+                            && GlobalVariables.currentRecord.actee.acteeButton.isChecked()) {
+                        GlobalVariables.currentRecord.actee.acteeButton.setChecked(false);
+                        GlobalVariables.currentRecord.actee.acteeButton.callOnClick();
+                    }
+
                     // Reset everything for next record
                     Record newRecord =
                             new Record(GlobalVariables.currentRecord.observerID, GlobalVariables.currentRecord.aoOnly);
                     GlobalVariables.currentRecord = newRecord;
+
                     // Update tab enabled states
                     RecordActivity parentActivity = (RecordActivity) getParent();
                     if (parentActivity != null) {
