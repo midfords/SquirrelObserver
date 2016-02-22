@@ -108,6 +108,13 @@ public  class RecordOtherTabActivity
                     Record newRecord =
                             new Record(GlobalVariables.currentRecord.observerID, GlobalVariables.currentRecord.aoOnly);
                     GlobalVariables.currentRecord = newRecord;
+                    // Update tab enabled states
+                    RecordActivity parentActivity = (RecordActivity) getParent();
+                    if (parentActivity != null) {
+
+                        parentActivity.updateTabEnabledState();
+                        parentActivity.switchTabView(0);
+                    }
                 }
             }
         });
