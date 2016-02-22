@@ -279,11 +279,11 @@ public class MainActivity extends ActionBarActivity
 
     public void onScanExportButtonClicked(final View view) {
 
-        GlobalVariables.csvScanPath =
+        String csvScanPath =
                 view.getContext().getFilesDir().getPath() + "/" + GlobalVariables.csvScanFileName;
 
         if (!FileParser.exportRecordCSV(
-                view.getContext(), GlobalVariables.csvScanPath)) {
+                view.getContext(), csvScanPath)) {
 
             Utils.exportButtonErrorMessage(view.getContext());
         }
@@ -291,11 +291,11 @@ public class MainActivity extends ActionBarActivity
 
     public void onAOExportButtonClicked(final View view) {
 
-        GlobalVariables.csvAOPath =
+        String csvAOPath =
                 view.getContext().getFilesDir().getPath() + "/" + GlobalVariables.csvAOFileName;
 
         if (!FileParser.exportRecordCSV(
-                view.getContext(), GlobalVariables.csvAOPath)) {
+                view.getContext(), csvAOPath)) {
 
             Utils.exportButtonErrorMessage(view.getContext());
         }
@@ -303,18 +303,18 @@ public class MainActivity extends ActionBarActivity
 
     public void onScanClearButtonClicked(View view) {
 
-        GlobalVariables.csvScanPath =
+        String csvScanPath =
                 view.getContext().getFilesDir().getPath() + "/" + GlobalVariables.csvScanFileName;
 
-        Utils.clearButtonWarningMessage(view.getContext(), GlobalVariables.csvScanPath);
+        Utils.clearButtonWarningMessage(view.getContext(), csvScanPath);
     }
 
     public void onAOClearButtonClicked(View view) {
 
-        GlobalVariables.csvAOPath =
+        String csvAOPath =
                 view.getContext().getFilesDir().getPath() + "/" + GlobalVariables.csvAOFileName;
 
-        Utils.clearButtonWarningMessage(view.getContext(), GlobalVariables.csvAOPath);
+        Utils.clearButtonWarningMessage(view.getContext(), csvAOPath);
     }
 
     public void onScanIntervalFieldClicked (final View view) {

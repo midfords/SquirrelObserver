@@ -32,6 +32,9 @@
     <string name="export_error_dialog_title">Export Error</string>
     <string name="export_error_dialog_message">There was an error while exporting the file. Please make sure the file path and name are valid.</string>
 
+    <string name="record_error_dialog_title">Error</string>
+    <string name="record_error_dialog_message">There was an error while recording the observation. Please make sure all parameters are valid and try again.</string>
+
     <string name="clear_warning_title">Clear Data?</string>
     <string name="clear_warning_message">This action will clear the entire csv file and reset it. This cannot be undone.</string>
     <string name="clear_successful_title">Clear Successful</string>
