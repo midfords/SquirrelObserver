@@ -61,6 +61,7 @@ public  class RecordActeeTabActivity
 
                 // Attach the actee to the button
                 button.setTag(actee);
+                actee.acteeButton = button;
 
                 button.setOnClickListener(new View.OnClickListener() {
 
