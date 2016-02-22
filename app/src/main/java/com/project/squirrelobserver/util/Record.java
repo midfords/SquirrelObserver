@@ -74,6 +74,14 @@ public class Record{
         return behavior;
     }
 
+    public Behavior getBehavior(int i) {
+
+        if (i >= behaviorsSize)
+            return null;
+        else
+            return (Behavior) ((LinkedList) behaviors).get(i);
+    }
+
     public boolean containsBehavior(Behavior b) {
 
         return behaviors != null && behaviors.contains(b);
