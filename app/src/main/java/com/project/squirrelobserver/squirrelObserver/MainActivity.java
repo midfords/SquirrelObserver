@@ -329,7 +329,7 @@ public class MainActivity extends ActionBarActivity
         AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
         builder.setTitle(getResources().getString(R.string.interval_picker_dialog_title));
         builder.setView(intervalPickerView)
-                .setCancelable(false)
+                .setCancelable(true)
                 .setPositiveButton(getResources().getString(R.string.interval_picker_dialog_confirm),
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
