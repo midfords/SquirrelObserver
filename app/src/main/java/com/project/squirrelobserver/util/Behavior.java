@@ -13,9 +13,11 @@ public class Behavior {
     public String desc; // Description of behavior
     public ArrayList<String> modifiers; // List of all modifiers
     public ToggleButton button;
+    public boolean requiresActee;
 
-    public Behavior(int code, String desc, ArrayList<String> modifiers) {
+    public Behavior(int code, boolean requiresActee, String desc, ArrayList<String> modifiers) {
         this.code = code;
+        this.requiresActee = requiresActee;
         this.desc = desc;
         this.modifiers = modifiers;
         button = null;
