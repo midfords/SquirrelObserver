@@ -12,6 +12,7 @@ import android.widget.TabHost;
 import android.widget.TextView;
 
 import com.project.squirrelobserver.R;
+import com.project.squirrelobserver.util.Actor;
 import com.project.squirrelobserver.util.Behavior;
 import com.project.squirrelobserver.util.GlobalVariables;
 import com.project.squirrelobserver.util.Utils;
@@ -120,8 +121,9 @@ public  class RecordActivity
 
         boolean enableActeeTab = false;
         boolean enableModifierTab = false;
+        boolean enableOtherTab = false;
 
-        // Update actee tab enabled state
+        // Check for actee and modifiers tab enabled state
         for (int i = 0; i < GlobalVariables.currentRecord.behaviorsSize; i++) {
 
             Behavior b = (Behavior) GlobalVariables.currentRecord.getBehavior(i);
@@ -131,6 +133,14 @@ public  class RecordActivity
             if (b != null && b.modifiers != null && !b.modifiers.isEmpty())
                 enableModifierTab = true;
         }
+
+        // Check for other tab enabled state
+        // Activate if all required items are selected
+        Actor actor = (Actor) GlobalVariables.currentRecord.actor;
+        Actor actee = (Actor) GlobalVariables.currentRecord.actee;
+        if (actor != null && GlobalVariables.currentRecord.behaviorsSize > 0
+                && enableActeeTab && actee != null)
+            enableOtherTab = true;
 
         // Update tab states
         if (tabView3 != null && tabTextView3 != null) {
@@ -143,6 +153,12 @@ public  class RecordActivity
             tabTextView4.setEnabled(enableModifierTab);
             tabView4.setEnabled(enableModifierTab);
             tabView4.setClickable(enableModifierTab);
+        }
+
+        if (tabView5 != null && tabTextView5 != null) {
+            tabTextView5.setEnabled(enableOtherTab);
+            tabView5.setEnabled(enableOtherTab);
+            tabView5.setClickable(enableOtherTab);
         }
     }
 
