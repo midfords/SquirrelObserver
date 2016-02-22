@@ -303,7 +303,8 @@ public class FileParser {
             recordLine.append(',');
 
             // Write the date
-            recordLine.append(record.date.toString());
+            if (record.date != null)
+                recordLine.append(record.date.toString());
             recordLine.append(',');
 
             // Write the location coordinates
@@ -359,7 +360,8 @@ public class FileParser {
             recordLine.append(record.relationship);
             recordLine.append(',');
 
-            recordLine.append(record.date);
+            if (record.date != null)
+                recordLine.append(record.date);
             recordLine.append(',');
 
             recordLine.append(record.groupSize);

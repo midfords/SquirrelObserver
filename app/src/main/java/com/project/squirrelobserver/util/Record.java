@@ -32,6 +32,10 @@ public class Record{
         this.modifiers = new ArrayList<String>();
         this.observerID = observerID;
         this.aoOnly = aoOnly;
+        this.x = 0.0;
+        this.y = 0.0;
+        this.relationship = 0;
+        this.groupSize = 0;
     }
 
     public Behavior addBehavior(Behavior behavior) {
@@ -68,5 +72,10 @@ public class Record{
         behaviorsSize--;
 
         return behavior;
+    }
+
+    public boolean containsBehavior(Behavior b) {
+
+        return behaviors != null && behaviors.contains(b);
     }
 }

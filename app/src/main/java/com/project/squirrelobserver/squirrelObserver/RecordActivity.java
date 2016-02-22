@@ -3,6 +3,7 @@ package com.project.squirrelobserver.squirrelObserver;
 import android.app.TabActivity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.TabHost;
 import android.widget.TextView;
 
 import com.project.squirrelobserver.R;
+import com.project.squirrelobserver.util.GlobalVariables;
 import com.project.squirrelobserver.util.Utils;
 
 public  class RecordActivity

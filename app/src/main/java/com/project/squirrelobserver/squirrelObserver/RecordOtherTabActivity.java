@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -14,8 +15,10 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.project.squirrelobserver.R;
+import com.project.squirrelobserver.util.FileParser;
 import com.project.squirrelobserver.util.GlobalVariables;
 import com.project.squirrelobserver.util.LocationPoint;
+import com.project.squirrelobserver.util.Record;
 import com.project.squirrelobserver.util.Utils;
 
 import java.util.ArrayList;
@@ -49,6 +52,8 @@ public  class RecordOtherTabActivity
         recordButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                // Get all values for record
                 EditText groupSize = (EditText) findViewById(R.id.group_size);
                 EditText xMod = (EditText) findViewById(R.id.x_mod_distance);
                 EditText yMod = (EditText) findViewById(R.id.y_mod_distance);
@@ -65,7 +70,45 @@ public  class RecordOtherTabActivity
                 GlobalVariables.currentRecord.x = x;
                 GlobalVariables.currentRecord.y = y;
 
+                // Write record to file
+                String csvScanPath =
+                        v.getContext().getFilesDir().getPath() + "/" + GlobalVariables.csvScanFileName;
+                String csvAOPath =
+                        v.getContext().getFilesDir().getPath() + "/" + GlobalVariables.csvAOFileName;
 
+                boolean writeToAOFile = false;
+
+                // Check if we need to also write record to ao file
+                for (int i = 0; GlobalVariables.aoBehaviors != null && i < GlobalVariables.aoBehaviors.size(); i++) {
+
+                    if (GlobalVariables.currentRecord != null
+                            && GlobalVariables.aoBehaviors != null
+                            && GlobalVariables.currentRecord.containsBehavior(GlobalVariables.aoBehaviors.get(i))) {
+
+                        writeToAOFile = true;
+                    }
+                }
+
+                boolean aoWriteResult = true;
+                boolean scanWriteResult =
+                        FileParser.writeLineToRecordCSV(csvScanPath, GlobalVariables.currentRecord);
+
+                if (writeToAOFile)
+                    aoWriteResult = FileParser.writeLineToRecordCSV(csvAOPath, GlobalVariables.currentRecord);
+
+                // If either write failed, show error message to user
+                if (!aoWriteResult || !scanWriteResult) {
+
+                    // Show error dialog
+                    Utils.writeRecordErrorMessage(v.getContext());
+
+                } else {
+
+                    // Reset everything for next record
+                    Record newRecord =
+                            new Record(GlobalVariables.currentRecord.observerID, GlobalVariables.currentRecord.aoOnly);
+                    GlobalVariables.currentRecord = newRecord;
+                }
             }
         });
     }
