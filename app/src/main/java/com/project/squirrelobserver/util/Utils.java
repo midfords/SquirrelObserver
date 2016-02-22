@@ -33,6 +33,20 @@ public class Utils {
                 .show();
     }
 
+    public static void writeRecordErrorMessage(Context context) {
+
+        new AlertDialog.Builder(context)
+                .setTitle(context.getResources().getString(R.string.record_error_dialog_title))
+                .setMessage(context.getResources().getString(R.string.record_error_dialog_message))
+                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        // Do nothing
+                    }
+                })
+                .show();
+    }
+
     public static void exportButtonErrorMessage(Context context) {
 
         new AlertDialog.Builder(context)
