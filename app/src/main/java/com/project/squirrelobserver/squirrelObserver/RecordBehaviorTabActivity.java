@@ -90,6 +90,11 @@ public  class RecordBehaviorTabActivity
                             GlobalVariables.currentRecord.removeBehavior(behavior);
                         }
 
+                        // Update tab enabled states
+                        RecordActivity parentActivity = (RecordActivity) getParent();
+                        if (parentActivity != null)
+                            parentActivity.updateTabEnabledState();
+
                         gridViewFrequent.invalidateViews();
                         gridView.invalidateViews();
                     }
