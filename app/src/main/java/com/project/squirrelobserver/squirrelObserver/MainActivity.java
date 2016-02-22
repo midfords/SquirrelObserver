@@ -476,6 +476,12 @@ public class MainActivity extends ActionBarActivity
                                         Intent intent = new Intent(activity, RecordActivity.class);
                                         Record record = new Record(observerIDEditText.getText().toString(), false);
 
+                                        long intervalInMillis = 0;
+                                        Bundle params = new Bundle();
+                                        params.putBoolean("startTimer", false);
+                                        params.putLong("scanInterval", intervalInMillis);
+                                        intent.putExtras(params);
+
                                         GlobalVariables.currentRecord = record;
 
                                         startActivity(intent);
