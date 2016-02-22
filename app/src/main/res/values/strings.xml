@@ -29,12 +29,6 @@
     <string name="import_error_dialog_title">Import Error</string>
     <string name="import_error_dialog_message">There was an error while importing the file. Please make sure that you upload a \'.csv\' file and that all fields are correctly filled.</string>
 
-    <string name="export_picker_dialog_path_hint">File Path</string>
-    <string name="export_picker_dialog_name_hint">File Name</string>
-    <string name="export_path_picker_dialog_title">Enter Path and File Name</string>
-    <string name="export_path_picker_dialog_confirm">Export</string>
-    <string name="export_path_picker_dialog_cancel">Cancel</string>
-
     <string name="export_error_dialog_title">Export Error</string>
     <string name="export_error_dialog_message">There was an error while exporting the file. Please make sure the file path and name are valid.</string>
 

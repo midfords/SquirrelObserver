@@ -30,6 +30,7 @@ import com.project.squirrelobserver.R;
 import com.project.squirrelobserver.util.GlobalVariables;
 import com.project.squirrelobserver.util.Utils;
 
+import java.io.File;
 import java.util.ArrayList;
 
 public class MainActivity extends ActionBarActivity
@@ -105,7 +106,7 @@ public class MainActivity extends ActionBarActivity
                             getResources().getString(R.string.file_import_dialog_title)),
                     selectCode);
 
-        } catch (android.content.ActivityNotFoundException ex) { }
+        } catch (Exception ex) { }
     }
 
     @Override
@@ -164,7 +165,7 @@ public class MainActivity extends ActionBarActivity
                                 // Set Label
                                 actorsLabel.setText(
                                         GlobalVariables.actorsCSVPath.substring(
-                                                GlobalVariables.actorsCSVPath.lastIndexOf("/")+1));
+                                                GlobalVariables.actorsCSVPath.lastIndexOf("/") + 1));
                             } else {
 
                                 Utils.importButtonErrorMessage(this);
@@ -191,7 +192,7 @@ public class MainActivity extends ActionBarActivity
                                 // Set Label
                                 behaviorsLabel.setText(
                                         GlobalVariables.behaviorsCSVPath.substring(
-                                                GlobalVariables.behaviorsCSVPath.lastIndexOf("/")+1));
+                                                GlobalVariables.behaviorsCSVPath.lastIndexOf("/") + 1));
                             } else {
 
                                 Utils.importButtonErrorMessage(this);
@@ -222,80 +223,42 @@ public class MainActivity extends ActionBarActivity
         showFileChooser(GlobalVariables.BEHAVIORS_CSV_SELECT_CODE);
     }
 
-    public void onScanExportButtonClicked(View view) {
+    public void onScanExportButtonClicked(final View view) {
 
-        // Prompt user for observer ID
-        View exportPromptView =
-                View.inflate(this, R.layout.dialog_export_path_picker, null);
-        final EditText exportPathEditText =
-                (EditText) exportPromptView.findViewById(R.id.filePathEditText);
-        final EditText exportNameEditText =
-                (EditText) exportPromptView.findViewById(R.id.fileNameEditText);
+        GlobalVariables.csvScanPath =
+                view.getContext().getFilesDir().getPath() + "/" + GlobalVariables.csvScanFileName;
 
-        // Generate dialog
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(getResources().getString(R.string.export_path_picker_dialog_title));
-        builder.setView(exportPromptView)
-                .setCancelable(true)
-                .setPositiveButton(
-                        getResources().getString(R.string.export_path_picker_dialog_confirm),
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
+        if (!FileParser.exportRecordCSV(
+                view.getContext(), GlobalVariables.csvScanPath)) {
 
-                                // Export file
-                            }
-                        })
-                .setNegativeButton(
-                        getResources().getString(R.string.export_path_picker_dialog_cancel),
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-
-                                // Do nothing
-                            }
-                        })
-                .show();
+            Utils.exportButtonErrorMessage(view.getContext());
+        }
     }
 
-    public void onAOExportButtonClicked(View view) {
+    public void onAOExportButtonClicked(final View view) {
 
-        // Prompt user for observer ID
-        View exportPromptView =
-                View.inflate(this, R.layout.dialog_export_path_picker, null);
-        final EditText exportPathEditText =
-                (EditText) exportPromptView.findViewById(R.id.filePathEditText);
-        final EditText exportNameEditText =
-                (EditText) exportPromptView.findViewById(R.id.fileNameEditText);
+        GlobalVariables.csvAOPath =
+                view.getContext().getFilesDir().getPath() + "/" + GlobalVariables.csvAOFileName;
 
-        // Generate dialog
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(getResources().getString(R.string.export_path_picker_dialog_title));
-        builder.setView(exportPromptView)
-                .setCancelable(true)
-                .setPositiveButton(
-                        getResources().getString(R.string.export_path_picker_dialog_confirm),
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
+        if (!FileParser.exportRecordCSV(
+                view.getContext(), GlobalVariables.csvAOPath)) {
 
-                                // Export file
-                            }
-                        })
-                .setNegativeButton(
-                        getResources().getString(R.string.export_path_picker_dialog_cancel),
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-
-                                // Do nothing
-                            }
-                        })
-                .show();
+            Utils.exportButtonErrorMessage(view.getContext());
+        }
     }
 
     public void onScanClearButtonClicked(View view) {
+
+        GlobalVariables.csvScanPath =
+                view.getContext().getFilesDir().getPath() + "/" + GlobalVariables.csvScanFileName;
 
         Utils.clearButtonWarningMessage(view.getContext(), GlobalVariables.csvScanPath);
     }
 
     public void onAOClearButtonClicked(View view) {
+
+        GlobalVariables.csvAOPath =
+                view.getContext().getFilesDir().getPath() + "/" + GlobalVariables.csvAOFileName;
 
         Utils.clearButtonWarningMessage(view.getContext(), GlobalVariables.csvAOPath);
     }

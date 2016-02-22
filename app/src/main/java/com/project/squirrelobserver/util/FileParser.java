@@ -1,13 +1,20 @@
 package com.project.squirrelobserver.util;
 
+import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
+import android.util.Log;
+
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
@@ -21,8 +28,8 @@ public class FileParser {
         if (csvFileLocation == null)
             return false;
         String extension = csvFileLocation.substring(
-                csvFileLocation.lastIndexOf(".") + 1, csvFileLocation.length());
-        if (!extension.equalsIgnoreCase("csv"))
+                csvFileLocation.lastIndexOf("."), csvFileLocation.length());
+        if (!extension.equalsIgnoreCase(".csv"))
             return false;
 
         GlobalVariables.locationPointsX = new ArrayList<LocationPoint>();    // Initialize our list of points
@@ -102,8 +109,8 @@ public class FileParser {
         if (csvFileBehaviors == null)
             return false;
         String extension = csvFileBehaviors.substring(
-                csvFileBehaviors.lastIndexOf(".") + 1, csvFileBehaviors.length());
-        if (!extension.equalsIgnoreCase("csv"))
+                csvFileBehaviors.lastIndexOf("."), csvFileBehaviors.length());
+        if (!extension.equalsIgnoreCase(".csv"))
             return false;
 
         GlobalVariables.behaviors = new ArrayList<Behavior>();    // Initialize our list of behaviors
@@ -175,8 +182,8 @@ public class FileParser {
         if (csvFileActors == null)
             return false;
         String extension = csvFileActors.substring(
-                csvFileActors.lastIndexOf(".") + 1, csvFileActors.length());
-        if (!extension.equalsIgnoreCase("csv"))
+                csvFileActors.lastIndexOf("."), csvFileActors.length());
+        if (!extension.equalsIgnoreCase(".csv"))
             return false;
 
         GlobalVariables.actors = new ArrayList<Actor>();    // Initialize our list of actors
@@ -192,7 +199,7 @@ public class FileParser {
             String line;
 
             // Skip first line, it contains the column headers
-            reader.readLine();
+            reader.readLine().toString();
 
             while ((line = reader.readLine()) != null) {
                 String[] dataRow = line.split(",");
@@ -245,31 +252,31 @@ public class FileParser {
         }
     }
 
-    public static boolean writeLineToRecordCSV(String csvRecordFile, Record record) {
+    public static boolean writeLineToRecordCSV(String csvRecordPath, Record record) {
 
-        if (csvRecordFile == null || record == null)
+        if (csvRecordPath == null || record == null)
             return false;
         if (record.actor == null)
             return false;
 
-        PrintWriter csvWriter = null;
+        FileWriter csvWriter = null;
 
         try {
 
-            File file = new File(csvRecordFile);
+            File file = new File(csvRecordPath);
 
             if (!file.exists()){
 
-                file = new File(csvRecordFile);
-                csvWriter = new  PrintWriter(new FileWriter(file, true));
+                file.createNewFile();
+                csvWriter = new FileWriter(file, true);
 
                 // Write header to new file
-                csvWriter.print(GlobalVariables.csvScanDataHeader);
+                csvWriter.write(GlobalVariables.csvScanDataHeader);
                 csvWriter.append('\n');
 
             } else {
 
-                csvWriter = new  PrintWriter(new FileWriter(file, true));
+                csvWriter = new FileWriter(file, true);
             }
 
             StringBuilder recordLine = new StringBuilder();
@@ -351,7 +358,7 @@ public class FileParser {
             recordLine.append(',');
 
             // Finish line
-            csvWriter.print(recordLine.toString());
+            csvWriter.write(recordLine.toString());
             csvWriter.append('\n');
             csvWriter.close();
 
@@ -359,38 +366,67 @@ public class FileParser {
 
         } catch (Exception e) {
 
-            if (csvWriter != null) {
-                csvWriter.append('\n');
-                csvWriter.close();
-            }
             return false;
         }
     }
 
-    public static boolean clearRecordCSV(String csvRecordFile) {
+    public static boolean clearRecordCSV(String csvRecordPath) {
 
-        if (csvRecordFile == null || csvRecordFile.isEmpty())
+        if (csvRecordPath == null || csvRecordPath.isEmpty())
             return false;
 
-        PrintWriter csvWriter = null;
+        FileWriter csvWriter = null;
 
         try {
 
-            File file = new File(csvRecordFile);
+            File file = new File(csvRecordPath);
 
-            if (!file.exists()) {
+            // If record file already exists, delete it
+            if (file.exists() && !file.delete()) {
 
-                file = new File(csvRecordFile);
+                return false;
+            }
 
-                // Delete contents
-                if (!file.delete())
-                    return false;
+            // Create new file
+            file = new File(csvRecordPath);
+            file.createNewFile();
+            csvWriter = new  FileWriter(file, true);
 
-                csvWriter = new PrintWriter(new FileWriter(file, true));
+            // Write header to new file
+            csvWriter.write(GlobalVariables.csvScanDataHeader);
+            csvWriter.append('\n');
+            csvWriter.close();
 
-                // Write header to new file
-                csvWriter.print(GlobalVariables.csvScanDataHeader);
-                csvWriter.append('\n');
+            return true;
+
+        } catch (Exception e) {
+
+            return false;
+        }
+    }
+
+    public static boolean exportRecordCSV(Context context, String csvRecordPath) {
+
+        if (csvRecordPath == null || csvRecordPath.isEmpty() || csvRecordPath.equals(".csv"))
+            return false;
+
+        try {
+
+            File file = new File(csvRecordPath);
+
+            File exportDownloadPath = new File(GlobalVariables.exportDownloadPath);
+            exportDownloadPath.mkdirs();
+
+            File fileCopy = new File(GlobalVariables.exportDownloadPath + file.getName());
+
+            if (file.exists() && copyFile(file, fileCopy)) {
+
+                Intent sendIntent = new Intent();
+                sendIntent.setAction(Intent.ACTION_SEND);
+                sendIntent.setType("text/plain");
+                sendIntent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(fileCopy));
+
+                context.startActivity(sendIntent);
 
                 return true;
             }
@@ -399,9 +435,30 @@ public class FileParser {
 
         } catch (Exception e) {
 
-            if (csvWriter != null) {
-                csvWriter.close();
+            return false;
+        }
+    }
+
+    private static boolean copyFile(File source, File destination) {
+
+        try {
+
+            InputStream in = new FileInputStream(source);
+            OutputStream out = new FileOutputStream(destination);
+
+            // Transfer bytes from in to out
+            byte[] buf = new byte[1024];
+            int len;
+            while ((len = in.read(buf)) > 0) {
+                out.write(buf, 0, len);
             }
+            in.close();
+            out.close();
+
+            return true;
+
+        } catch (Exception e) {
+
             return false;
         }
     }
