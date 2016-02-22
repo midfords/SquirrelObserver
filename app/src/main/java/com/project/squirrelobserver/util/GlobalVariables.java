@@ -34,8 +34,12 @@ public class GlobalVariables {
     public static String locationCSVPath = "";
     public static String actorsCSVPath = "";
     public static String behaviorsCSVPath = "";
+
     public static String csvAOPath = "";
+    public static String csvAOFileName = "Project_Export_AO_Data.csv";
     public static String csvScanPath = "";
+    public static String csvScanFileName = "Project_Export_Scan_Data.csv";
+    public static String exportDownloadPath = "/sdcard/Download/SquirrelObserver/";
 
     public static String csvScanDataHeader =
             "Tag," +
