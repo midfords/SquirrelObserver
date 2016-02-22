@@ -7,8 +7,13 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import com.project.squirrelobserver.R;
+import com.project.squirrelobserver.util.GlobalVariables;
+
+import java.util.zip.Inflater;
 
 /**
  * A simple {@link android.app.Fragment} subclass.
@@ -46,8 +51,28 @@ public class ImportExportFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_importexport, container, false);
+        View view = inflater.inflate(R.layout.fragment_importexport, container, false);
+
+        // Update file names if paths exist
+        if (GlobalVariables.locationCSVPath != null && !GlobalVariables.locationCSVPath.isEmpty()) {
+            TextView locationLabel = (TextView) view.findViewById(R.id.locationFileName);
+            locationLabel.setText(GlobalVariables.locationCSVPath.substring(
+                    GlobalVariables.locationCSVPath.lastIndexOf("/") + 1));
+        }
+        if (GlobalVariables.actorsCSVPath != null && !GlobalVariables.actorsCSVPath.isEmpty()) {
+            TextView actorsLabel = (TextView) view.findViewById(R.id.actorsFileName);
+            actorsLabel.setText(GlobalVariables.actorsCSVPath.substring(
+                    GlobalVariables.actorsCSVPath.lastIndexOf("/") + 1));
+        }
+        if (GlobalVariables.behaviorsCSVPath != null && !GlobalVariables.behaviorsCSVPath.isEmpty()) {
+            TextView behaviorsLabel = (TextView) view.findViewById(R.id.behaviorsFileName);
+            behaviorsLabel.setText(GlobalVariables.behaviorsCSVPath.substring(
+                    GlobalVariables.behaviorsCSVPath.lastIndexOf("/") + 1));
+        }
+
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event

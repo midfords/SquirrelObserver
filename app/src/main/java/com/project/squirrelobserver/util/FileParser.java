@@ -17,6 +17,8 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Created by sean on 2/12/16.
@@ -25,11 +27,11 @@ public class FileParser {
 
     public static boolean generateListOfLocationPoints (String csvFileLocation) {
 
-        if (csvFileLocation == null)
+        if (csvFileLocation == null || csvFileLocation.isEmpty())
             return false;
         String extension = csvFileLocation.substring(
                 csvFileLocation.lastIndexOf("."), csvFileLocation.length());
-        if (!extension.equalsIgnoreCase(".csv"))
+        if (!".csv".equalsIgnoreCase(extension))
             return false;
 
         GlobalVariables.locationPointsX = new ArrayList<LocationPoint>();    // Initialize our list of points
@@ -39,6 +41,9 @@ public class FileParser {
 
         try {
             File file = new File(csvFileLocation);
+            if (!file.exists())
+                return false;
+
             inputStream = new BufferedInputStream(new FileInputStream(file));
 
             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
@@ -98,19 +103,19 @@ public class FileParser {
 
             try {
 
-                inputStream.close();
+                if (inputStream != null) inputStream.close();
 
-            } catch (IOException e) { }
+            } catch (Exception e) { }
         }
     }
 
     public static boolean generateListOfBehaviors (String csvFileBehaviors) {
 
-        if (csvFileBehaviors == null)
+        if (csvFileBehaviors == null || csvFileBehaviors.isEmpty())
             return false;
         String extension = csvFileBehaviors.substring(
                 csvFileBehaviors.lastIndexOf("."), csvFileBehaviors.length());
-        if (!extension.equalsIgnoreCase(".csv"))
+        if (!".csv".equalsIgnoreCase(extension))
             return false;
 
         GlobalVariables.behaviors = new ArrayList<Behavior>();    // Initialize our list of behaviors
@@ -119,6 +124,9 @@ public class FileParser {
 
         try {
             File file = new File(csvFileBehaviors);
+            if (!file.exists())
+                return false;
+
             inputStream = new BufferedInputStream(new FileInputStream(file));
 
             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
@@ -171,19 +179,19 @@ public class FileParser {
 
             try {
 
-                inputStream.close();
+                if (inputStream != null) inputStream.close();
 
-            } catch (IOException e) { }
+            } catch (Exception e) { }
         }
     }
 
     public static boolean generateListOfActors (String csvFileActors) {
 
-        if (csvFileActors == null)
+        if (csvFileActors == null || csvFileActors.isEmpty())
             return false;
         String extension = csvFileActors.substring(
                 csvFileActors.lastIndexOf("."), csvFileActors.length());
-        if (!extension.equalsIgnoreCase(".csv"))
+        if (!".csv".equalsIgnoreCase(extension))
             return false;
 
         GlobalVariables.actors = new ArrayList<Actor>();    // Initialize our list of actors
@@ -192,6 +200,9 @@ public class FileParser {
 
         try {
             File file = new File(csvFileActors);
+            if (!file.exists())
+                return false;
+
             inputStream = new BufferedInputStream(new FileInputStream(file));
 
             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
@@ -246,9 +257,9 @@ public class FileParser {
 
             try {
 
-                inputStream.close();
+                if (inputStream != null) inputStream.close();
 
-            } catch (IOException e) { }
+            } catch (Exception e) { }
         }
     }
 
@@ -439,10 +450,188 @@ public class FileParser {
         }
     }
 
-    private static boolean copyFile(File source, File destination) {
+    public static boolean removeValueFromAppSettings(String settingsPath, String tag) {
+
+        if (settingsPath == null || settingsPath.isEmpty())
+            return false;
+        if (tag == null || tag.isEmpty())
+            return false;
+
+        FileWriter csvWriter = null;
+        InputStream inputStream = null;
+
+        try {
+            File file = new File(settingsPath);
+
+            // If settings don't exist, create the file
+            if (!file.exists()) {
+
+                return false;
+            }
+
+            inputStream = new BufferedInputStream(new FileInputStream(file));
+            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+            ArrayList<String> settingsLines = new ArrayList<String>();
+            String line;
+
+            // Read in entire settings file
+            while ((line = reader.readLine()) != null) {
+
+                settingsLines.add(line);
+            }
+
+            // Delete settings file contents
+            file.delete();
+            file.createNewFile();
+
+            // Write settings values while ignoring removed tag
+            csvWriter = new FileWriter(file, true);
+            for (int i = 0; i < settingsLines.size(); i++) {
+
+                String[] data = settingsLines.get(i).split(GlobalVariables.settingsDelimiter);
+
+                if (!tag.equals(data[0])) {
+
+                    csvWriter.write(settingsLines.get(i));
+                    csvWriter.append('\n');
+                }
+            }
+
+            csvWriter.close();
+
+            return true;
+
+        } catch (Exception e) {
+
+            return false;
+        }
+    }
+
+    public static boolean writeValueToAppSettings(String settingsPath, String tag, String value) {
+
+        if (settingsPath == null || settingsPath.isEmpty())
+            return false;
+        if (tag == null || tag.isEmpty())
+            return false;
+        if (value == null || value.isEmpty())
+            return false;
+
+        FileWriter csvWriter = null;
+        InputStream inputStream = null;
 
         try {
 
+            File file = new File(settingsPath);
+
+            // If settings don't exist, create the file
+            if (!file.exists()) {
+
+                // Create new settings file
+                file.createNewFile();
+            }
+
+            inputStream = new BufferedInputStream(new FileInputStream(file));
+            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+            ArrayList<String> settingsLines = new ArrayList<String>();
+            String newSettingsLine = tag + GlobalVariables.settingsDelimiter + value;
+            String line;
+            boolean wroteSetting = false;
+
+            // Read in entire settings file
+            while ((line = reader.readLine()) != null) {
+
+                settingsLines.add(line);
+            }
+
+            // Delete settings file contents
+            file.delete();
+            file.createNewFile();
+
+            // Replace settings value while writing back all data
+            csvWriter = new FileWriter(file, true);
+            for (int i = 0; i < settingsLines.size(); i++) {
+
+                String[] data = settingsLines.get(i).split(GlobalVariables.settingsDelimiter);
+
+                if (tag.equals(data[0])) {
+
+                    settingsLines.remove(i);
+                    settingsLines.add(i, newSettingsLine);
+                    wroteSetting = true;
+                }
+
+                csvWriter.write(settingsLines.get(i));
+                csvWriter.append('\n');
+            }
+
+            // Write new setting
+            if (!wroteSetting) {
+
+                csvWriter.write(newSettingsLine);
+                csvWriter.append('\n');
+            }
+
+            csvWriter.close();
+
+            return true;
+
+        } catch (Exception e) {
+
+            return false;
+        }
+    }
+
+    public static boolean importAppSettings(String settingsPath) {
+
+        if (settingsPath == null || settingsPath.isEmpty())
+            return false;
+
+        FileWriter csvWriter = null;
+        InputStream inputStream = null;
+
+        try {
+
+            File file = new File(settingsPath);
+
+            // If settings don't exist, create the file
+            if (!file.exists()) {
+
+                // Create new settings file
+                file.createNewFile();
+
+            } else {
+
+                inputStream = new BufferedInputStream(new FileInputStream(file));
+                BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+                String line;
+
+                while ((line = reader.readLine()) != null) {
+                    String[] dataRow = line.split(GlobalVariables.settingsDelimiter);
+
+                    if (GlobalVariables.settingsLocationTag.equals(dataRow[0])) {
+
+                        GlobalVariables.locationCSVPath = dataRow[1];
+                    } else if (GlobalVariables.settingsActorTag.equals(dataRow[0])) {
+
+                        GlobalVariables.actorsCSVPath = dataRow[1];
+                    } else if (GlobalVariables.settingsBehaviorTag.equals(dataRow[0])) {
+
+                        GlobalVariables.behaviorsCSVPath = dataRow[1];
+                    }
+                }
+            }
+
+            return true;
+
+        } catch (Exception e) {
+
+            return false;
+        }
+    }
+
+    private static boolean copyFile(File source, File destination) {
+
+        try {
             InputStream in = new FileInputStream(source);
             OutputStream out = new FileOutputStream(destination);
 
