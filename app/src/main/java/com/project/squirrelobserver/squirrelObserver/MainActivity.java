@@ -3,6 +3,10 @@ package com.project.squirrelobserver.squirrelObserver;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
+import android.os.Build;
+import android.provider.DocumentsContract;
+import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.FragmentManager;
@@ -143,6 +147,8 @@ public class MainActivity extends ActionBarActivity
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         if (data != null) {
+
+    //        String documentId = DocumentsContract.getDocumentId(data.getData());
 
             // Get the Uri of the selected file
             Uri uri = data.getData();

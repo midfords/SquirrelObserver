@@ -8,7 +8,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.RadioButton;
 import android.widget.TabHost;
-import android.widget.TabWidget;
 import android.widget.TextView;
 
 import com.project.squirrelobserver.R;
@@ -21,7 +20,19 @@ public  class RecordActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_record);
+        Bundle params = getIntent().getExtras();
 
+        //Setup timer
+        TextView timer = (TextView) findViewById(R.id.textClock);
+        boolean startTimer = params.getBoolean("startTimer");
+        if(startTimer) {
+            long startTimeInMillis = params.getLong("scanInterval");
+            int seconds = (int) (startTimeInMillis / 1000);
+            int minutes = seconds / 60;
+            seconds = seconds % 60;
+
+            timer.setText(String.format("%d:%02d", minutes, seconds));
+        }
         // Setup tabs
         TabHost tabHost = (TabHost)findViewById(android.R.id.tabhost);
 
