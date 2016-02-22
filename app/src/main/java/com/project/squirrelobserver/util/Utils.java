@@ -6,6 +6,9 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.database.Cursor;
 import android.net.Uri;
+import android.util.Log;
+import android.view.View;
+import android.widget.EditText;
 
 import com.project.squirrelobserver.R;
 
@@ -72,7 +75,7 @@ public class Utils {
                 .show();
     }
 
-    public static void clearButtonWarningMessage(final Context context, final String csvPath) {
+    public static void clearButtonWarningMessage(final Context context, final String csvFilPath) {
 
         // Close current activity after verify dialogue
         new AlertDialog.Builder(context)
@@ -82,7 +85,7 @@ public class Utils {
                     public void onClick(DialogInterface dialog, int which) {
 
                         // Clear file
-                        if (FileParser.clearRecordCSV(csvPath)) {
+                        if (FileParser.clearRecordCSV(csvFilPath)) {
 
                             Utils.clearButtonSuccessMessage(context);
                         } else {
