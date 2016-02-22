@@ -70,4 +70,11 @@
     <string name="setup_default_time">10:00</string>
     <string name="setup_x_hint">X</string>
     <string name="setup_y_hint">Y</string>
+
+    <string name="other_tab_location_label">Location:</string>
+    <string name="other_tab_location_x_label">X:</string>
+    <string name="other_tab_location_y_label">Y:</string>
+    <string name="other_tab_location_meters_unit">m</string>
+    <string name="other_tab_group_size_label">Group Size:</string>
+    <string name="other_tab_record_button_text">Record</string>
 </resources>
