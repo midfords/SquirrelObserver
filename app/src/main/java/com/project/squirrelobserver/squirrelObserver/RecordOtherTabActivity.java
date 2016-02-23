@@ -91,10 +91,12 @@ public  class RecordOtherTabActivity
                 }
 
                 boolean aoWriteResult = true;
-                boolean scanWriteResult =
-                        FileParser.writeLineToRecordCSV(csvScanPath, GlobalVariables.currentRecord);
+                boolean scanWriteResult = true;
 
-                if (writeToAOFile)
+                if (!GlobalVariables.currentRecord.aoOnly)
+                    scanWriteResult = FileParser.writeLineToRecordCSV(csvScanPath, GlobalVariables.currentRecord);
+
+                if (writeToAOFile || GlobalVariables.currentRecord.aoOnly)
                     aoWriteResult = FileParser.writeLineToRecordCSV(csvAOPath, GlobalVariables.currentRecord);
 
                 // If either write failed, show error message to user
