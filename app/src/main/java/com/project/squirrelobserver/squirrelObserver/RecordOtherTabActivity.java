@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.ToggleButton;
 
 import com.project.squirrelobserver.R;
 import com.project.squirrelobserver.util.Behavior;
@@ -49,7 +50,7 @@ public  class RecordOtherTabActivity
         ySpinner.setAdapter(y_list);
         ySpinner.setSelection(0);
 
-        Button recordButton = (Button) findViewById(R.id.record_button);
+        final Button recordButton = (Button) findViewById(R.id.record_button);
         recordButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -126,38 +127,113 @@ public  class RecordOtherTabActivity
                 } else {
 
                     // Reset button toggles, disable actor button
-                    for (int i = 0; GlobalVariables.currentRecord != null && i < GlobalVariables.currentRecord.behaviorsSize; i++) {
+                    for (int i = 0; i < GlobalVariables.currentRecord.behaviorsSize; i++) {
 
-                        Behavior b = GlobalVariables.currentRecord.getBehavior(i);
+                        Behavior recordBehavior = GlobalVariables.currentRecord.getBehavior(i);
 
-                        if (b != null
-                                && b.button != null
-                                && b.button.isChecked())
+                        // Update most recent and most frequent lists
+                        recordBehavior.numTimeUsed++;
+
+                        // Replace item if numTimeUsed is higher
+                        if (GlobalVariables.behaviorButtons != null
+                            && GlobalVariables.behaviorButtons.contains(recordBehavior.button)) {
+
+                            boolean placedItem = false;
+                            for (int j = 0; !placedItem && j < GlobalVariables.behaviorFrequentButtons.size(); j++) {
+
+                                ToggleButton frequentButtonToCheck = GlobalVariables.behaviorFrequentButtons.get(j);
+                                Behavior frequentBehaviorToCheck = (Behavior) frequentButtonToCheck.getTag();
+
+                                // Check if current button count is higher
+                                if (frequentBehaviorToCheck != null
+                                        && frequentBehaviorToCheck.numTimeUsed < recordBehavior.numTimeUsed) {
+
+                                    ToggleButton oldFrequent =
+                                            GlobalVariables.behaviorFrequentButtons.remove(j);
+
+                                    GlobalVariables.behaviorButtons.remove(recordBehavior.button);
+                                    GlobalVariables.behaviorFrequentButtons.add(recordBehavior.button);
+
+                                    // Place old frequent back in button list
+                                    GlobalVariables.behaviorButtons.add(oldFrequent);
+
+                                    placedItem = true;
+                                }
+                            }
+                        }
+
+                        // Uncheck button
+                        if (recordBehavior.button != null
+                                && recordBehavior.button.isChecked()) {
+                            GlobalVariables.currentRecord.getBehavior(i).button.setChecked(false);
                             GlobalVariables.currentRecord.getBehavior(i).button.callOnClick();
+                        }
                     }
+
+                    // Update most recent actor list if item selected was in main list
+                    if (GlobalVariables.currentRecord != null
+                            && GlobalVariables.currentRecord.actor != null
+                            && GlobalVariables.currentRecord.actor.actorButton != null
+                            && GlobalVariables.actorRecentButtons != null
+                            && GlobalVariables.actorButtons != null
+                            && GlobalVariables.actorButtons.contains(
+                                GlobalVariables.currentRecord.actor.actorButton)) {
+
+                        // Put old recent back in main button list
+                        ToggleButton oldRecent = GlobalVariables.actorRecentButtons.remove(0);
+                        GlobalVariables.actorButtons.add(oldRecent);
+
+                        // Remove used button from buttons and add to recent buttons
+                        GlobalVariables.actorButtons.remove(
+                                GlobalVariables.currentRecord.actor.actorButton);
+                        GlobalVariables.actorRecentButtons.add(
+                                GlobalVariables.currentRecord.actor.actorButton);
+                    }
+
+                    // Uncheck and disable actor button
                     if (GlobalVariables.currentRecord != null
                             && GlobalVariables.currentRecord.actor != null
                             && GlobalVariables.currentRecord.actor.actorButton != null
                             && GlobalVariables.currentRecord.actor.actorButton.isChecked()) {
+
                         GlobalVariables.currentRecord.actor.actorButton.setChecked(false);
-
-                        // Disable actor button that was used
                         GlobalVariables.currentRecord.actor.actorButton.setEnabled(false);
-
                         GlobalVariables.currentRecord.actor.actorButton.callOnClick();
                     }
+
+                    // Update most recent actee list
+                    if (GlobalVariables.currentRecord != null
+                            && GlobalVariables.currentRecord.actee != null
+                            && GlobalVariables.currentRecord.actee.acteeButton != null
+                            && GlobalVariables.acteeRecentButtons != null
+                            && GlobalVariables.acteeButtons != null
+                            && GlobalVariables.acteeButtons.contains(
+                                GlobalVariables.currentRecord.actee.acteeButton)) {
+
+                        // Put old recent back in main button list
+                        ToggleButton oldRecent = GlobalVariables.acteeRecentButtons.remove(0);
+                        GlobalVariables.acteeButtons.add(oldRecent);
+
+                        // Remove used button from buttons and add to recent buttons
+                        GlobalVariables.acteeButtons.remove(
+                                GlobalVariables.currentRecord.actee.acteeButton);
+                        GlobalVariables.acteeRecentButtons.add(
+                                GlobalVariables.currentRecord.actee.acteeButton);
+                    }
+
+                    // Uncheck actee button
                     if (GlobalVariables.currentRecord != null
                             && GlobalVariables.currentRecord.actee != null
                             && GlobalVariables.currentRecord.actee.acteeButton != null
                             && GlobalVariables.currentRecord.actee.acteeButton.isChecked()) {
+
                         GlobalVariables.currentRecord.actee.acteeButton.setChecked(false);
                         GlobalVariables.currentRecord.actee.acteeButton.callOnClick();
                     }
 
                     // Reset everything for next record
-                    Record newRecord =
+                    GlobalVariables.currentRecord =
                             new Record(GlobalVariables.currentRecord.observerID, GlobalVariables.currentRecord.aoOnly);
-                    GlobalVariables.currentRecord = newRecord;
 
                     // Reset Other tab fields
                     xSpinner.setSelection(0);
@@ -188,12 +264,11 @@ public  class RecordOtherTabActivity
         Utils.endRecordingSessionVerifyMessage(context, this);
     }
 
-
     public void groupSizeButtonClick(View v) {
+
         EditText groupSizeText = (EditText) findViewById(R.id.group_size);
         Button btn = (Button) v;
         groupSizeText.setText(btn.getText());
     }
-
 
 }

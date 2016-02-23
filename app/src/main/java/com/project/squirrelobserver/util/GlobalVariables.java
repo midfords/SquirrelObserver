@@ -5,6 +5,7 @@ import android.widget.ToggleButton;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.TooManyListenersException;
 
 /**
  * Created by sean on 2/13/16.
@@ -19,10 +20,13 @@ public class GlobalVariables {
     public static double originX = 0.0;
     public static double originY = 0.0;
 
-    // Used to keep track of recent button lists
-    public static Queue<ToggleButton> actorRecentButtons = new LinkedList<ToggleButton>();
-    public static Queue<ToggleButton> acteeRecentButtons = new LinkedList<ToggleButton>();
-    public static ArrayList<ToggleButton> behaviorFrequentButtons = new ArrayList<ToggleButton>();
+    // Used to keep track of button lists for tabs
+    public static final ArrayList<ToggleButton> actorButtons = new ArrayList<ToggleButton>();
+    public static final ArrayList<ToggleButton> actorRecentButtons = new ArrayList<ToggleButton>();
+    public static final ArrayList<ToggleButton> acteeButtons = new ArrayList<ToggleButton>();
+    public static final ArrayList<ToggleButton> acteeRecentButtons = new ArrayList<ToggleButton>();
+    public static final ArrayList<ToggleButton> behaviorFrequentButtons = new ArrayList<ToggleButton>();
+    public static final ArrayList<ToggleButton> behaviorButtons = new ArrayList<ToggleButton>();
 
     public static final int SCAN_INTERVAL_DEFAULT_MINUTES = 10;
     public static final int SCAN_INTERVAL_DEFAULT_SECONDS = 0;

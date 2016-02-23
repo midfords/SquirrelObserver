@@ -53,9 +53,6 @@ public  class RecordActorTabActivity
             final GridView gridView = new GridView(RecordActorTabActivity.this);
             final GridView gridViewRecent = new GridView(RecordActorTabActivity.this);
 
-            final ArrayList<ToggleButton> list = new ArrayList<ToggleButton>();
-            final ArrayList<ToggleButton> listRecent = new ArrayList<ToggleButton>();
-
             // Loop to run through all buttons
             for (int i = 0; i < GlobalVariables.actors.size(); i++) {
 
@@ -134,20 +131,19 @@ public  class RecordActorTabActivity
                 if (i < 4) {
 
                     GlobalVariables.actorRecentButtons.add(button);
-                    listRecent.add(button);
                 } else {
 
-                    list.add(button);
+                    GlobalVariables.actorButtons.add(button);
                 }
             }
 
             final ButtonAdapter adapter =
                     new ButtonAdapter(
-                            this, android.R.layout.simple_dropdown_item_1line, list);
+                            this, android.R.layout.simple_dropdown_item_1line, GlobalVariables.actorButtons);
 
             final ButtonAdapter adapterRecent =
                     new ButtonAdapter(
-                            this, android.R.layout.simple_dropdown_item_1line, listRecent);
+                            this, android.R.layout.simple_dropdown_item_1line, GlobalVariables.actorRecentButtons);
 
             gridView.setNumColumns(4);
             gridView.setLayoutParams(
@@ -191,7 +187,7 @@ public  class RecordActorTabActivity
 
                 @Override
                 public void afterTextChanged(Editable arg0) {
-                    hideButtons(filter.getText().toString(), list);
+                    hideButtons(filter.getText().toString(), GlobalVariables.actorButtons);
                     gridViewRecent.invalidateViews();
                     gridView.invalidateViews();
                 }
