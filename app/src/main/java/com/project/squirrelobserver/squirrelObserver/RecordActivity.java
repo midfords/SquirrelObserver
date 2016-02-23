@@ -39,17 +39,22 @@ public  class RecordActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_record);
         Bundle params = getIntent().getExtras();
+        boolean startTimer;
 
-        //Setup timer
-        TextView timer = (TextView) findViewById(R.id.textClock);
-        boolean startTimer = params.getBoolean("startTimer");
-        if(startTimer) {
-            long startTimeInMillis = params.getLong("scanInterval");
-            int seconds = (int) (startTimeInMillis / 1000);
-            int minutes = seconds / 60;
-            seconds = seconds % 60;
+        if(!params.equals(null)) {
+            //Setup timer
+            TextView timer = (TextView) findViewById(R.id.textClock);
+            startTimer = params.getBoolean("startTimer", false);
+            if (startTimer) {
+                long startTimeInMillis = params.getLong("scanInterval", 0);
+                int seconds = (int) (startTimeInMillis / 1000);
+                int minutes = seconds / 60;
+                seconds = seconds % 60;
 
-            timer.setText(String.format("%d:%02d", minutes, seconds));
+                timer.setText(String.format("%d:%02d", minutes, seconds));
+            }
+        } else {
+            startTimer = false;
         }
 
         // Set text in header label
