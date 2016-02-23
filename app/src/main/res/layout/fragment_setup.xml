@@ -50,52 +50,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="@string/setup_location_label"
-                    android:layout_below="@+id/section_label"
-                    android:layout_alignParentStart="true"
-                    android:autoText="false" />
-
-                <LinearLayout
-                    android:layout_height="wrap_content"
-                    android:layout_width="match_parent"
-                    android:layout_weight="1"
-                    android:layout_below="@+id/locationLabel"
-                    android:orientation="horizontal">
-
-                    <EditText
-                        android:layout_width="140dp"
-                        android:layout_height="wrap_content"
-                        android:inputType="numberDecimal"
-                        android:ems="10"
-                        android:id="@+id/locationX"
-                        android:textSize="15dp"
-                        android:hint="@string/setup_x_hint"/>
-
-                    <View
-                        android:layout_width="0dp"
-                        android:layout_height="1dp"
-                        android:layout_weight="1" >
-                    </View>
-
-                    <EditText
-                        android:layout_width="140dp"
-                        android:layout_height="wrap_content"
-                        android:inputType="numberDecimal"
-                        android:ems="10"
-                        android:id="@+id/locationY"
-                        android:textSize="15dp"
-                        android:hint="@string/setup_y_hint"/>
-
-                </LinearLayout>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="@string/setup_scan_interval_label"
                     android:layout_below="@+id/locationFieldLayout"
-                    android:layout_alignParentStart="true"
-                    android:layout_marginTop="53dp" />
+                    android:layout_alignParentStart="true" />
 
                 <EditText
                     android:layout_width="match_parent"

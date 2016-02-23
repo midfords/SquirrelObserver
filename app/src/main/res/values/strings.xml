@@ -66,13 +66,10 @@
     <string name="import_export_clear_button">Clear</string>
 
     <string name="setup_start_button">Start</string>
-    <string name="setup_location_label">Location:</string>
     <string name="setup_scan_interval_label">Scan Interval:</string>
     <string name="setup_observer_id_label">Observer ID:</string>
     <string name="setup_all_occurrences_label">All-Occurrences Behaviors:</string>
     <string name="setup_default_time">10:00</string>
-    <string name="setup_x_hint">X</string>
-    <string name="setup_y_hint">Y</string>
 
     <string name="other_tab_location_label">Location:</string>
     <string name="other_tab_location_x_label">X:</string>
