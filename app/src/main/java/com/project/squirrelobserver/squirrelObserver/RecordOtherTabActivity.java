@@ -58,15 +58,33 @@ public  class RecordOtherTabActivity
                 EditText groupSize = (EditText) findViewById(R.id.group_size);
                 EditText xMod = (EditText) findViewById(R.id.x_mod_distance);
                 EditText yMod = (EditText) findViewById(R.id.y_mod_distance);
-
-                GlobalVariables.currentRecord.groupSize = Integer.parseInt(groupSize.getText().toString());
                 Spinner xSpinner = (Spinner) findViewById(R.id.location_x_spinner);
                 Spinner ySpinner = (Spinner) findViewById(R.id.location_y_spinner);
 
+                if(groupSize.getText().toString().equals(null) || groupSize.getText().toString().equals("")){
+                    GlobalVariables.currentRecord.groupSize = 1;
+                } else {
+                    GlobalVariables.currentRecord.groupSize = Integer.parseInt(groupSize.getText().toString());
+                }
+
                 double x, y;
 
-                x = ((LocationPoint) xSpinner.getSelectedItem()).x + (Double.parseDouble(xMod.getText().toString()));
-                y = ((LocationPoint) ySpinner.getSelectedItem()).y + (Double.parseDouble(yMod.getText().toString()));
+                if(xSpinner.getAdapter().equals(null)) {
+                    x = 0;
+                } else {
+                    if(xMod.getText().toString().equals(null) || xMod.getText().toString().equals("")) {
+                        xMod.setText("0");
+                    }
+                    x = ((LocationPoint) xSpinner.getSelectedItem()).x + (Double.parseDouble(xMod.getText().toString()));
+                }
+                if(ySpinner.getAdapter().equals(null)) {
+                    y = 0;
+                } else {
+                    if(yMod.getText().toString().equals(null) || yMod.getText().toString().equals("")) {
+                        yMod.setText("0");
+                    }
+                    y = ((LocationPoint) ySpinner.getSelectedItem()).y + (Double.parseDouble(yMod.getText().toString()));
+                }
 
                 GlobalVariables.currentRecord.x = x;
                 GlobalVariables.currentRecord.y = y;
@@ -140,6 +158,13 @@ public  class RecordOtherTabActivity
                     Record newRecord =
                             new Record(GlobalVariables.currentRecord.observerID, GlobalVariables.currentRecord.aoOnly);
                     GlobalVariables.currentRecord = newRecord;
+
+                    // Reset Other tab fields
+                    xSpinner.setSelection(0);
+                    ySpinner.setSelection(0);
+                    groupSize.setText("1");
+                    xMod.setText("");
+                    yMod.setText("");
 
                     // Update tab enabled states
                     RecordActivity parentActivity = (RecordActivity) getParent();
