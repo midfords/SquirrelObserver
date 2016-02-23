@@ -12,6 +12,7 @@ public class Behavior {
     public int code;    // Behavior numerical code
     public String desc; // Description of behavior
     public ArrayList<String> modifiers; // List of all modifiers
+    public ArrayList<ToggleButton> modifierButtons = new ArrayList<ToggleButton>();
     public ToggleButton button;
     public boolean requiresActee;
 
