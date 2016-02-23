@@ -474,7 +474,7 @@ public class MainActivity extends ActionBarActivity
 
                                         // Start Record Activity
                                         Intent intent = new Intent(activity, RecordActivity.class);
-                                        Record record = new Record(observerIDEditText.getText().toString(), false);
+                                        Record record = new Record(observerIDEditText.getText().toString(), true);
 
                                         long intervalInMillis = 0;
                                         Bundle params = new Bundle();
