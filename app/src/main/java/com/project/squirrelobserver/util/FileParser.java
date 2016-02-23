@@ -62,25 +62,44 @@ public class FileParser {
                     x = dataRow[1];
                     y = dataRow[2];
 
-                    // Parse x and y integers
-                    int x_parsed = 0;
-                    int y_parsed = 0;
+                    // Check if we're reading the origin point
+                    if ("origin".equalsIgnoreCase(label)) {
 
-                    // Attempt to parse the int
-                    try { x_parsed = Integer.parseInt(x); }
-                    catch (Exception e) { }
-                    try { y_parsed = Integer.parseInt(y); }
-                    catch (Exception e) { }
+                        // Parse x and y integers
+                        double origin_x_parsed = 0.0;
+                        double origin_y_parsed = 0.0;
 
-                    LocationPoint locationPoint = new LocationPoint(label, x_parsed, y_parsed);
+                        // Attempt to parse the int
+                        try { origin_x_parsed = Double.parseDouble(x); }
+                        catch (Exception e) { }
+                        try { origin_y_parsed = Double.parseDouble(y); }
+                        catch (Exception e) { }
 
-                    if (x_parsed == 0) {
+                        GlobalVariables.originX = origin_x_parsed;
+                        GlobalVariables.originY = origin_y_parsed;
 
-                        GlobalVariables.locationPointsY.add(locationPoint);
+                    } else {
 
-                    } else if (y_parsed == 0) {
+                        // Parse x and y integers
+                        int x_parsed = 0;
+                        int y_parsed = 0;
 
-                        GlobalVariables.locationPointsX.add(locationPoint);
+                        // Attempt to parse the int
+                        try { x_parsed = Integer.parseInt(x); }
+                        catch (Exception e) { }
+                        try { y_parsed = Integer.parseInt(y); }
+                        catch (Exception e) { }
+
+                        LocationPoint locationPoint = new LocationPoint(label, x_parsed, y_parsed);
+
+                        if (x_parsed == 0) {
+
+                            GlobalVariables.locationPointsY.add(locationPoint);
+
+                        } else if (y_parsed == 0) {
+
+                            GlobalVariables.locationPointsX.add(locationPoint);
+                        }
                     }
                 }
             }

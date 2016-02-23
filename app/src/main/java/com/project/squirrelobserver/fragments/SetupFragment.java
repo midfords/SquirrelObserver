@@ -59,8 +59,6 @@ public  class SetupFragment
 
         final View contentView = inflater.inflate(R.layout.fragment_setup, container, false);
         final Button startButton = (Button) contentView.findViewById(R.id.startButton);
-        final EditText editTextX = (EditText) contentView.findViewById(R.id.locationX);
-        final EditText editTextY = (EditText) contentView.findViewById(R.id.locationY);
         final EditText editTextID = (EditText) contentView.findViewById(R.id.observerIDInput);
         final EditText editTextInterval = (EditText) contentView.findViewById(R.id.scanIntervalInput);
 
@@ -89,39 +87,11 @@ public  class SetupFragment
             }
         });
 
-        editTextX.addTextChangedListener(new TextWatcher() {
-
-            @Override
-            public void afterTextChanged(Editable arg0) {
-                enableStartButtonIfReady(editTextX, editTextY, editTextID, startButton);
-            }
-
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) { }
-        });
-
-        editTextY.addTextChangedListener(new TextWatcher() {
-
-            @Override
-            public void afterTextChanged(Editable arg0) {
-                enableStartButtonIfReady(editTextX, editTextY, editTextID, startButton);
-            }
-
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) { }
-        });
-
         editTextID.addTextChangedListener(new TextWatcher() {
 
             @Override
             public void afterTextChanged(Editable arg0) {
-                enableStartButtonIfReady(editTextX, editTextY, editTextID, startButton);
+                enableStartButtonIfReady(editTextID, startButton);
             }
 
             @Override
@@ -135,16 +105,12 @@ public  class SetupFragment
         return contentView;
     }
 
-    public void enableStartButtonIfReady(final EditText editTextX,
-                                         final EditText editTextY,
-                                         final EditText editTextID,
+    public void enableStartButtonIfReady(final EditText editTextID,
                                          final Button startButton) {
 
-        boolean isXFieldReady = !editTextX.getText().toString().isEmpty();
-        boolean isYFieldReady = !editTextY.getText().toString().isEmpty();
         boolean isIDFieldReady = !editTextID.getText().toString().isEmpty();
 
-        startButton.setEnabled(isXFieldReady && isYFieldReady && isIDFieldReady);
+        startButton.setEnabled(isIDFieldReady);
     }
 
     @Override

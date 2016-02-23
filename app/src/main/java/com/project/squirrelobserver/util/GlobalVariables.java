@@ -16,6 +16,9 @@ public class GlobalVariables {
     public static ArrayList<Behavior> behaviors;   // List of all behaviors
     public static ArrayList<Actor> actors;     // List of all actors
 
+    public static double originX = 0.0;
+    public static double originY = 0.0;
+
     // Used to keep track of recent button lists
     public static Queue<ToggleButton> actorRecentButtons = new LinkedList<ToggleButton>();
     public static Queue<ToggleButton> acteeRecentButtons = new LinkedList<ToggleButton>();
