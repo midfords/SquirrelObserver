@@ -17,6 +17,8 @@ import com.project.squirrelobserver.util.Behavior;
 import com.project.squirrelobserver.util.GlobalVariables;
 import com.project.squirrelobserver.util.Utils;
 
+import org.w3c.dom.Text;
+
 public  class RecordActivity
         extends TabActivity {
 
@@ -49,6 +51,17 @@ public  class RecordActivity
 
             timer.setText(String.format("%d:%02d", minutes, seconds));
         }
+
+        // Set text in header label
+        TextView header = (TextView) findViewById(R.id.scanAOHeaderLabel);
+
+        // Check for Scan or A-O
+        if (startTimer) {
+            header.setText(getResources().getString(R.string.record_activity_scan_label));
+        } else {
+            header.setText(getResources().getString(R.string.record_activity_all_occurrences_label));
+        }
+
         // Setup tabs
         tabHost = (TabHost)findViewById(android.R.id.tabhost);
 
@@ -177,29 +190,6 @@ public  class RecordActivity
 
         // Close current activity after verify dialogue
         Utils.endRecordingSessionVerifyMessage(view.getContext(), this);
-    }
-
-    public void onRadioButtonClicked(View view) {
-
-        // Is the button now checked?
-        boolean checked = ((RadioButton) view).isChecked();
-
-        // Check which radio button was clicked
-        switch(view.getId()) {
-
-            case R.id.radio_scan:
-                if (checked)
-
-                    // Scan radio was clicked
-
-                    break;
-            case R.id.radio_all_occurrences:
-                if (checked)
-
-                    // AO radio was clicked
-
-                    break;
-        }
     }
 
     @Override

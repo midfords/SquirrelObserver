@@ -31,26 +31,12 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"/>
 
-            <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_gravity="center_vertical">
-
-                <RadioButton android:id="@+id/radio_scan"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/record_activity_scan_radio"
-                    android:checked="true"
-                    android:onClick="onRadioButtonClicked"/>
-
-                <RadioButton android:id="@+id/radio_all_occurrences"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/record_activity_all_occurrences_radio"
-                    android:onClick="onRadioButtonClicked"/>
-
-            </RadioGroup>
+                android:gravity="center"
+                android:text="@string/record_activity_scan_label"
+                android:id="@+id/scanAOHeaderLabel"/>
 
             <!-- Hacky shit to right align button -->
             <View
