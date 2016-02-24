@@ -37,6 +37,12 @@ public  class RecordActivity
     private long currentTime = 0;
     private Chronometer mChronometer;
 
+    public RecordActorTabActivity actorTabActivity = null;
+    public RecordBehaviorTabActivity behaviorTabActivity = null;
+    public RecordActeeTabActivity acteeTabActivity = null;
+    public RecordModifierTabActivity modifierTabActivity = null;
+    public RecordOtherTabActivity otherTabActivity = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

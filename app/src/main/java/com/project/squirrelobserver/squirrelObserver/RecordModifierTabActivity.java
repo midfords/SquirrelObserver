@@ -37,6 +37,10 @@ public  class RecordModifierTabActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_record_modifiers_tab);
 
+        // Set reference to self in parent activity
+        RecordActivity recordActivity = (RecordActivity) this.getParent();
+        recordActivity.modifierTabActivity = RecordModifierTabActivity.this;
+
         // Create buttons for every behavior and place on activity
         if (GlobalVariables.behaviors != null && !GlobalVariables.behaviors.isEmpty()) {
 

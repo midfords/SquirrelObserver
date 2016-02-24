@@ -20,14 +20,6 @@ public class GlobalVariables {
     public static double originX = 0.0;
     public static double originY = 0.0;
 
-    // Used to keep track of button lists for tabs
-    public static final ArrayList<ToggleButton> actorButtons = new ArrayList<ToggleButton>();
-    public static final ArrayList<ToggleButton> actorRecentButtons = new ArrayList<ToggleButton>();
-    public static final ArrayList<ToggleButton> acteeButtons = new ArrayList<ToggleButton>();
-    public static final ArrayList<ToggleButton> acteeRecentButtons = new ArrayList<ToggleButton>();
-    public static final ArrayList<ToggleButton> behaviorFrequentButtons = new ArrayList<ToggleButton>();
-    public static final ArrayList<ToggleButton> behaviorButtons = new ArrayList<ToggleButton>();
-
     public static final int SCAN_INTERVAL_DEFAULT_MINUTES = 10;
     public static final int SCAN_INTERVAL_DEFAULT_SECONDS = 0;
 
