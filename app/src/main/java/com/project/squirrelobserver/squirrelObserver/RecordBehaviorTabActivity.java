@@ -210,7 +210,7 @@ public  class RecordBehaviorTabActivity
                 if (frequentBehaviorToCheck != null
                         && frequentBehaviorToCheck.numTimeUsed < behavior.numTimeUsed) {
 
-/*                    // Place old frequent back in button list
+                    // Place old frequent back in button list
                     ToggleButton oldFrequent = listFrequent.remove(i);
 
                     if (oldFrequent != null)
@@ -218,7 +218,7 @@ public  class RecordBehaviorTabActivity
 
                     if (list.remove(button))
                         listFrequent.add(button);
-*/
+
                     break;
                 }
             }

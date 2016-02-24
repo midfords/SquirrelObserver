@@ -271,5 +271,4 @@ public  class RecordActeeTabActivity
         // Close current activity after verify dialogue
         Utils.endRecordingSessionVerifyMessage(context, this);
     }
-
 }
