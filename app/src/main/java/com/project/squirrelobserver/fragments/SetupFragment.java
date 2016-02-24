@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +32,7 @@ public  class SetupFragment
 
 
     private SetupFragmentCallbacks mListener;
+    private View contentView = null;
 
     /**
      * Use this factory method to create a new instance of
@@ -57,7 +59,7 @@ public  class SetupFragment
     public View onCreateView(LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
 
-        final View contentView = inflater.inflate(R.layout.fragment_setup, container, false);
+        contentView = inflater.inflate(R.layout.fragment_setup, container, false);
         final Button startButton = (Button) contentView.findViewById(R.id.startButton);
         final EditText editTextID = (EditText) contentView.findViewById(R.id.observerIDInput);
         final EditText editTextInterval = (EditText) contentView.findViewById(R.id.scanIntervalInput);
@@ -103,6 +105,50 @@ public  class SetupFragment
 
         // Inflate the layout for this fragment
         return contentView;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        if (contentView != null) {
+
+            EditText editTextInterval = (EditText) contentView.findViewById(R.id.scanIntervalInput);
+            EditText editTextBehaviors = (EditText) contentView.findViewById(R.id.aoBehaviorsInput);
+
+            // Reset text in ao behaviors box
+            if (editTextBehaviors != null
+                    && GlobalVariables.aoBehaviors != null
+                    && !GlobalVariables.aoBehaviors.isEmpty()) {
+
+                String list = "";
+
+                for (int i = 0; i < GlobalVariables.aoBehaviors.size(); i++) {
+
+                    list += GlobalVariables.aoBehaviors.get(i).desc
+                            + ((i == GlobalVariables.aoBehaviors.size() - 1)
+                            ? "" : ", ");
+                }
+
+                editTextBehaviors.setText(list);
+            }
+
+            // Reset text in scan interval box
+            if (editTextInterval != null) {
+
+                int minute = GlobalVariables.scanIntervalMinutes;
+                int second = GlobalVariables.scanIntervalSeconds;
+
+                GlobalVariables.scanIntervalMinutes = minute;
+                GlobalVariables.scanIntervalSeconds = second;
+
+                String secondsString = (second < 10 ? "0" : "") + second;
+                String minutesString = (minute < 10 ? "0" : "") + minute;
+                String timeString = minutesString + ":" + secondsString;
+
+                editTextInterval.setText(timeString);
+            }
+        }
     }
 
     public void enableStartButtonIfReady(final EditText editTextID,
