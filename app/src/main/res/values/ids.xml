@@ -2,5 +2,11 @@
 <resources>
     
     <item name="modifier_grid_id" type="id" />
-    
+    <item name="actor_grid_id" type="id" />
+    <item name="actor_grid_recent_id" type="id" />
+    <item name="actee_grid_id" type="id" />
+    <item name="actee_grid_recent_id" type="id" />
+    <item name="behavior_grid_id" type="id" />
+    <item name="behavior_grid_recent_id" type="id" />
+
 </resources>

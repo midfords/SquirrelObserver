@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
@@ -13,16 +14,11 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.TableLayout;
-import android.widget.TableRow;
 import android.widget.ToggleButton;
 
 import com.project.squirrelobserver.R;
 import com.project.squirrelobserver.adapters.ButtonAdapter;
-import com.project.squirrelobserver.util.Actor;
 import com.project.squirrelobserver.util.Behavior;
-import com.project.squirrelobserver.util.FileParser;
 import com.project.squirrelobserver.util.GlobalVariables;
 import com.project.squirrelobserver.util.Utils;
 
@@ -34,10 +30,17 @@ import java.util.ArrayList;
 public  class RecordBehaviorTabActivity
         extends Activity {
 
+    private final ArrayList<ToggleButton> list = new ArrayList<ToggleButton>();
+    private final ArrayList<ToggleButton> listFrequent = new ArrayList<ToggleButton>();
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_record_behaviors_tab);
+
+        // Set reference to self in parent activity
+        RecordActivity recordActivity = (RecordActivity) this.getParent();
+        recordActivity.behaviorTabActivity = RecordBehaviorTabActivity.this;
 
         // Create buttons for every behavior and place on activity
         if (GlobalVariables.behaviors != null && !GlobalVariables.behaviors.isEmpty()) {
@@ -46,9 +49,6 @@ public  class RecordBehaviorTabActivity
 
             final GridView gridView = new GridView(RecordBehaviorTabActivity.this);
             final GridView gridViewFrequent = new GridView(RecordBehaviorTabActivity.this);
-
-            final ArrayList<ToggleButton> list = new ArrayList<ToggleButton>();
-            final ArrayList<ToggleButton> listFrequent = new ArrayList<ToggleButton>();
 
             // Loop to run through all buttons
             for (int i = 0; i < GlobalVariables.behaviors.size(); i++) {
@@ -102,11 +102,8 @@ public  class RecordBehaviorTabActivity
 
                 // Add the first four buttons to the frequentLayout
                 if (i < 4) {
-
-                    GlobalVariables.behaviorFrequentButtons.add(button);
                     listFrequent.add(button);
                 } else {
-
                     list.add(button);
                 }
             }
@@ -119,6 +116,7 @@ public  class RecordBehaviorTabActivity
                     new ButtonAdapter(
                             this, android.R.layout.simple_dropdown_item_1line, listFrequent);
 
+            gridView.setId(R.id.behavior_grid_id);
             gridView.setNumColumns(4);
             gridView.setLayoutParams(
                     new ViewGroup.LayoutParams(
@@ -129,6 +127,7 @@ public  class RecordBehaviorTabActivity
             gridView.setHorizontalSpacing(5);
             gridView.setAdapter(adapter);
 
+            gridView.setId(R.id.behavior_grid_recent_id);
             gridViewFrequent.setNumColumns(4);
             gridViewFrequent.setGravity(Gravity.TOP);
             gridViewFrequent.setVerticalSpacing(5);
@@ -162,7 +161,6 @@ public  class RecordBehaviorTabActivity
                 @Override
                 public void afterTextChanged(Editable arg0) {
                     hideButtons(filter.getText().toString(), list);
-                    gridViewFrequent.invalidateViews();
                     gridView.invalidateViews();
                 }
 
@@ -172,6 +170,66 @@ public  class RecordBehaviorTabActivity
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) { }
             });
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        final GridView gridView = (GridView) findViewById(R.id.behavior_grid_id);
+        final GridView gridViewRecent = (GridView) findViewById(R.id.behavior_grid_recent_id);
+
+        if (gridView != null && gridViewRecent != null) {
+            gridView.invalidateViews();
+            gridViewRecent.invalidateViews();
+        }
+    }
+
+    public void updateFrequentButtons(Behavior behavior) {
+
+        if (behavior == null || behavior.button == null)
+            return;
+
+        ToggleButton button = behavior.button;
+
+        // Update most recent and most frequent lists
+        behavior.numTimeUsed++;
+
+        // Replace item if numTimeUsed is higher
+        if (list != null
+                && listFrequent != null
+                && list.contains(button)) {
+
+            for (int i = 0; i < 4; i++) {
+
+                ToggleButton frequentButtonToCheck = listFrequent.get(i);
+                Behavior frequentBehaviorToCheck = (Behavior) frequentButtonToCheck.getTag();
+
+                // Check if current button count is higher
+                if (frequentBehaviorToCheck != null
+                        && frequentBehaviorToCheck.numTimeUsed < behavior.numTimeUsed) {
+
+                    // Place old frequent back in button list
+                    ToggleButton oldFrequent = listFrequent.remove(i);
+
+                    if (oldFrequent != null)
+                        list.add(oldFrequent);
+
+                    if (list.remove(button))
+                        listFrequent.add(button);
+
+                    break;
+                }
+            }
+        }
+    }
+
+    public void uncheckButton(ToggleButton button) {
+
+        if (button != null) {
+            button.setChecked(false);
+            button.callOnClick();
         }
     }
 

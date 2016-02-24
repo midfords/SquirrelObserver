@@ -39,11 +39,17 @@ public  class RecordActorTabActivity
         extends Activity {
 
     private ToggleButton previousButton = null;
+    private final ArrayList<ToggleButton> list = new ArrayList<ToggleButton>();
+    private final ArrayList<ToggleButton> listRecent = new ArrayList<ToggleButton>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_record_actor_tab);
+
+        // Set reference to self in parent activity
+        RecordActivity recordActivity = (RecordActivity) this.getParent();
+        recordActivity.actorTabActivity = RecordActorTabActivity.this;
 
         // Create buttons for every behavior and place on activity
         if (GlobalVariables.actors != null && !GlobalVariables.actors.isEmpty()) {
@@ -52,9 +58,6 @@ public  class RecordActorTabActivity
 
             final GridView gridView = new GridView(RecordActorTabActivity.this);
             final GridView gridViewRecent = new GridView(RecordActorTabActivity.this);
-
-            final ArrayList<ToggleButton> list = new ArrayList<ToggleButton>();
-            final ArrayList<ToggleButton> listRecent = new ArrayList<ToggleButton>();
 
             // Loop to run through all buttons
             for (int i = 0; i < GlobalVariables.actors.size(); i++) {
@@ -132,11 +135,8 @@ public  class RecordActorTabActivity
 
                 // Add the first four buttons to the recentLayout
                 if (i < 4) {
-
-                    GlobalVariables.actorRecentButtons.add(button);
                     listRecent.add(button);
                 } else {
-
                     list.add(button);
                 }
             }
@@ -149,6 +149,7 @@ public  class RecordActorTabActivity
                     new ButtonAdapter(
                             this, android.R.layout.simple_dropdown_item_1line, listRecent);
 
+            gridView.setId(R.id.actor_grid_id);
             gridView.setNumColumns(4);
             gridView.setLayoutParams(
                     new ViewGroup.LayoutParams(
@@ -159,6 +160,7 @@ public  class RecordActorTabActivity
             gridView.setHorizontalSpacing(5);
             gridView.setAdapter(adapter);
 
+            gridView.setId(R.id.actor_grid_recent_id);
             gridViewRecent.setNumColumns(4);
             gridViewRecent.setGravity(Gravity.TOP);
             gridViewRecent.setVerticalSpacing(5);
@@ -181,7 +183,8 @@ public  class RecordActorTabActivity
                 public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 
                     ToggleButton button = (ToggleButton) adapter.getItem(arg2);
-                    button.callOnClick();
+                    if (button != null)
+                        button.callOnClick();
                 }
             });
 
@@ -192,7 +195,6 @@ public  class RecordActorTabActivity
                 @Override
                 public void afterTextChanged(Editable arg0) {
                     hideButtons(filter.getText().toString(), list);
-                    gridViewRecent.invalidateViews();
                     gridView.invalidateViews();
                 }
 
@@ -204,6 +206,67 @@ public  class RecordActorTabActivity
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
                 }
             });
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        final GridView gridView = (GridView) findViewById(R.id.actor_grid_id);
+        final GridView gridViewRecent = (GridView) findViewById(R.id.actor_grid_recent_id);
+
+        if (gridView != null && gridViewRecent != null) {
+            gridView.invalidateViews();
+            gridViewRecent.invalidateViews();
+        }
+    }
+
+    public void reenableAllButtons() {
+
+        for (int i = 0; i < listRecent.size(); i++) {
+
+            listRecent.get(i).setEnabled(true);
+        }
+
+        for (int i = 0; i < list.size(); i++) {
+
+            list.get(i).setEnabled(true);
+        }
+    }
+
+    public void uncheckButton(ToggleButton button) {
+
+        if (button != null) {
+
+            button.setChecked(false);
+            button.callOnClick();
+        }
+    }
+
+    public void disableButton(ToggleButton button) {
+
+        if (button != null) {
+
+            button.setChecked(false);
+            button.setEnabled(false);
+            button.callOnClick();
+        }
+    }
+
+    public void updateRecentButtons(ToggleButton button) {
+
+        // Update most recent actor list
+        if (button != null && list.contains(button)) {
+
+            // Put old recent back in main button list
+            ToggleButton oldRecent = listRecent.remove(0);
+            if (oldRecent != null)
+                list.add(oldRecent);
+
+            // Remove used button from buttons and add to recent buttons
+            if (list.remove(button))
+                listRecent.add(button);
         }
     }
 

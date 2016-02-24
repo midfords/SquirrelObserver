@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.ToggleButton;
 
 import com.project.squirrelobserver.R;
 import com.project.squirrelobserver.util.Behavior;
@@ -23,6 +24,7 @@ import com.project.squirrelobserver.util.Record;
 import com.project.squirrelobserver.util.Utils;
 
 import java.util.ArrayList;
+import java.util.zip.GZIPOutputStream;
 
 /**
  * Created by sean on 2/9/16.
@@ -34,6 +36,10 @@ public  class RecordOtherTabActivity
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_record_other_tab);
+
+        // Set reference to self in parent activity
+        RecordActivity recordActivity = (RecordActivity) this.getParent();
+        recordActivity.otherTabActivity = RecordOtherTabActivity.this;
 
         Spinner xSpinner = (Spinner) findViewById(R.id.location_x_spinner);
 
@@ -49,7 +55,7 @@ public  class RecordOtherTabActivity
         ySpinner.setAdapter(y_list);
         ySpinner.setSelection(0);
 
-        Button recordButton = (Button) findViewById(R.id.record_button);
+        final Button recordButton = (Button) findViewById(R.id.record_button);
         recordButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -125,39 +131,60 @@ public  class RecordOtherTabActivity
 
                 } else {
 
-                    // Reset button toggles, disable actor button
-                    for (int i = 0; GlobalVariables.currentRecord != null && i < GlobalVariables.currentRecord.behaviorsSize; i++) {
+                    RecordActivity parentActivity = (RecordActivity) getParent();
 
-                        Behavior b = GlobalVariables.currentRecord.getBehavior(i);
+                    // Update behavior frequent buttons
+                    if (parentActivity != null && parentActivity.behaviorTabActivity != null) {
 
-                        if (b != null
-                                && b.button != null
-                                && b.button.isChecked())
-                            GlobalVariables.currentRecord.getBehavior(i).button.callOnClick();
+                        switch (GlobalVariables.currentRecord.behaviorsSize) {
+
+                            case 3:
+                                Behavior b2 = GlobalVariables.currentRecord.getBehavior(2);
+                                parentActivity.behaviorTabActivity.uncheckButton(b2.button);
+                                parentActivity.behaviorTabActivity.updateFrequentButtons(b2);
+
+                            case 2:
+                                Behavior b1 = GlobalVariables.currentRecord.getBehavior(1);
+                                parentActivity.behaviorTabActivity.uncheckButton(b1.button);
+                                parentActivity.behaviorTabActivity.updateFrequentButtons(b1);
+
+                            case 1:
+                                Behavior b0 = GlobalVariables.currentRecord.getBehavior(0);
+                                parentActivity.behaviorTabActivity.uncheckButton(b0.button);
+                                parentActivity.behaviorTabActivity.updateFrequentButtons(b0);
+                        }
                     }
-                    if (GlobalVariables.currentRecord != null
+
+                    // Update actor tab button
+                    if (parentActivity != null
+                            && parentActivity.actorTabActivity != null
+                            && GlobalVariables.currentRecord != null
                             && GlobalVariables.currentRecord.actor != null
-                            && GlobalVariables.currentRecord.actor.actorButton != null
-                            && GlobalVariables.currentRecord.actor.actorButton.isChecked()) {
-                        GlobalVariables.currentRecord.actor.actorButton.setChecked(false);
+                            && GlobalVariables.currentRecord.actor.actorButton != null) {
 
-                        // Disable actor button that was used
-                        GlobalVariables.currentRecord.actor.actorButton.setEnabled(false);
+                        ToggleButton actorButton = GlobalVariables.currentRecord.actor.actorButton;
 
-                        GlobalVariables.currentRecord.actor.actorButton.callOnClick();
+                        parentActivity.actorTabActivity.uncheckButton(actorButton);
+                        parentActivity.actorTabActivity.disableButton(actorButton);
+                        parentActivity.actorTabActivity.updateRecentButtons(actorButton);
                     }
-                    if (GlobalVariables.currentRecord != null
+
+                    // Update actee tab button
+                    if (parentActivity != null
+                            && parentActivity.acteeTabActivity != null
+                            && GlobalVariables.currentRecord != null
                             && GlobalVariables.currentRecord.actee != null
-                            && GlobalVariables.currentRecord.actee.acteeButton != null
-                            && GlobalVariables.currentRecord.actee.acteeButton.isChecked()) {
-                        GlobalVariables.currentRecord.actee.acteeButton.setChecked(false);
-                        GlobalVariables.currentRecord.actee.acteeButton.callOnClick();
+                            && GlobalVariables.currentRecord.actee.acteeButton!= null) {
+
+                        ToggleButton acteeButton = GlobalVariables.currentRecord.actee.acteeButton;
+
+                        parentActivity.acteeTabActivity.uncheckButton(acteeButton);
+                        parentActivity.acteeTabActivity.updateRecentButtons(acteeButton);
                     }
 
                     // Reset everything for next record
-                    Record newRecord =
+                    GlobalVariables.currentRecord =
                             new Record(GlobalVariables.currentRecord.observerID, GlobalVariables.currentRecord.aoOnly);
-                    GlobalVariables.currentRecord = newRecord;
 
                     // Reset Other tab fields
                     xSpinner.setSelection(0);
@@ -167,7 +194,6 @@ public  class RecordOtherTabActivity
                     yMod.setText("");
 
                     // Update tab enabled states
-                    RecordActivity parentActivity = (RecordActivity) getParent();
                     if (parentActivity != null) {
 
                         parentActivity.updateTabEnabledState();
@@ -188,12 +214,11 @@ public  class RecordOtherTabActivity
         Utils.endRecordingSessionVerifyMessage(context, this);
     }
 
-
     public void groupSizeButtonClick(View v) {
+
         EditText groupSizeText = (EditText) findViewById(R.id.group_size);
         Button btn = (Button) v;
         groupSizeText.setText(btn.getText());
     }
-
 
 }
