@@ -65,12 +65,13 @@ public  class RecordActivity
                         chronometer.setText(String.format("%d:%02d", minutes, seconds));
                     } else {
                         chronometer.stop();
+                        chronometer.setBase(SystemClock.elapsedRealtime());
                         Vibrator vibe = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
                         if(vibe.hasVibrator()) {
                             chronometer.setText(String.format("%d:%02d", 0, 0));
                             vibe.vibrate(500);
                         }
-//                        chronometer.start();  //This causes issues. How to restart it?
+                        chronometer.start();  //This causes issues. How to restart it?
                     }
                 }
             });
