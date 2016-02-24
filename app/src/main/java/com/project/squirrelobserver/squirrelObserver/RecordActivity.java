@@ -1,13 +1,15 @@
 package com.project.squirrelobserver.squirrelObserver;
 
 import android.app.TabActivity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+import android.os.SystemClock;
+import android.os.Vibrator;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.RadioButton;
+import android.widget.Chronometer;
 import android.widget.TabHost;
 import android.widget.TextView;
 
@@ -16,8 +18,6 @@ import com.project.squirrelobserver.util.Actor;
 import com.project.squirrelobserver.util.Behavior;
 import com.project.squirrelobserver.util.GlobalVariables;
 import com.project.squirrelobserver.util.Utils;
-
-import org.w3c.dom.Text;
 
 public  class RecordActivity
         extends TabActivity {
@@ -33,28 +33,48 @@ public  class RecordActivity
     private TextView tabTextView4 = null;
     private View tabView5 = null;
     private TextView tabTextView5 = null;
+    private long scanTime = 0;
+    private long currentTime = 0;
+    private Chronometer mChronometer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_record);
         Bundle params = getIntent().getExtras();
-        boolean startTimer;
 
-        if(!params.equals(null)) {
-            //Setup timer
-            TextView timer = (TextView) findViewById(R.id.textClock);
-            startTimer = params.getBoolean("startTimer", false);
-            if (startTimer) {
-                long startTimeInMillis = params.getLong("scanInterval", 0);
-                int seconds = (int) (startTimeInMillis / 1000);
-                int minutes = seconds / 60;
-                seconds = seconds % 60;
+        //Setup timer
+        mChronometer = (Chronometer) findViewById(R.id.timer);
 
-                timer.setText(String.format("%d:%02d", minutes, seconds));
-            }
-        } else {
-            startTimer = false;
+        boolean startTimer = params.getBoolean("startTimer");
+        if(startTimer) {
+            scanTime = params.getLong("scanInterval");
+
+            mChronometer.setBase(SystemClock.elapsedRealtime());
+            mChronometer.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener() {
+                @Override
+                public void onChronometerTick(Chronometer chronometer) {
+                    long timeExpended = SystemClock.elapsedRealtime() - chronometer.getBase();
+                    long currentTime = scanTime - timeExpended;
+
+                    System.out.println(currentTime);
+                    if(currentTime > 0) {
+                        int seconds = (int) (currentTime / 1000);
+                        int minutes = seconds / 60;
+                        seconds = seconds % 60;
+                        chronometer.setText(String.format("%d:%02d", minutes, seconds));
+                    } else {
+                        chronometer.stop();
+                        chronometer.setBase(SystemClock.elapsedRealtime());
+                        Vibrator vibe = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+                        if(vibe.hasVibrator()) {
+                            chronometer.setText(String.format("%d:%02d", 0, 0));
+                            vibe.vibrate(500);
+                        }
+                        chronometer.start();  //This causes issues. How to restart it?
+                    }
+                }
+            });
         }
 
         // Set text in header label
@@ -134,6 +154,10 @@ public  class RecordActivity
         tabView5.setClickable(false);
 
         tabHost.setCurrentTab(0);
+
+        if(!mChronometer.equals(null)) {
+            mChronometer.start();
+        }
     }
 
     public void switchTabView(int position) {
