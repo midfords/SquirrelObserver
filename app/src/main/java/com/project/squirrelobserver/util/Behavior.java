@@ -15,6 +15,7 @@ public class Behavior {
     public ArrayList<ToggleButton> modifierButtons = new ArrayList<ToggleButton>();
     public ToggleButton button;
     public boolean requiresActee;
+    public int numTimeUsed;
 
     public Behavior(int code, boolean requiresActee, String desc, ArrayList<String> modifiers) {
         this.code = code;
@@ -22,5 +23,6 @@ public class Behavior {
         this.desc = desc;
         this.modifiers = modifiers;
         button = null;
+        numTimeUsed = 0;
     }
 }
