@@ -39,7 +39,7 @@ public  class RecordBehaviorTabActivity
         setContentView(R.layout.activity_record_behaviors_tab);
 
         // Set reference to self in parent activity
-        RecordActivity recordActivity = (RecordActivity) this.getParent();
+        final RecordActivity recordActivity = (RecordActivity) this.getParent();
         recordActivity.behaviorTabActivity = RecordBehaviorTabActivity.this;
 
         // Create buttons for every behavior and place on activity
@@ -72,6 +72,8 @@ public  class RecordBehaviorTabActivity
                     @Override
                     public void onClick(View arg0) {
 
+                        RecordActivity parentActivity = (RecordActivity) getParent();
+
                         if (button.isChecked()) {
 
                             // Button is ON
@@ -88,10 +90,25 @@ public  class RecordBehaviorTabActivity
 
                             // Button is OFF
                             GlobalVariables.currentRecord.removeBehavior(behavior);
+
+                            // Check if we still need an actee
+                            if (GlobalVariables.currentRecord != null
+                                    && !GlobalVariables.currentRecord.requiresActee()) {
+
+                                if (recordActivity != null
+                                        && recordActivity.acteeTabActivity != null
+                                        && GlobalVariables.currentRecord != null
+                                        && GlobalVariables.currentRecord.actee != null
+                                        && GlobalVariables.currentRecord.actee.acteeButton != null) {
+
+                                    parentActivity.acteeTabActivity.uncheckButton(
+                                            GlobalVariables.currentRecord.actee.acteeButton);
+                                    GlobalVariables.currentRecord.actee = null;
+                                }
+                            }
                         }
 
                         // Update tab enabled states
-                        RecordActivity parentActivity = (RecordActivity) getParent();
                         if (parentActivity != null)
                             parentActivity.updateTabEnabledState();
 

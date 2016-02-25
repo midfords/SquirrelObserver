@@ -82,6 +82,18 @@ public class Record{
             return (Behavior) ((LinkedList) behaviors).get(i);
     }
 
+    public boolean requiresActee() {
+
+        boolean requiresActee = false;
+
+        for (int i = 0; i < behaviorsSize; i++) {
+
+            requiresActee = requiresActee || getBehavior(i).requiresActee;
+        }
+
+        return requiresActee;
+    }
+
     public boolean containsBehavior(Behavior b) {
 
         return behaviors != null && behaviors.contains(b);
