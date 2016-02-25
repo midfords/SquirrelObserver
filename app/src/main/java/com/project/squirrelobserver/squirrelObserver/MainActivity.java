@@ -18,11 +18,13 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.support.v4.widget.DrawerLayout;
+import android.view.WindowManager;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.project.squirrelobserver.util.Behavior;
 import com.project.squirrelobserver.util.FileParser;
@@ -471,20 +473,25 @@ public class MainActivity extends ActionBarActivity
                                 getResources().getString(R.string.ao_observer_id_picker_dialog_confirm),
                                 new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int id) {
+                                        if (observerIDEditText.getText().toString().equals("")) {
+                                            observerIDEditText.requestFocus();
+                                            Toast toast = Toast.makeText(getApplicationContext(), "Observer ID is mandatory", Toast.LENGTH_SHORT);
+                                            toast.show();
+                                        } else {
+                                            // Start Record Activity
+                                            Intent intent = new Intent(activity, RecordActivity.class);
+                                            Record record = new Record(observerIDEditText.getText().toString(), true);
 
-                                        // Start Record Activity
-                                        Intent intent = new Intent(activity, RecordActivity.class);
-                                        Record record = new Record(observerIDEditText.getText().toString(), true);
+                                            long intervalInMillis = 0;
+                                            Bundle params = new Bundle();
+                                            params.putBoolean("startTimer", false);
+                                            params.putLong("scanInterval", intervalInMillis);
+                                            intent.putExtras(params);
 
-                                        long intervalInMillis = 0;
-                                        Bundle params = new Bundle();
-                                        params.putBoolean("startTimer", false);
-                                        params.putLong("scanInterval", intervalInMillis);
-                                        intent.putExtras(params);
+                                            GlobalVariables.currentRecord = record;
 
-                                        GlobalVariables.currentRecord = record;
-
-                                        startActivity(intent);
+                                            startActivity(intent);
+                                        }
                                     }
                                 })
                         .setNegativeButton(

@@ -91,6 +91,7 @@ public  class RecordActivity
             header.setText(getResources().getString(R.string.record_activity_scan_label));
         } else {
             header.setText(getResources().getString(R.string.record_activity_all_occurrences_label));
+            mChronometer.setVisibility(View.GONE);
         }
 
         // Setup tabs
@@ -161,9 +162,7 @@ public  class RecordActivity
 
         tabHost.setCurrentTab(0);
 
-        if(!mChronometer.equals(null)) {
-            mChronometer.start();
-        }
+        mChronometer.start();
     }
 
     public void switchTabView(int position) {
