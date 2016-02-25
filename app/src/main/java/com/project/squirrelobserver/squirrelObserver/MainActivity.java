@@ -131,7 +131,7 @@ public class MainActivity extends ActionBarActivity
     private void showFileChooser(int selectCode) {
 
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-        intent.setType("*/*");
+        intent.setType("text/csv");
         intent.addCategory(Intent.CATEGORY_OPENABLE);
 
         try {
