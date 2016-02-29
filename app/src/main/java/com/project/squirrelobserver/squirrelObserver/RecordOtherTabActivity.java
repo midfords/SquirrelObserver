@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import com.project.squirrelobserver.R;
@@ -165,7 +166,10 @@ public  class RecordOtherTabActivity
                         ToggleButton actorButton = GlobalVariables.currentRecord.actor.actorButton;
 
                         parentActivity.actorTabActivity.uncheckButton(actorButton);
-                        parentActivity.actorTabActivity.disableButton(actorButton);
+                        TextView header = (TextView) parentActivity.findViewById(R.id.scanAOHeaderLabel);
+                        if(header.getText().toString().equals("Scan")) {
+                            parentActivity.actorTabActivity.disableButton(actorButton);
+                        }
                         parentActivity.actorTabActivity.updateRecentButtons(actorButton);
                     }
 
