@@ -66,13 +66,13 @@ public class FileParser {
                     if ("origin".equalsIgnoreCase(label)) {
 
                         // Parse x and y integers
-                        double origin_x_parsed = 0.0;
-                        double origin_y_parsed = 0.0;
+                        int origin_x_parsed = 0;
+                        int origin_y_parsed = 0;
 
                         // Attempt to parse the int
-                        try { origin_x_parsed = Double.parseDouble(x); }
+                        try { origin_x_parsed = Integer.parseInt(x); }
                         catch (Exception e) { }
-                        try { origin_y_parsed = Double.parseDouble(y); }
+                        try { origin_y_parsed = Integer.parseInt(y); }
                         catch (Exception e) { }
 
                         GlobalVariables.originX = origin_x_parsed;

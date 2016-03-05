@@ -17,8 +17,8 @@ public class GlobalVariables {
     public static ArrayList<Behavior> behaviors;   // List of all behaviors
     public static ArrayList<Actor> actors;     // List of all actors
 
-    public static double originX = 0.0;
-    public static double originY = 0.0;
+    public static int originX = 0;
+    public static int originY = 0;
 
     public static final int SCAN_INTERVAL_DEFAULT_MINUTES = 10;
     public static final int SCAN_INTERVAL_DEFAULT_SECONDS = 0;

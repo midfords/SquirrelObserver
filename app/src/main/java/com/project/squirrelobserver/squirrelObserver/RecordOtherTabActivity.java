@@ -74,7 +74,7 @@ public  class RecordOtherTabActivity
                     GlobalVariables.currentRecord.groupSize = Integer.parseInt(groupSize.getText().toString());
                 }
 
-                double x, y;
+                int x, y;
 
                 if(xSpinner.getAdapter().equals(null)) {
                     x = 0;
@@ -82,7 +82,7 @@ public  class RecordOtherTabActivity
                     if(xMod.getText().toString().equals(null) || xMod.getText().toString().equals("")) {
                         xMod.setText("0");
                     }
-                    x = ((LocationPoint) xSpinner.getSelectedItem()).x + (Double.parseDouble(xMod.getText().toString()));
+                    x = GlobalVariables.originX + ((LocationPoint) xSpinner.getSelectedItem()).x + (Integer.parseInt(xMod.getText().toString()));
                 }
                 if(ySpinner.getAdapter().equals(null)) {
                     y = 0;
@@ -90,7 +90,7 @@ public  class RecordOtherTabActivity
                     if(yMod.getText().toString().equals(null) || yMod.getText().toString().equals("")) {
                         yMod.setText("0");
                     }
-                    y = ((LocationPoint) ySpinner.getSelectedItem()).y + (Double.parseDouble(yMod.getText().toString()));
+                    y = GlobalVariables.originY + ((LocationPoint) ySpinner.getSelectedItem()).y + (Integer.parseInt(yMod.getText().toString()));
                 }
 
                 GlobalVariables.currentRecord.x = x;
