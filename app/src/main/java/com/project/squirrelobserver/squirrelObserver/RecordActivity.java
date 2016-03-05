@@ -42,6 +42,7 @@ public  class RecordActivity
     public RecordActeeTabActivity acteeTabActivity = null;
     public RecordModifierTabActivity modifierTabActivity = null;
     public RecordOtherTabActivity otherTabActivity = null;
+    public boolean startTimer = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +53,7 @@ public  class RecordActivity
         //Setup timer
         mChronometer = (Chronometer) findViewById(R.id.timer);
 
-        boolean startTimer = params.getBoolean("startTimer");
+        startTimer = params.getBoolean("startTimer");
         if(startTimer) {
             scanTime = params.getLong("scanInterval");
 
