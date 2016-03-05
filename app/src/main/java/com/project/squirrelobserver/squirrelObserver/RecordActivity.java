@@ -78,7 +78,7 @@ public  class RecordActivity
                             chronometer.setText(String.format("%d:%02d", 0, 0));
                             vibe.vibrate(500);
                         }
-                        chronometer.start();  //This causes issues. How to restart it?
+                        chronometer.start();
                     }
                 }
             });
