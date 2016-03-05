@@ -166,8 +166,8 @@ public  class RecordOtherTabActivity
                         ToggleButton actorButton = GlobalVariables.currentRecord.actor.actorButton;
 
                         parentActivity.actorTabActivity.uncheckButton(actorButton);
-                        TextView header = (TextView) parentActivity.findViewById(R.id.scanAOHeaderLabel);
-                        if(header.getText().toString().equals("Scan")) {
+
+                        if(parentActivity.startTimer) {
                             parentActivity.actorTabActivity.disableButton(actorButton);
                         }
                         parentActivity.actorTabActivity.updateRecentButtons(actorButton);
