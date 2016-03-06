@@ -63,12 +63,12 @@ public  class RecordActivity
                 scanMode = toggle.isChecked();
                 if (toggle.isChecked()) {
                     toggle.setText(R.string.record_activity_scan_label);
-                    if(!actorTabActivity.equals(null)) {
+                    if(actorTabActivity != null) {
                         actorTabActivity.switchFromAllOccurences();
                     }
                 } else {
                     toggle.setText(R.string.record_activity_all_occurrences_label);
-                    if(!actorTabActivity.equals(null)) {
+                    if(actorTabActivity != null) {
                         actorTabActivity.switchToAllOccurences();
                     }
                 }
@@ -95,7 +95,7 @@ public  class RecordActivity
                         chronometer.setText(String.format("%d:%02d", minutes, seconds));
                     } else {
                         chronometer.stop();
-                        if(!actorTabActivity.equals(null)) {
+                        if(actorTabActivity != null) {
                             actorTabActivity.reenableAllButtons();
                         }
                         chronometer.setBase(SystemClock.elapsedRealtime());
