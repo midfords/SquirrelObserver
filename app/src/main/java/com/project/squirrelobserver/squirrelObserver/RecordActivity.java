@@ -3,6 +3,7 @@ package com.project.squirrelobserver.squirrelObserver;
 import android.app.TabActivity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.os.Vibrator;
@@ -61,17 +62,20 @@ public  class RecordActivity
                 Switch toggle = (Switch) v;
                 scanMode = toggle.isChecked();
                 if (toggle.isChecked()) {
-                    modeToggle.setText(R.string.record_activity_scan_label);
-                    actorTabActivity.switchFromAllOccurances();
+                    toggle.setText(R.string.record_activity_scan_label);
+                    if(!actorTabActivity.equals(null)) {
+                        actorTabActivity.switchFromAllOccurences();
+                    }
                 } else {
-                    modeToggle.setText(R.string.record_activity_all_occurrences_label);
-                    actorTabActivity.switchToAllOccurances();
+                    toggle.setText(R.string.record_activity_all_occurrences_label);
+                    if(!actorTabActivity.equals(null)) {
+                        actorTabActivity.switchToAllOccurences();
+                    }
                 }
             }
         });
 
         scanMode = params.getBoolean("startTimer", false);
-        System.out.println("Scan Mode: " + scanMode);
         modeToggle.setChecked(scanMode);
         if(scanMode) {
             scanTime = params.getLong("scanInterval");
@@ -91,6 +95,9 @@ public  class RecordActivity
                         chronometer.setText(String.format("%d:%02d", minutes, seconds));
                     } else {
                         chronometer.stop();
+                        if(!actorTabActivity.equals(null)) {
+                            actorTabActivity.reenableAllButtons();
+                        }
                         chronometer.setBase(SystemClock.elapsedRealtime());
                         Vibrator vibe = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
                         if(vibe.hasVibrator()) {
@@ -109,6 +116,8 @@ public  class RecordActivity
             modeToggle.setText(R.string.record_activity_scan_label);
         } else {
             modeToggle.setText(R.string.record_activity_all_occurrences_label);
+            modeToggle.setEnabled(false);
+            modeToggle.setTextColor(Color.BLACK);
             mChronometer.setVisibility(View.GONE);
         }
 

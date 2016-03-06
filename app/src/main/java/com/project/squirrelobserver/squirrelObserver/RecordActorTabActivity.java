@@ -41,8 +41,7 @@ public  class RecordActorTabActivity
     private ToggleButton previousButton = null;
     private final ArrayList<ToggleButton> list = new ArrayList<ToggleButton>();
     private final ArrayList<ToggleButton> listRecent = new ArrayList<ToggleButton>();
-    private final ArrayList<ToggleButton> disabledList = new ArrayList<>();
-    private final ArrayList<ToggleButton> disabledListRecent = new ArrayList<>();
+    private ArrayList<ToggleButton> disabledList = new ArrayList<>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -224,10 +223,10 @@ public  class RecordActorTabActivity
         }
     }
 
-    public void switchToAllOccurances() {
+    public void switchToAllOccurences() {
         for (int i = 0; i < listRecent.size(); i++) {
             if(!listRecent.get(i).isEnabled()) {
-                disabledListRecent.add(listRecent.get(i));
+                disabledList.add(listRecent.get(i));
                 listRecent.get(i).setEnabled(true);
             }
         }
@@ -239,12 +238,7 @@ public  class RecordActorTabActivity
         }
     }
 
-    public void switchFromAllOccurances() {
-        for (int i = 0; i < disabledListRecent.size(); i++) {
-            disabledListRecent.get(i).setEnabled(false);
-        }
-        disabledListRecent.clear();
-
+    public void switchFromAllOccurences() {
         for (int i = 0; i < disabledList.size(); i++) {
             disabledList.get(i).setEnabled(false);
         }
