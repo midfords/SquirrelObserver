@@ -41,6 +41,7 @@ public  class RecordActorTabActivity
     private ToggleButton previousButton = null;
     private final ArrayList<ToggleButton> list = new ArrayList<ToggleButton>();
     private final ArrayList<ToggleButton> listRecent = new ArrayList<ToggleButton>();
+    private ArrayList<ToggleButton> disabledList = new ArrayList<>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -220,6 +221,28 @@ public  class RecordActorTabActivity
             gridView.invalidateViews();
             gridViewRecent.invalidateViews();
         }
+    }
+
+    public void switchToAllOccurences() {
+        for (int i = 0; i < listRecent.size(); i++) {
+            if(!listRecent.get(i).isEnabled()) {
+                disabledList.add(listRecent.get(i));
+                listRecent.get(i).setEnabled(true);
+            }
+        }
+        for (int i = 0; i < list.size(); i++) {
+            if(!list.get(i).isEnabled()) {
+                disabledList.add(list.get(i));
+                list.get(i).setEnabled(true);
+            }
+        }
+    }
+
+    public void switchFromAllOccurences() {
+        for (int i = 0; i < disabledList.size(); i++) {
+            disabledList.get(i).setEnabled(false);
+        }
+        disabledList.clear();
     }
 
     public void reenableAllButtons() {
