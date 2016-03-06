@@ -167,7 +167,7 @@ public  class RecordOtherTabActivity
 
                         parentActivity.actorTabActivity.uncheckButton(actorButton);
 
-                        if(parentActivity.startTimer) {
+                        if(parentActivity.scanMode) {
                             parentActivity.actorTabActivity.disableButton(actorButton);
                         }
                         parentActivity.actorTabActivity.updateRecentButtons(actorButton);

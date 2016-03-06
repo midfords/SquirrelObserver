@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Chronometer;
+import android.widget.Switch;
 import android.widget.TabHost;
 import android.widget.TextView;
 
@@ -36,13 +37,14 @@ public  class RecordActivity
     private long scanTime = 0;
     private long currentTime = 0;
     private Chronometer mChronometer;
+    private Switch modeToggle = null;
 
     public RecordActorTabActivity actorTabActivity = null;
     public RecordBehaviorTabActivity behaviorTabActivity = null;
     public RecordActeeTabActivity acteeTabActivity = null;
     public RecordModifierTabActivity modifierTabActivity = null;
     public RecordOtherTabActivity otherTabActivity = null;
-    public boolean startTimer = false;
+    public boolean scanMode = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,9 +54,26 @@ public  class RecordActivity
 
         //Setup timer
         mChronometer = (Chronometer) findViewById(R.id.timer);
+        modeToggle = (Switch) findViewById(R.id.modeToggle);
+        modeToggle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Switch toggle = (Switch) v;
+                scanMode = toggle.isChecked();
+                if (toggle.isChecked()) {
+                    modeToggle.setText(R.string.record_activity_scan_label);
+                    actorTabActivity.switchFromAllOccurances();
+                } else {
+                    modeToggle.setText(R.string.record_activity_all_occurrences_label);
+                    actorTabActivity.switchToAllOccurances();
+                }
+            }
+        });
 
-        startTimer = params.getBoolean("startTimer");
-        if(startTimer) {
+        scanMode = params.getBoolean("startTimer", false);
+        System.out.println("Scan Mode: " + scanMode);
+        modeToggle.setChecked(scanMode);
+        if(scanMode) {
             scanTime = params.getLong("scanInterval");
 
             mChronometer.setBase(SystemClock.elapsedRealtime());
@@ -85,13 +104,11 @@ public  class RecordActivity
         }
 
         // Set text in header label
-        TextView header = (TextView) findViewById(R.id.scanAOHeaderLabel);
-
         // Check for Scan or A-O
-        if (startTimer) {
-            header.setText(getResources().getString(R.string.record_activity_scan_label));
+        if (scanMode) {
+            modeToggle.setText(R.string.record_activity_scan_label);
         } else {
-            header.setText(getResources().getString(R.string.record_activity_all_occurrences_label));
+            modeToggle.setText(R.string.record_activity_all_occurrences_label);
             mChronometer.setVisibility(View.GONE);
         }
 
