@@ -15,12 +15,14 @@ public class Behavior {
     public ArrayList<ToggleButton> modifierButtons = new ArrayList<ToggleButton>();
     public ToggleButton button;
     public boolean requiresActee;
+    public boolean isAO;
     public int numTimeUsed;
 
-    public Behavior(int code, boolean requiresActee, String desc, ArrayList<String> modifiers) {
+    public Behavior(int code, boolean requiresActee, String desc, boolean isAO, ArrayList<String> modifiers) {
         this.code = code;
         this.requiresActee = requiresActee;
         this.desc = desc;
+        this.isAO = isAO;
         this.modifiers = modifiers;
         button = null;
         numTimeUsed = 0;
