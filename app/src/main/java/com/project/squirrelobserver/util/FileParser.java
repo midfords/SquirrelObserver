@@ -133,7 +133,7 @@ public class FileParser {
 
         GlobalVariables.behaviors = new ArrayList<Behavior>();    // Initialize our list of behaviors
         InputStream inputStream = null;
-        String code, reqActee, desc, modif;   // Code, Requires Acee, Description and Modifier
+        String code, reqActee, desc, isAO, modif;   // Code, Requires Acee, Description, Is All-Occ and Modifier
 
         try {
             File file = new File(csvFileBehaviors);
@@ -157,10 +157,11 @@ public class FileParser {
                     code = dataRow[0];
                     desc = dataRow[1];
                     reqActee = dataRow[2];
+                    isAO = dataRow[3];
 
                     // Generate list of modifiers
                     ArrayList<String> modifiers = new ArrayList<String>();
-                    for (int i = 3; i < dataRow.length; i++) {
+                    for (int i = 4; i < dataRow.length; i++) {
 
                         modif = dataRow[i];
                         modifiers.add(modif);
@@ -171,14 +172,16 @@ public class FileParser {
                         int code_parsed = Integer.parseInt(code);
                         int reqActee_parsed = Integer.parseInt(reqActee);
                         boolean reqActee_bool = reqActee_parsed == 1;
+                        int isAO_parsed = Integer.parseInt(isAO);
+                        boolean isAO_bool = isAO_parsed == 1;
 
-                        Behavior behavior = new Behavior(code_parsed, reqActee_bool, desc, modifiers);
+                        Behavior behavior = new Behavior(code_parsed, reqActee_bool, desc, isAO_bool, modifiers);
                         GlobalVariables.behaviors.add(behavior);
 
                     } catch (Exception e) { }
                 }
             }
-
+            GlobalVariables.aoBehaviors = null;
             return true;
 
         } catch (Exception e) {
