@@ -455,6 +455,14 @@ public class MainActivity extends ActionBarActivity
         }
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(GlobalVariables.aoBehaviors == null) {
+            fillAllOccurrenceBehaviorsList();
+        }
+    }
+
     public void fillAllOccurrenceBehaviorsList() {
         if (GlobalVariables.aoBehaviors == null) {
 
