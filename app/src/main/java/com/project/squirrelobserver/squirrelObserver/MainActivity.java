@@ -97,6 +97,9 @@ public class MainActivity extends ActionBarActivity
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
+
+        // Fill list of AO behaviors
+        fillAllOccurrenceBehaviorsList();
     }
 
     @Override
@@ -448,6 +451,35 @@ public class MainActivity extends ActionBarActivity
                                 }
                             })
                     .show();
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(GlobalVariables.aoBehaviors == null) {
+            fillAllOccurrenceBehaviorsList();
+        }
+    }
+
+    public void fillAllOccurrenceBehaviorsList() {
+        if (GlobalVariables.aoBehaviors == null) {
+
+            GlobalVariables.aoBehaviors = new ArrayList<Behavior>();
+        }
+
+        if (GlobalVariables.behaviors != null && GlobalVariables.behaviors.size() > 0) {
+            for (int i = 0; i < GlobalVariables.behaviors.size(); i++) {
+
+                Behavior behavior = GlobalVariables.behaviors.get(i);
+
+                // Automatically check behaviours flagged as AO
+                if (behavior.isAO
+                        && GlobalVariables.aoBehaviors != null
+                        && !GlobalVariables.aoBehaviors.contains(behavior)) {
+                    GlobalVariables.aoBehaviors.add(behavior);
+                }
+            }
         }
     }
 
