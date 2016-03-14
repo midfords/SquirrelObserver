@@ -1,6 +1,7 @@
 package com.project.squirrelobserver.fragments;
 
 import android.app.Activity;
+import android.provider.Settings;
 import android.support.v4.app.Fragment;
 import android.net.Uri;
 import android.os.Bundle;
@@ -70,6 +71,7 @@ public class ImportExportFragment extends Fragment {
             TextView behaviorsLabel = (TextView) view.findViewById(R.id.behaviorsFileName);
             behaviorsLabel.setText(GlobalVariables.behaviorsCSVPath.substring(
                     GlobalVariables.behaviorsCSVPath.lastIndexOf("/") + 1));
+            GlobalVariables.aoBehaviors = null;
         }
 
         return view;

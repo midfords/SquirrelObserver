@@ -41,12 +41,6 @@
                 android:layout_weight="1"
                 android:id="@+id/modeToggle"
                 android:textAlignment="center" />
-      <!--      <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="@string/record_activity_scan_label"
-                android:id="@+id/scanAOHeaderLabel"/>-->
 
             <!-- Hacky shit to right align button -->
             <View
