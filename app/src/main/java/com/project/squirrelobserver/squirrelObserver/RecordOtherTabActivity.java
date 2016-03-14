@@ -68,7 +68,7 @@ public  class RecordOtherTabActivity
                 Spinner xSpinner = (Spinner) findViewById(R.id.location_x_spinner);
                 Spinner ySpinner = (Spinner) findViewById(R.id.location_y_spinner);
 
-                if(groupSize.getText().toString().equals(null) || groupSize.getText().toString().equals("")){
+                if(groupSize.getText().toString() == null || groupSize.getText().toString().equals("")){
                     GlobalVariables.currentRecord.groupSize = 1;
                 } else {
                     GlobalVariables.currentRecord.groupSize = Integer.parseInt(groupSize.getText().toString());
@@ -76,18 +76,18 @@ public  class RecordOtherTabActivity
 
                 int x, y;
 
-                if(xSpinner.getAdapter().equals(null)) {
+                if(xSpinner.getAdapter() == null) {
                     x = 0;
                 } else {
-                    if(xMod.getText().toString().equals(null) || xMod.getText().toString().equals("")) {
+                    if(xMod.getText().toString() == null || xMod.getText().toString().equals("")) {
                         xMod.setText("0");
                     }
                     x = GlobalVariables.originX + ((LocationPoint) xSpinner.getSelectedItem()).x + (Integer.parseInt(xMod.getText().toString()));
                 }
-                if(ySpinner.getAdapter().equals(null)) {
+                if(ySpinner.getAdapter() == null) {
                     y = 0;
                 } else {
-                    if(yMod.getText().toString().equals(null) || yMod.getText().toString().equals("")) {
+                    if(yMod.getText().toString() == null || yMod.getText().toString().equals("")) {
                         yMod.setText("0");
                     }
                     y = GlobalVariables.originY + ((LocationPoint) ySpinner.getSelectedItem()).y + (Integer.parseInt(yMod.getText().toString()));
