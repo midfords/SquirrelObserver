@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.project.squirrelobserver.R;
 import com.project.squirrelobserver.util.Record;
@@ -153,9 +154,23 @@ public  class SetupFragment
 
     public void enableStartButtonIfReady(final EditText editTextID,
                                          final Button startButton) {
+        String idText = editTextID.getText().toString();
+        boolean isIDFieldReady = true;
+        Toast toast;
 
-        boolean isIDFieldReady = !editTextID.getText().toString().isEmpty();
-
+        if(idText.isEmpty()) {
+            isIDFieldReady = false;
+        } else {
+            for(int i=0; i < idText.length(); i++) {
+                if(!Character.isLetterOrDigit(idText.charAt(i))) {
+                    isIDFieldReady = false;
+                }
+            }
+            if(!isIDFieldReady) {
+                toast = Toast.makeText(getActivity().getApplicationContext(), "Illegal Character in Observer ID", Toast.LENGTH_SHORT);
+                toast.show();
+            }
+        }
         startButton.setEnabled(isIDFieldReady);
     }
 
