@@ -1,7 +1,6 @@
 package com.project.squirrelobserver.fragments;
 
 import android.app.Activity;
-import android.provider.Settings;
 import android.support.v4.app.Fragment;
 import android.net.Uri;
 import android.os.Bundle;
