@@ -14,6 +14,7 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.LinearLayout;
+import android.widget.Switch;
 import android.widget.ToggleButton;
 
 import com.project.squirrelobserver.R;
@@ -32,6 +33,8 @@ public  class RecordBehaviorTabActivity
 
     private final ArrayList<ToggleButton> list = new ArrayList<ToggleButton>();
     private final ArrayList<ToggleButton> listFrequent = new ArrayList<ToggleButton>();
+    private GridView gridView = null;
+    private GridView gridViewFrequent = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -47,8 +50,8 @@ public  class RecordBehaviorTabActivity
 
             LinearLayout linearLayout = (LinearLayout) findViewById(R.id.behaviorsTabLinearLayout);
 
-            final GridView gridView = new GridView(RecordBehaviorTabActivity.this);
-            final GridView gridViewFrequent = new GridView(RecordBehaviorTabActivity.this);
+            gridView = new GridView(RecordBehaviorTabActivity.this);
+            gridViewFrequent = new GridView(RecordBehaviorTabActivity.this);
 
             // Loop to run through all buttons
             for (int i = 0; i < GlobalVariables.behaviors.size(); i++) {
@@ -116,7 +119,10 @@ public  class RecordBehaviorTabActivity
                         gridView.invalidateViews();
                     }
                 });
-
+                if (!behavior.isAO
+                        && !recordActivity.scanMode) {
+                    button.setVisibility(View.GONE);
+                }
                 // Add the first four buttons to the frequentLayout
                 if (i < 4) {
                     listFrequent.add(button);
@@ -188,18 +194,16 @@ public  class RecordBehaviorTabActivity
                 public void onTextChanged(CharSequence s, int start, int before, int count) { }
             });
         }
+
     }
 
     @Override
     public void onResume() {
         super.onResume();
 
-        final GridView gridView = (GridView) findViewById(R.id.behavior_grid_id);
-        final GridView gridViewRecent = (GridView) findViewById(R.id.behavior_grid_recent_id);
-
-        if (gridView != null && gridViewRecent != null) {
+        if (gridView != null && gridViewFrequent != null) {
             gridView.invalidateViews();
-            gridViewRecent.invalidateViews();
+            gridViewFrequent.invalidateViews();
         }
     }
 
@@ -255,6 +259,8 @@ public  class RecordBehaviorTabActivity
         if (buttons == null)
             return;
 
+        boolean isScanMode = ((Switch)getParent().findViewById(R.id.modeToggle)).isChecked();
+
         for (int i = 0; i < buttons.size(); i++) {
 
             ToggleButton button = buttons.get(i);
@@ -268,9 +274,39 @@ public  class RecordBehaviorTabActivity
             if (!behavior.desc.toLowerCase().contains(filter.toLowerCase())) {
 
                 button.setVisibility(View.GONE);
-            } else {
-
+            } else if (isScanMode || (!isScanMode && behavior.isAO)) {
                 button.setVisibility(View.VISIBLE);
+            }
+        }
+    }
+
+    public void toggleMode(boolean scanMode) {
+        toggleHideNonAOBehaviors(scanMode, list);
+        toggleHideNonAOBehaviors(scanMode, listFrequent);
+
+        if (gridView != null && gridViewFrequent != null) {
+            gridView.invalidateViews();
+            gridViewFrequent.invalidateViews();
+        }
+    }
+
+    private void toggleHideNonAOBehaviors(boolean scanMode, ArrayList<ToggleButton> buttons) {
+        if(buttons == null)
+            return;
+
+        for(int i=0; i < buttons.size(); i++) {
+            ToggleButton button = buttons.get(i);
+            if (button == null)
+                return;
+
+            Behavior behavior = (Behavior) button.getTag();
+            if(behavior == null)
+                return;
+
+            if (!scanMode && !behavior.isAO) {
+                    button.setVisibility(View.GONE);
+            } else {
+                    button.setVisibility(View.VISIBLE);
             }
         }
     }
