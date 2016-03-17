@@ -38,6 +38,8 @@
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:showText="false"
+                android:textOff=""
+                android:textOn=""
                 android:layout_weight="1"
                 android:id="@+id/modeToggle"
                 android:textAlignment="center" />

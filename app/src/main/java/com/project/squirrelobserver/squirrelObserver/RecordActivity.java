@@ -61,6 +61,10 @@ public  class RecordActivity
             public void onClick(View v) {
                 Switch toggle = (Switch) v;
                 scanMode = toggle.isChecked();
+                if (behaviorTabActivity != null) {
+                    behaviorTabActivity.toggleMode(scanMode);
+                    behaviorTabActivity.onContentChanged();
+                }
                 if (toggle.isChecked()) {
                     toggle.setText(R.string.record_activity_scan_label);
                     if(actorTabActivity != null) {
