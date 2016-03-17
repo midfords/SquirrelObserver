@@ -201,9 +201,6 @@ public  class RecordBehaviorTabActivity
     public void onResume() {
         super.onResume();
 
-//        gridView = (GridView) findViewById(R.id.behavior_grid_id);
-//        gridViewFrequent = (GridView) findViewById(R.id.behavior_grid_recent_id);
-
         if (gridView != null && gridViewFrequent != null) {
             gridView.invalidateViews();
             gridViewFrequent.invalidateViews();
@@ -277,14 +274,8 @@ public  class RecordBehaviorTabActivity
             if (!behavior.desc.toLowerCase().contains(filter.toLowerCase())) {
 
                 button.setVisibility(View.GONE);
-            } else {
-                if(isScanMode) {
-                    button.setVisibility(View.VISIBLE);
-                } else {
-                    if(((Behavior) button.getTag()).isAO) {
-                        button.setVisibility(View.VISIBLE);
-                    }
-                }
+            } else if (isScanMode || (!isScanMode && behavior.isAO)) {
+                button.setVisibility(View.VISIBLE);
             }
         }
     }
@@ -292,9 +283,6 @@ public  class RecordBehaviorTabActivity
     public void toggleMode(boolean scanMode) {
         toggleHideNonAOBehaviors(scanMode, list);
         toggleHideNonAOBehaviors(scanMode, listFrequent);
-
-//        final GridView gridView = (GridView) findViewById(R.id.behavior_grid_id);
-//        final GridView gridViewRecent = (GridView) findViewById(R.id.behavior_grid_recent_id);
 
         if (gridView != null && gridViewFrequent != null) {
             gridView.invalidateViews();
@@ -315,11 +303,9 @@ public  class RecordBehaviorTabActivity
             if(behavior == null)
                 return;
 
-            if (!scanMode) {
-                if (!behavior.isAO)
+            if (!scanMode && !behavior.isAO) {
                     button.setVisibility(View.GONE);
             } else {
-                if (!behavior.isAO)
                     button.setVisibility(View.VISIBLE);
             }
         }
