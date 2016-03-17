@@ -50,7 +50,7 @@
 
     <string name="record_activity_end_button">End</string>
     <string name="record_activity_scan_label">Scan</string>
-    <string name="record_activity_all_occurrences_label">All Occurrences</string>
+    <string name="record_activity_all_occurrences_label">A-O</string>
     <string name="record_activity_filter_hint">Filter</string>
 
     <string name="import_export_location_label">Location File:</string>
