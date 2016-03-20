@@ -17,6 +17,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -312,8 +313,8 @@ public class FileParser {
             recordLine.append(',');
 
             // Write the date
-            if (record.date != null)
-                recordLine.append(record.date.toString());
+            record.date = Calendar.getInstance();
+            recordLine.append(record.dateFormat.format(record.date.getTime()));
             recordLine.append(',');
 
             // Write the location coordinates
@@ -369,8 +370,8 @@ public class FileParser {
             recordLine.append(record.relationship);
             recordLine.append(',');
 
-            if (record.date != null)
-                recordLine.append(record.date);
+            // Write Time
+            recordLine.append(record.timeFormat.format(record.date.getTime()));
             recordLine.append(',');
 
             recordLine.append(record.groupSize);
@@ -379,6 +380,8 @@ public class FileParser {
             recordLine.append(record.observerID);
             recordLine.append(',');
 
+            recordLine.append(record.scanInterval);
+            recordLine.append(',');
             // Finish line
             csvWriter.write(recordLine.toString());
             csvWriter.append('\n');

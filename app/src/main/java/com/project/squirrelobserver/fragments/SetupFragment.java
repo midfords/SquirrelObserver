@@ -84,6 +84,7 @@ public  class SetupFragment
                 params.putLong("scanInterval", intervalInMillis);
                 intent.putExtras(params);
 
+                GlobalVariables.scanInterval = 0;
                 GlobalVariables.currentRecord = record;
 
                 getActivity().startActivity(intent);

@@ -64,8 +64,11 @@ public class GlobalVariables {
             "Time," +
             "# Squirrels in Group," +
             "ID," +
+            "Scan Interval," +
             "Comments";
 
     public static Record currentRecord = null;
     public static ArrayList<Behavior> aoBehaviors = null;
+
+    public static int scanInterval = 0;
 }
