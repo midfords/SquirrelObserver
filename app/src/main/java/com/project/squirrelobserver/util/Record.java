@@ -1,7 +1,10 @@
 package com.project.squirrelobserver.util;
 
+import java.text.DateFormat;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -17,15 +20,22 @@ public class Record{
     private Queue<Behavior> behaviors;
     public int behaviorsSize;
     public ArrayList<String> modifiers;
-    public Date date = null;
+    public Calendar date = null;
     public double x;
     public double y;
     public int relationship;
     public int groupSize;
     public String observerID;
+    public int scanInterval;
     public boolean aoOnly;
+    public DateFormat dateFormat = null;
+    public DateFormat timeFormat = null;
+
 
     public Record(String observerID, boolean aoOnly) {
+
+        dateFormat = new SimpleDateFormat("dd-MMM-yy");
+        timeFormat = new SimpleDateFormat("HHmm");
 
         this.behaviors = new LinkedList<Behavior>();
         this.behaviorsSize = 0;
@@ -36,6 +46,7 @@ public class Record{
         this.y = 0.0;
         this.relationship = 0;
         this.groupSize = 0;
+        this.scanInterval = 0;
     }
 
     public Behavior addBehavior(Behavior behavior) {

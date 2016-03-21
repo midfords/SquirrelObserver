@@ -83,7 +83,7 @@ public  class RecordActivity
         modeToggle.setChecked(scanMode);
         if(scanMode) {
             scanTime = params.getLong("scanInterval");
-
+            GlobalVariables.scanInterval++;
             mChronometer.setBase(SystemClock.elapsedRealtime());
             mChronometer.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener() {
                 @Override
@@ -99,6 +99,7 @@ public  class RecordActivity
                         chronometer.setText(String.format("%d:%02d", minutes, seconds));
                     } else {
                         chronometer.stop();
+                        GlobalVariables.scanInterval++;
                         if(actorTabActivity != null) {
                             actorTabActivity.reenableAllButtons();
                         }

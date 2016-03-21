@@ -96,6 +96,8 @@ public  class RecordOtherTabActivity
                 GlobalVariables.currentRecord.x = x;
                 GlobalVariables.currentRecord.y = y;
 
+                GlobalVariables.currentRecord.scanInterval = GlobalVariables.scanInterval;
+
                 // Write record to file
                 String csvScanPath =
                         v.getContext().getFilesDir().getPath() + "/" + GlobalVariables.csvScanFileName;
