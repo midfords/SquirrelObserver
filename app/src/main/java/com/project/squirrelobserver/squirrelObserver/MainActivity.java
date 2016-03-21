@@ -521,7 +521,7 @@ public class MainActivity extends ActionBarActivity
                                             if (isIDFieldReady) {
                                                 // Start Record Activity
                                                 Intent intent = new Intent(activity, RecordActivity.class);
-                                                Record record = new Record(observerIDEditText.getText().toString(), false);
+                                                Record record = new Record(observerId, false);
 
                                                 long intervalInMillis = 0;
                                                 Bundle params = new Bundle();
