@@ -226,13 +226,13 @@ public  class RecordActeeTabActivity
         if (button != null && list.contains(button)) {
 
             // Put old recent back in main button list
-            ToggleButton oldRecent = listRecent.remove(0);
+            ToggleButton oldRecent = listRecent.remove(listRecent.size()-1);
             if (oldRecent != null)
-                list.add(oldRecent);
+                list.add(0, oldRecent);
 
             // Remove used button from buttons and add to recent buttons
             if (list.remove(button))
-                listRecent.add(button);
+                listRecent.add(0, button);
         }
     }
 
