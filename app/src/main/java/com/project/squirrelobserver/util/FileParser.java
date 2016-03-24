@@ -367,7 +367,9 @@ public class FileParser {
             }
 
             // Write additional info
-            recordLine.append(record.relationship);
+            if(record.relationship > 0) {
+                recordLine.append(record.relationship);
+            }
             recordLine.append(',');
 
             // Write Time
