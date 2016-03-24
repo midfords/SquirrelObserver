@@ -6,12 +6,16 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.database.Cursor;
 import android.net.Uri;
+import android.provider.DocumentsContract;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
 import com.project.squirrelobserver.R;
 
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.net.URISyntaxException;
 
 /**
@@ -139,16 +143,19 @@ public class Utils {
     public static String getPath(Context context, Uri uri) {
 
         if ("content".equalsIgnoreCase(uri.getScheme())) {
-            String[] projection = { "_data" };
+            String[] projection = {MediaStore.Files.FileColumns.DATA, MediaStore.Files.FileColumns.DISPLAY_NAME};//{ "_data" };
+//            String path = DocumentsContract.getDocumentId(uri);
             Cursor cursor = null;
 
             try {
                 cursor = context.getContentResolver().query(uri, projection, null, null, null);
-                int column_index = cursor.getColumnIndexOrThrow("_data");
+//                int column_index = cursor.getColumnIndexOrThrow(MediaStore.Files.FileColumns.DISPLAY_NAME);
 
                 if (cursor.moveToFirst()) {
 
-                    return cursor.getString(column_index);
+                    return uri.toString() + "|" + cursor.getString(1);
+
+//                    return cursor.getString(column_index);
                 }
 
             } catch (Exception e) { }

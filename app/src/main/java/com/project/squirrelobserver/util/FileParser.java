@@ -2,7 +2,9 @@ package com.project.squirrelobserver.util;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
+import android.provider.MediaStore;
 import android.util.Log;
 
 import java.io.BufferedInputStream;
@@ -26,14 +28,36 @@ import java.util.List;
  */
 public class FileParser {
 
-    public static boolean generateListOfLocationPoints (String csvFileLocation) {
+    public static boolean generateListOfLocationPoints (String csvFileLocation, Context c) {
 
         if (csvFileLocation == null || csvFileLocation.isEmpty())
             return false;
-        String extension = csvFileLocation.substring(
-                csvFileLocation.lastIndexOf("."), csvFileLocation.length());
-        if (!".csv".equalsIgnoreCase(extension))
-            return false;
+
+        Uri uri = null;
+
+        if (csvFileLocation.toLowerCase().contains("content:")) {
+            uri = Uri.parse(csvFileLocation);
+
+            String[] projection = {MediaStore.Files.FileColumns.DISPLAY_NAME};
+            Cursor cursor = null;
+
+            try {
+                cursor = c.getContentResolver().query(uri, projection, null, null, null);
+
+                if (cursor.moveToFirst()) {
+
+                    String displayName = cursor.getString(0);
+                    if(!".csv".equalsIgnoreCase(displayName.substring(displayName.lastIndexOf("."))))
+                        return false;
+                }
+
+            } catch (Exception e) { }
+        } else {
+            String extension = csvFileLocation.substring(
+                    csvFileLocation.lastIndexOf("."), csvFileLocation.length());
+            if (!".csv".equalsIgnoreCase(extension))
+                return false;
+        }
 
         GlobalVariables.locationPointsX = new ArrayList<LocationPoint>();    // Initialize our list of points
         GlobalVariables.locationPointsY = new ArrayList<LocationPoint>();    // Initialize our list of points
@@ -41,11 +65,16 @@ public class FileParser {
         String label, x, y;
 
         try {
-            File file = new File(csvFileLocation);
-            if (!file.exists())
-                return false;
+            File file = null;
+            if(uri == null) {
+                file = new File(csvFileLocation);
+                if (!file.exists())
+                    return false;
 
-            inputStream = new BufferedInputStream(new FileInputStream(file));
+                inputStream = new BufferedInputStream(new FileInputStream(file));
+            } else {
+                inputStream = c.getContentResolver().openInputStream(uri);
+            }
 
             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
 
@@ -123,25 +152,51 @@ public class FileParser {
         }
     }
 
-    public static boolean generateListOfBehaviors (String csvFileBehaviors) {
+    public static boolean generateListOfBehaviors (String csvFileBehaviors, Context c) {
 
         if (csvFileBehaviors == null || csvFileBehaviors.isEmpty())
             return false;
-        String extension = csvFileBehaviors.substring(
-                csvFileBehaviors.lastIndexOf("."), csvFileBehaviors.length());
-        if (!".csv".equalsIgnoreCase(extension))
-            return false;
+
+        Uri uri = null;
+
+        if (csvFileBehaviors.toLowerCase().contains("content:")) {
+            uri = Uri.parse(csvFileBehaviors);
+
+            String[] projection = {MediaStore.Files.FileColumns.DISPLAY_NAME};
+            Cursor cursor = null;
+
+            try {
+                cursor = c.getContentResolver().query(uri, projection, null, null, null);
+
+                if (cursor.moveToFirst()) {
+
+                    String displayName = cursor.getString(0);
+                    if(!".csv".equalsIgnoreCase(displayName.substring(displayName.lastIndexOf("."))))
+                        return false;
+                }
+
+            } catch (Exception e) { }
+        } else {
+            String extension = csvFileBehaviors.substring(
+                    csvFileBehaviors.lastIndexOf("."), csvFileBehaviors.length());
+            if (!".csv".equalsIgnoreCase(extension))
+                return false;
+        }
 
         GlobalVariables.behaviors = new ArrayList<Behavior>();    // Initialize our list of behaviors
         InputStream inputStream = null;
         String code, reqActee, desc, isAO, modif;   // Code, Requires Acee, Description, Is All-Occ and Modifier
 
         try {
-            File file = new File(csvFileBehaviors);
-            if (!file.exists())
-                return false;
-
-            inputStream = new BufferedInputStream(new FileInputStream(file));
+            File file = null;
+            if(uri == null) {
+                file = new File(csvFileBehaviors);
+                if (!file.exists())
+                    return false;
+                inputStream = new BufferedInputStream(new FileInputStream(file));
+            } else {
+                inputStream = c.getContentResolver().openInputStream(uri);
+            }
 
             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
 
@@ -200,25 +255,52 @@ public class FileParser {
         }
     }
 
-    public static boolean generateListOfActors (String csvFileActors) {
+    public static boolean generateListOfActors (String csvFileActors, Context c) {
 
         if (csvFileActors == null || csvFileActors.isEmpty())
             return false;
-        String extension = csvFileActors.substring(
-                csvFileActors.lastIndexOf("."), csvFileActors.length());
-        if (!".csv".equalsIgnoreCase(extension))
-            return false;
+
+        Uri uri = null;
+
+        if (csvFileActors.toLowerCase().contains("content:")) {
+            uri = Uri.parse(csvFileActors);
+
+            String[] projection = {MediaStore.Files.FileColumns.DISPLAY_NAME};
+            Cursor cursor = null;
+
+            try {
+                cursor = c.getContentResolver().query(uri, projection, null, null, null);
+
+                if (cursor.moveToFirst()) {
+
+                    String displayName = cursor.getString(0);
+                    if(!".csv".equalsIgnoreCase(displayName.substring(displayName.lastIndexOf("."))))
+                        return false;
+                }
+
+            } catch (Exception e) { }
+        } else {
+            String extension = csvFileActors.substring(
+                    csvFileActors.lastIndexOf("."), csvFileActors.length());
+            if (!".csv".equalsIgnoreCase(extension))
+                return false;
+        }
 
         GlobalVariables.actors = new ArrayList<Actor>();    // Initialize our list of actors
         InputStream inputStream = null;
         String name, abb, tag, col, sex, age; // Name, Abbreviation, Tag no, Colony, Sex, Age
 
         try {
-            File file = new File(csvFileActors);
-            if (!file.exists())
-                return false;
+            File file = null;
+            if (uri == null) {
+                file = new File(csvFileActors);
+                if (!file.exists())
+                    return false;
 
-            inputStream = new BufferedInputStream(new FileInputStream(file));
+                inputStream = new BufferedInputStream(new FileInputStream(file));
+            } else {
+                inputStream = c.getContentResolver().openInputStream(uri);
+            }
 
             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
 
