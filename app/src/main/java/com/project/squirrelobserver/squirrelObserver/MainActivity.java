@@ -152,20 +152,12 @@ public class MainActivity extends ActionBarActivity
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         if (data != null) {
-
-    //        String documentId = DocumentsContract.getDocumentId(data.getData());
-
             // Get the Uri of the selected file
             Uri uri = data.getData();
 
             // Get the path
             String path = Utils.getPath(this, uri);
             String fileName = "";
-
-            if("content".equalsIgnoreCase(uri.getScheme())) {
-                fileName = path.substring(path.indexOf('|')+1);
-                path = path.substring(0, path.indexOf('|'));
-            }
 
             switch (requestCode) {
                 case GlobalVariables.LOCATION_CSV_SELECT_CODE:
@@ -188,10 +180,8 @@ public class MainActivity extends ActionBarActivity
                                         settingsPath, GlobalVariables.settingsLocationTag, GlobalVariables.locationCSVPath);
 
                                 // Set Label
-                                if(fileName == "") {
-                                    fileName = GlobalVariables.locationCSVPath.substring(
-                                            GlobalVariables.locationCSVPath.lastIndexOf("/") + 1);
-                                }
+                                fileName = GlobalVariables.locationCSVPath.substring(
+                                       GlobalVariables.locationCSVPath.lastIndexOf("/") + 1);
                                 locationLabel.setText(fileName);
                             } else {
 
@@ -224,10 +214,8 @@ public class MainActivity extends ActionBarActivity
                                         settingsPath, GlobalVariables.settingsActorTag, GlobalVariables.actorsCSVPath);
 
                                 // Set Label
-                                if(fileName == "") {
-                                    fileName = GlobalVariables.actorsCSVPath.substring(
-                                            GlobalVariables.actorsCSVPath.lastIndexOf("/") + 1);
-                                }
+                                fileName = GlobalVariables.actorsCSVPath.substring(
+                                        GlobalVariables.actorsCSVPath.lastIndexOf("/") + 1);
                                 actorsLabel.setText(fileName);
 
                             } else {
@@ -260,10 +248,8 @@ public class MainActivity extends ActionBarActivity
                                         settingsPath, GlobalVariables.settingsBehaviorTag, GlobalVariables.behaviorsCSVPath);
 
                                 // Set Label
-                                if(fileName == "") {
-                                    fileName = GlobalVariables.behaviorsCSVPath.substring(
-                                            GlobalVariables.behaviorsCSVPath.lastIndexOf("/") + 1);
-                                }
+                                fileName = GlobalVariables.behaviorsCSVPath.substring(
+                                        GlobalVariables.behaviorsCSVPath.lastIndexOf("/") + 1);
                                 behaviorsLabel.setText(fileName);
                             } else {
 
