@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -14,8 +15,16 @@ import android.widget.EditText;
 
 import com.project.squirrelobserver.R;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.ObjectOutputStream;
+import java.io.OutputStream;
 import java.net.URISyntaxException;
 
 /**
@@ -144,21 +153,48 @@ public class Utils {
 
         if ("content".equalsIgnoreCase(uri.getScheme())) {
             String[] projection = {MediaStore.Files.FileColumns.DATA, MediaStore.Files.FileColumns.DISPLAY_NAME};//{ "_data" };
-//            String path = DocumentsContract.getDocumentId(uri);
             Cursor cursor = null;
-
+            String displayName;
+            String destination;
             try {
                 cursor = context.getContentResolver().query(uri, projection, null, null, null);
-//                int column_index = cursor.getColumnIndexOrThrow(MediaStore.Files.FileColumns.DISPLAY_NAME);
 
                 if (cursor.moveToFirst()) {
+                    displayName = cursor.getString(1);
+                    destination = GlobalVariables.exportDownloadPath + displayName;//context.getFilesDir().getPath() + "/" + displayName;
+                    String extension = displayName.substring(displayName.lastIndexOf(".")+1);
 
-                    return uri.toString() + "|" + cursor.getString(1);
+                    if("csv".equalsIgnoreCase(extension)) {
+                        File file = new File(destination);
+                        file.mkdirs();
+                        InputStream in = context.getContentResolver().openInputStream(uri);
 
-//                    return cursor.getString(column_index);
+                        if(!file.exists()) {
+                            file.createNewFile();
+                        } else {
+                            file.delete();
+                            file.createNewFile();
+                        }
+                        OutputStream out = new FileOutputStream(destination);
+
+                        // Transfer bytes from in to out
+                        byte[] buf = new byte[1024];
+                        int len;
+                        while ((len = in.read(buf)) > 0) {
+                            out.write(buf, 0, len);
+                        }
+                        in.close();
+                        out.close();
+                    } else {
+                        destination = "";
+                    }
+                    return destination;
                 }
 
-            } catch (Exception e) { }
+            } catch (Exception e) {
+                String error = e.toString();
+                e.printStackTrace();
+            }
 
         } else if ("file".equalsIgnoreCase(uri.getScheme())) {
 
