@@ -408,10 +408,12 @@ public class MainActivity extends ActionBarActivity
                         if (isChecked) {
 
                             Behavior behavior = (Behavior) checkBox.getTag();
+                            behavior.isAO = true;
                             GlobalVariables.aoBehaviors.add(behavior);
                         } else {
 
                             Behavior behavior = (Behavior) checkBox.getTag();
+                            behavior.isAO = false;
                             GlobalVariables.aoBehaviors.remove(behavior);
                         }
                     }
