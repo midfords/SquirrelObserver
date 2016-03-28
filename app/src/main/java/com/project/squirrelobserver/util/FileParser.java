@@ -201,7 +201,7 @@ public class FileParser {
             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
 
             String line;
-
+            GlobalVariables.aoBehaviors = null;
             // Skip first line, it contains the column headers
             reader.readLine();
 
@@ -237,7 +237,6 @@ public class FileParser {
                     } catch (Exception e) { }
                 }
             }
-            GlobalVariables.aoBehaviors = null;
             return true;
 
         } catch (Exception e) {

@@ -70,7 +70,6 @@ public class ImportExportFragment extends Fragment {
             TextView behaviorsLabel = (TextView) view.findViewById(R.id.behaviorsFileName);
             behaviorsLabel.setText(GlobalVariables.behaviorsCSVPath.substring(
                     GlobalVariables.behaviorsCSVPath.lastIndexOf("/") + 1));
-            GlobalVariables.aoBehaviors = null;
         }
 
         return view;
