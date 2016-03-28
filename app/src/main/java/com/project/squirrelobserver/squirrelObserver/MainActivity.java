@@ -67,7 +67,7 @@ public class MainActivity extends ActionBarActivity
         //   to the empty string.
         if (GlobalVariables.locationCSVPath != null
                 && !GlobalVariables.locationCSVPath.isEmpty()
-                && !FileParser.generateListOfLocationPoints(GlobalVariables.locationCSVPath)) {
+                && !FileParser.generateListOfLocationPoints(GlobalVariables.locationCSVPath, getApplicationContext())) {
             GlobalVariables.locationCSVPath = "";
             FileParser.removeValueFromAppSettings(
                     path, GlobalVariables.settingsLocationTag);
@@ -75,7 +75,7 @@ public class MainActivity extends ActionBarActivity
 
         if (GlobalVariables.actorsCSVPath != null
                 && !GlobalVariables.actorsCSVPath.isEmpty()
-                && !FileParser.generateListOfActors(GlobalVariables.actorsCSVPath)) {
+                && !FileParser.generateListOfActors(GlobalVariables.actorsCSVPath, getApplicationContext())) {
             GlobalVariables.actorsCSVPath = "";
             FileParser.removeValueFromAppSettings(
                     path, GlobalVariables.settingsActorTag);
@@ -83,7 +83,7 @@ public class MainActivity extends ActionBarActivity
 
         if (GlobalVariables.behaviorsCSVPath != null
                 && !GlobalVariables.behaviorsCSVPath.isEmpty()
-                && !FileParser.generateListOfBehaviors(GlobalVariables.behaviorsCSVPath)) {
+                && !FileParser.generateListOfBehaviors(GlobalVariables.behaviorsCSVPath, getApplicationContext())) {
             GlobalVariables.behaviorsCSVPath = "";
             FileParser.removeValueFromAppSettings(
                     path, GlobalVariables.settingsBehaviorTag);
@@ -152,14 +152,12 @@ public class MainActivity extends ActionBarActivity
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         if (data != null) {
-
-    //        String documentId = DocumentsContract.getDocumentId(data.getData());
-
             // Get the Uri of the selected file
             Uri uri = data.getData();
 
             // Get the path
             String path = Utils.getPath(this, uri);
+            String fileName = "";
 
             switch (requestCode) {
                 case GlobalVariables.LOCATION_CSV_SELECT_CODE:
@@ -173,7 +171,7 @@ public class MainActivity extends ActionBarActivity
                             TextView locationLabel = (TextView) findViewById(R.id.locationFileName);
 
                             // Import File Contents
-                            if (FileParser.generateListOfLocationPoints(GlobalVariables.locationCSVPath)) {
+                            if (FileParser.generateListOfLocationPoints(GlobalVariables.locationCSVPath, getApplicationContext())) {
 
                                 // Update settings with new file
                                 String settingsPath =
@@ -182,9 +180,9 @@ public class MainActivity extends ActionBarActivity
                                         settingsPath, GlobalVariables.settingsLocationTag, GlobalVariables.locationCSVPath);
 
                                 // Set Label
-                                locationLabel.setText(
-                                        GlobalVariables.locationCSVPath.substring(
-                                                GlobalVariables.locationCSVPath.lastIndexOf("/") + 1));
+                                fileName = GlobalVariables.locationCSVPath.substring(
+                                       GlobalVariables.locationCSVPath.lastIndexOf("/") + 1);
+                                locationLabel.setText(fileName);
                             } else {
 
                                 Utils.importButtonErrorMessage(this);
@@ -207,7 +205,7 @@ public class MainActivity extends ActionBarActivity
                             TextView actorsLabel = (TextView) findViewById(R.id.actorsFileName);
 
                             // Import File Contents
-                            if (FileParser.generateListOfActors(GlobalVariables.actorsCSVPath)) {
+                            if (FileParser.generateListOfActors(GlobalVariables.actorsCSVPath, getApplicationContext())) {
 
                                 // Update settings with new file
                                 String settingsPath =
@@ -216,9 +214,10 @@ public class MainActivity extends ActionBarActivity
                                         settingsPath, GlobalVariables.settingsActorTag, GlobalVariables.actorsCSVPath);
 
                                 // Set Label
-                                actorsLabel.setText(
-                                        GlobalVariables.actorsCSVPath.substring(
-                                                GlobalVariables.actorsCSVPath.lastIndexOf("/") + 1));
+                                fileName = GlobalVariables.actorsCSVPath.substring(
+                                        GlobalVariables.actorsCSVPath.lastIndexOf("/") + 1);
+                                actorsLabel.setText(fileName);
+
                             } else {
 
                                 Utils.importButtonErrorMessage(this);
@@ -240,7 +239,7 @@ public class MainActivity extends ActionBarActivity
                             TextView behaviorsLabel = (TextView) findViewById(R.id.behaviorsFileName);
 
                             // Import File Contents
-                            if (FileParser.generateListOfBehaviors(GlobalVariables.behaviorsCSVPath)) {
+                            if (FileParser.generateListOfBehaviors(GlobalVariables.behaviorsCSVPath, getApplicationContext())) {
 
                                 // Update settings with new file
                                 String settingsPath =
@@ -249,9 +248,9 @@ public class MainActivity extends ActionBarActivity
                                         settingsPath, GlobalVariables.settingsBehaviorTag, GlobalVariables.behaviorsCSVPath);
 
                                 // Set Label
-                                behaviorsLabel.setText(
-                                        GlobalVariables.behaviorsCSVPath.substring(
-                                                GlobalVariables.behaviorsCSVPath.lastIndexOf("/") + 1));
+                                fileName = GlobalVariables.behaviorsCSVPath.substring(
+                                        GlobalVariables.behaviorsCSVPath.lastIndexOf("/") + 1);
+                                behaviorsLabel.setText(fileName);
                             } else {
 
                                 Utils.importButtonErrorMessage(this);
