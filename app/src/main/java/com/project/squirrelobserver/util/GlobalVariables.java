@@ -12,6 +12,8 @@ import java.util.TooManyListenersException;
  */
 public class GlobalVariables {
 
+    public static boolean activateFrequentRecentButtonLists = true;
+
     public static ArrayList<LocationPoint> locationPointsX; // List of all points in x coordinate system
     public static ArrayList<LocationPoint> locationPointsY; // List of all points in y coordinate system
     public static ArrayList<Behavior> behaviors;   // List of all behaviors
