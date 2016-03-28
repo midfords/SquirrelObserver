@@ -279,6 +279,9 @@ public  class RecordActorTabActivity
 
     public void updateRecentButtons(ToggleButton button) {
 
+        if (!GlobalVariables.activateFrequentRecentButtonLists)
+            return;
+
         // Update most recent actor list
         if (button != null && list.contains(button)) {
 

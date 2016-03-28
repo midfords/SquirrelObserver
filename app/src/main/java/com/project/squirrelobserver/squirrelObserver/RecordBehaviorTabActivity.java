@@ -209,6 +209,9 @@ public  class RecordBehaviorTabActivity
 
     public void updateFrequentButtons(Behavior behavior) {
 
+        if (!GlobalVariables.activateFrequentRecentButtonLists)
+            return;
+
         if (behavior == null || behavior.button == null)
             return;
 
