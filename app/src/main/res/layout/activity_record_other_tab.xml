@@ -132,6 +132,7 @@
                     android:inputType="number"
                     android:ems="10"
                     android:id="@+id/group_size"
+                    android:imeOptions="actionDone"
                     android:textAlignment="center"
                     android:text="1" />
             </LinearLayout>
