@@ -153,7 +153,6 @@ public class Utils {
     public static String getPath(Context context, Uri uri) {
 
         if ("content".equalsIgnoreCase(uri.getScheme())) {
-            String[] projection = {MediaStore.Files.FileColumns.DATA, MediaStore.Files.FileColumns.DISPLAY_NAME, MediaStore.Files.FileColumns.MIME_TYPE};//{ "_data" };
             Cursor cursor = null;
             String displayName;
             String destination;
@@ -162,7 +161,7 @@ public class Utils {
 
                 if (cursor.moveToFirst()) {
                     displayName = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
-                    destination = GlobalVariables.exportDownloadPath + displayName;//context.getFilesDir().getPath() + "/" + displayName;
+                    destination = GlobalVariables.exportDownloadPath + displayName;
                     String extension = displayName.substring(displayName.lastIndexOf(".")+1);
 
                     if("csv".equalsIgnoreCase(extension)) {
@@ -192,10 +191,7 @@ public class Utils {
                     return destination;
                 }
 
-            } catch (Exception e) {
-                String error = e.toString();
-                e.printStackTrace();
-            }
+            } catch (Exception e) { }
 
         } else if ("file".equalsIgnoreCase(uri.getScheme())) {
 
