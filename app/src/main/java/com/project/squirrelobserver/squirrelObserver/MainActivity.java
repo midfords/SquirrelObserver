@@ -547,9 +547,10 @@ public class MainActivity extends ActionBarActivity
 
                                         // Do nothing
                                     }
-                                })
-                        .show();
-
+                                });
+                AlertDialog dialog = builder.create();
+                dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+                dialog.show();
                 return true;
 
             case android.R.id.home:
