@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
+import android.provider.OpenableColumns;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -152,16 +153,15 @@ public class Utils {
     public static String getPath(Context context, Uri uri) {
 
         if ("content".equalsIgnoreCase(uri.getScheme())) {
-            String[] projection = {MediaStore.Files.FileColumns.DATA, MediaStore.Files.FileColumns.DISPLAY_NAME};//{ "_data" };
             Cursor cursor = null;
             String displayName;
             String destination;
             try {
-                cursor = context.getContentResolver().query(uri, projection, null, null, null);
+                cursor = context.getContentResolver().query(uri, null, null, null, null);
 
                 if (cursor.moveToFirst()) {
-                    displayName = cursor.getString(1);
-                    destination = GlobalVariables.exportDownloadPath + displayName;//context.getFilesDir().getPath() + "/" + displayName;
+                    displayName = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
+                    destination = GlobalVariables.exportDownloadPath + displayName;
                     String extension = displayName.substring(displayName.lastIndexOf(".")+1);
 
                     if("csv".equalsIgnoreCase(extension)) {
@@ -191,10 +191,7 @@ public class Utils {
                     return destination;
                 }
 
-            } catch (Exception e) {
-                String error = e.toString();
-                e.printStackTrace();
-            }
+            } catch (Exception e) { }
 
         } else if ("file".equalsIgnoreCase(uri.getScheme())) {
 
