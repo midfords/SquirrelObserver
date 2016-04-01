@@ -57,9 +57,7 @@ public  class RecordOtherTabActivity
         ySpinner.setSelection(0);
 
         EditText xModEditText = (EditText) findViewById(R.id.x_mod_distance);
-        EditText yModEditText = (EditText) findViewById(R.id.y_mod_distance);
         xModEditText.setNextFocusDownId(R.id.y_mod_distance);
-        yModEditText.setNextFocusDownId(R.id.group_size);
 
         final Button recordButton = (Button) findViewById(R.id.record_button);
         recordButton.setOnClickListener(new View.OnClickListener() {
