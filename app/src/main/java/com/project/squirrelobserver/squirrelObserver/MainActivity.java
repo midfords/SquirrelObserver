@@ -67,7 +67,7 @@ public class MainActivity extends ActionBarActivity
         //   to the empty string.
         if (GlobalVariables.locationCSVPath != null
                 && !GlobalVariables.locationCSVPath.isEmpty()
-                && !FileParser.generateListOfLocationPoints(GlobalVariables.locationCSVPath, getApplicationContext())) {
+                && !FileParser.generateListOfLocationPoints(GlobalVariables.locationCSVPath)) {
             GlobalVariables.locationCSVPath = "";
             FileParser.removeValueFromAppSettings(
                     path, GlobalVariables.settingsLocationTag);
@@ -75,7 +75,7 @@ public class MainActivity extends ActionBarActivity
 
         if (GlobalVariables.actorsCSVPath != null
                 && !GlobalVariables.actorsCSVPath.isEmpty()
-                && !FileParser.generateListOfActors(GlobalVariables.actorsCSVPath, getApplicationContext())) {
+                && !FileParser.generateListOfActors(GlobalVariables.actorsCSVPath)) {
             GlobalVariables.actorsCSVPath = "";
             FileParser.removeValueFromAppSettings(
                     path, GlobalVariables.settingsActorTag);
@@ -83,7 +83,7 @@ public class MainActivity extends ActionBarActivity
 
         if (GlobalVariables.behaviorsCSVPath != null
                 && !GlobalVariables.behaviorsCSVPath.isEmpty()
-                && !FileParser.generateListOfBehaviors(GlobalVariables.behaviorsCSVPath, getApplicationContext())) {
+                && !FileParser.generateListOfBehaviors(GlobalVariables.behaviorsCSVPath)) {
             GlobalVariables.behaviorsCSVPath = "";
             FileParser.removeValueFromAppSettings(
                     path, GlobalVariables.settingsBehaviorTag);
@@ -171,7 +171,7 @@ public class MainActivity extends ActionBarActivity
                             TextView locationLabel = (TextView) findViewById(R.id.locationFileName);
 
                             // Import File Contents
-                            if (FileParser.generateListOfLocationPoints(GlobalVariables.locationCSVPath, getApplicationContext())) {
+                            if (FileParser.generateListOfLocationPoints(GlobalVariables.locationCSVPath)) {
 
                                 // Update settings with new file
                                 String settingsPath =
@@ -205,7 +205,7 @@ public class MainActivity extends ActionBarActivity
                             TextView actorsLabel = (TextView) findViewById(R.id.actorsFileName);
 
                             // Import File Contents
-                            if (FileParser.generateListOfActors(GlobalVariables.actorsCSVPath, getApplicationContext())) {
+                            if (FileParser.generateListOfActors(GlobalVariables.actorsCSVPath)) {
 
                                 // Update settings with new file
                                 String settingsPath =
@@ -239,7 +239,7 @@ public class MainActivity extends ActionBarActivity
                             TextView behaviorsLabel = (TextView) findViewById(R.id.behaviorsFileName);
 
                             // Import File Contents
-                            if (FileParser.generateListOfBehaviors(GlobalVariables.behaviorsCSVPath, getApplicationContext())) {
+                            if (FileParser.generateListOfBehaviors(GlobalVariables.behaviorsCSVPath)) {
 
                                 // Update settings with new file
                                 String settingsPath =

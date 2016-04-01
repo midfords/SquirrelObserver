@@ -28,36 +28,15 @@ import java.util.List;
  */
 public class FileParser {
 
-    public static boolean generateListOfLocationPoints (String csvFileLocation, Context c) {
+    public static boolean generateListOfLocationPoints (String csvFileLocation) {
 
         if (csvFileLocation == null || csvFileLocation.isEmpty())
             return false;
 
-        Uri uri = null;
-
-        if (csvFileLocation.toLowerCase().contains("content:")) {
-            uri = Uri.parse(csvFileLocation);
-
-            String[] projection = {MediaStore.Files.FileColumns.DISPLAY_NAME};
-            Cursor cursor = null;
-
-            try {
-                cursor = c.getContentResolver().query(uri, projection, null, null, null);
-
-                if (cursor.moveToFirst()) {
-
-                    String displayName = cursor.getString(0);
-                    if(!".csv".equalsIgnoreCase(displayName.substring(displayName.lastIndexOf("."))))
-                        return false;
-                }
-
-            } catch (Exception e) { }
-        } else {
-            String extension = csvFileLocation.substring(
-                    csvFileLocation.lastIndexOf("."), csvFileLocation.length());
-            if (!".csv".equalsIgnoreCase(extension))
-                return false;
-        }
+        String extension = csvFileLocation.substring(
+                csvFileLocation.lastIndexOf("."), csvFileLocation.length());
+        if (!".csv".equalsIgnoreCase(extension))
+            return false;
 
         GlobalVariables.locationPointsX = new ArrayList<LocationPoint>();    // Initialize our list of points
         GlobalVariables.locationPointsY = new ArrayList<LocationPoint>();    // Initialize our list of points
@@ -66,15 +45,11 @@ public class FileParser {
 
         try {
             File file = null;
-            if(uri == null) {
-                file = new File(csvFileLocation);
-                if (!file.exists())
-                    return false;
+            file = new File(csvFileLocation);
+            if (!file.exists())
+                return false;
 
-                inputStream = new BufferedInputStream(new FileInputStream(file));
-            } else {
-                inputStream = c.getContentResolver().openInputStream(uri);
-            }
+            inputStream = new BufferedInputStream(new FileInputStream(file));
 
             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
 
@@ -86,8 +61,8 @@ public class FileParser {
             while ((line = reader.readLine()) != null) {
                 String[] dataRow = line.split(",");
 
-                if (dataRow.length == 3) { // Don't use row if there are incomplete fields
-
+                if (dataRow.length == 3 && !dataRow[0].isEmpty() && !dataRow[1].isEmpty()
+                        && !dataRow[2].isEmpty()) { // Don't use row if there are incomplete or empty fields
                     label = dataRow[0];
                     x = dataRow[1];
                     y = dataRow[2];
@@ -152,36 +127,15 @@ public class FileParser {
         }
     }
 
-    public static boolean generateListOfBehaviors (String csvFileBehaviors, Context c) {
+    public static boolean generateListOfBehaviors (String csvFileBehaviors) {
 
         if (csvFileBehaviors == null || csvFileBehaviors.isEmpty())
             return false;
 
-        Uri uri = null;
-
-        if (csvFileBehaviors.toLowerCase().contains("content:")) {
-            uri = Uri.parse(csvFileBehaviors);
-
-            String[] projection = {MediaStore.Files.FileColumns.DISPLAY_NAME};
-            Cursor cursor = null;
-
-            try {
-                cursor = c.getContentResolver().query(uri, projection, null, null, null);
-
-                if (cursor.moveToFirst()) {
-
-                    String displayName = cursor.getString(0);
-                    if(!".csv".equalsIgnoreCase(displayName.substring(displayName.lastIndexOf("."))))
-                        return false;
-                }
-
-            } catch (Exception e) { }
-        } else {
-            String extension = csvFileBehaviors.substring(
-                    csvFileBehaviors.lastIndexOf("."), csvFileBehaviors.length());
-            if (!".csv".equalsIgnoreCase(extension))
-                return false;
-        }
+        String extension = csvFileBehaviors.substring(
+                csvFileBehaviors.lastIndexOf("."), csvFileBehaviors.length());
+        if (!".csv".equalsIgnoreCase(extension))
+            return false;
 
         GlobalVariables.behaviors = new ArrayList<Behavior>();    // Initialize our list of behaviors
         InputStream inputStream = null;
@@ -189,14 +143,10 @@ public class FileParser {
 
         try {
             File file = null;
-            if(uri == null) {
-                file = new File(csvFileBehaviors);
-                if (!file.exists())
-                    return false;
-                inputStream = new BufferedInputStream(new FileInputStream(file));
-            } else {
-                inputStream = c.getContentResolver().openInputStream(uri);
-            }
+            file = new File(csvFileBehaviors);
+            if (!file.exists())
+                return false;
+            inputStream = new BufferedInputStream(new FileInputStream(file));
 
             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
 
@@ -208,33 +158,41 @@ public class FileParser {
             while ((line = reader.readLine()) != null) {
                 String[] dataRow = line.split(",");
 
-                if (dataRow.length >= 3) { // Don't use row if there are incomplete fields
+                if (dataRow.length >= 4 && !dataRow[0].isEmpty() && !dataRow[1].isEmpty()) { // Don't use row if there are incomplete fields
+                        code = dataRow[0];
+                        desc = dataRow[1];
+                        if(dataRow[2].isEmpty()) {
+                            reqActee = "0";
+                        } else {
+                            reqActee = dataRow[2];
+                        }
+                        if(dataRow[3].isEmpty()) {
+                            isAO = "0";
+                        } else {
+                            isAO = dataRow[3];
+                        }
 
-                    code = dataRow[0];
-                    desc = dataRow[1];
-                    reqActee = dataRow[2];
-                    isAO = dataRow[3];
+                        // Generate list of modifiers
+                        ArrayList<String> modifiers = new ArrayList<String>();
+                        for (int i = 4; i < dataRow.length; i++) {
 
-                    // Generate list of modifiers
-                    ArrayList<String> modifiers = new ArrayList<String>();
-                    for (int i = 4; i < dataRow.length; i++) {
+                            modif = dataRow[i];
+                            modifiers.add(modif);
+                        }
 
-                        modif = dataRow[i];
-                        modifiers.add(modif);
-                    }
+                        try {
+                            // Parse code integer
+                            int code_parsed = Integer.parseInt(code);
+                            int reqActee_parsed = Integer.parseInt(reqActee);
+                            boolean reqActee_bool = reqActee_parsed == 1;
+                            int isAO_parsed = Integer.parseInt(isAO);
+                            boolean isAO_bool = isAO_parsed == 1;
 
-                    try {
-                        // Parse code integer
-                        int code_parsed = Integer.parseInt(code);
-                        int reqActee_parsed = Integer.parseInt(reqActee);
-                        boolean reqActee_bool = reqActee_parsed == 1;
-                        int isAO_parsed = Integer.parseInt(isAO);
-                        boolean isAO_bool = isAO_parsed == 1;
+                            Behavior behavior = new Behavior(code_parsed, reqActee_bool, desc, isAO_bool, modifiers);
+                            GlobalVariables.behaviors.add(behavior);
 
-                        Behavior behavior = new Behavior(code_parsed, reqActee_bool, desc, isAO_bool, modifiers);
-                        GlobalVariables.behaviors.add(behavior);
-
-                    } catch (Exception e) { }
+                        } catch (Exception e) {
+                        }
                 }
             }
             return true;
@@ -247,43 +205,20 @@ public class FileParser {
         } finally {
 
             try {
-
                 if (inputStream != null) inputStream.close();
-
             } catch (Exception e) { }
         }
     }
 
-    public static boolean generateListOfActors (String csvFileActors, Context c) {
+    public static boolean generateListOfActors (String csvFileActors) {
 
         if (csvFileActors == null || csvFileActors.isEmpty())
             return false;
 
-        Uri uri = null;
-
-        if (csvFileActors.toLowerCase().contains("content:")) {
-            uri = Uri.parse(csvFileActors);
-
-            String[] projection = {MediaStore.Files.FileColumns.DISPLAY_NAME};
-            Cursor cursor = null;
-
-            try {
-                cursor = c.getContentResolver().query(uri, projection, null, null, null);
-
-                if (cursor.moveToFirst()) {
-
-                    String displayName = cursor.getString(0);
-                    if(!".csv".equalsIgnoreCase(displayName.substring(displayName.lastIndexOf("."))))
-                        return false;
-                }
-
-            } catch (Exception e) { }
-        } else {
-            String extension = csvFileActors.substring(
-                    csvFileActors.lastIndexOf("."), csvFileActors.length());
-            if (!".csv".equalsIgnoreCase(extension))
-                return false;
-        }
+        String extension = csvFileActors.substring(
+                csvFileActors.lastIndexOf("."), csvFileActors.length());
+        if (!".csv".equalsIgnoreCase(extension))
+            return false;
 
         GlobalVariables.actors = new ArrayList<Actor>();    // Initialize our list of actors
         InputStream inputStream = null;
@@ -291,15 +226,11 @@ public class FileParser {
 
         try {
             File file = null;
-            if (uri == null) {
-                file = new File(csvFileActors);
-                if (!file.exists())
-                    return false;
+            file = new File(csvFileActors);
+            if (!file.exists())
+                return false;
 
-                inputStream = new BufferedInputStream(new FileInputStream(file));
-            } else {
-                inputStream = c.getContentResolver().openInputStream(uri);
-            }
+            inputStream = new BufferedInputStream(new FileInputStream(file));
 
             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
 
@@ -311,29 +242,36 @@ public class FileParser {
             while ((line = reader.readLine()) != null) {
                 String[] dataRow = line.split(",");
 
-                if (dataRow.length == 6) { // TODO verify there will not be missing fields in data
+                if (dataRow.length == 6 && !dataRow[0].isEmpty() && !dataRow[1].isEmpty()
+                        && !dataRow[2].isEmpty() && !dataRow[3].isEmpty() && !dataRow[4].isEmpty()
+                        && !dataRow[5].isEmpty()) { // TODO verify there will not be missing fields in data
+                        name = dataRow[0];
+                        abb = dataRow[1];
+                        tag = dataRow[2];
+                        col = dataRow[3];
+                        sex = dataRow[4];
+                        age = dataRow[5];
 
-                    name = dataRow[0];
-                    abb = dataRow[1];
-                    tag = dataRow[2];
-                    col = dataRow[3];
-                    sex = dataRow[4];
-                    age = dataRow[5];
+                        // Parse integers
+                        int tag_parsed = -1;
+                        int sex_parsed = -1;
+                        int age_parsed = -1;
 
-                    // Parse integers
-                    int tag_parsed = -1;
-                    int sex_parsed = -1;
-                    int age_parsed = -1;
+                        try {
+                            tag_parsed = Integer.parseInt(tag);
+                        } catch (Exception e) {
+                        }
+                        try {
+                            sex_parsed = Integer.parseInt(sex);
+                        } catch (Exception e) {
+                        }
+                        try {
+                            age_parsed = Integer.parseInt(age);
+                        } catch (Exception e) {
+                        }
 
-                    try { tag_parsed = Integer.parseInt(tag); }
-                    catch (Exception e) { }
-                    try { sex_parsed = Integer.parseInt(sex); }
-                    catch (Exception e) { }
-                    try { age_parsed = Integer.parseInt(age); }
-                    catch (Exception e) { }
-
-                    Actor actor = new Actor(name, abb, tag_parsed, col, sex_parsed, age_parsed);
-                    GlobalVariables.actors.add(actor);
+                        Actor actor = new Actor(name, abb, tag_parsed, col, sex_parsed, age_parsed);
+                        GlobalVariables.actors.add(actor);
                 }
             }
 
