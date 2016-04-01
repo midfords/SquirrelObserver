@@ -102,6 +102,7 @@
                     android:layout_height="wrap_content"
                     android:inputType="numberSigned"
                     android:ems="10"
+                    android:imeOptions="actionDone"
                     android:id="@+id/y_mod_distance"
                     android:layout_marginLeft="40dp" />
 
