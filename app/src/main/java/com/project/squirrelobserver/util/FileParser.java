@@ -158,8 +158,7 @@ public class FileParser {
             while ((line = reader.readLine()) != null) {
                 String[] dataRow = line.split(",");
 
-                if (dataRow.length >= 4) { // Don't use row if there are incomplete fields
-                    if (!dataRow[0].isEmpty() || !dataRow[1].isEmpty()) {
+                if (dataRow.length >= 4 && !dataRow[0].isEmpty() && !dataRow[1].isEmpty()) { // Don't use row if there are incomplete fields
                         code = dataRow[0];
                         desc = dataRow[1];
                         if(dataRow[2].isEmpty()) {
@@ -194,7 +193,6 @@ public class FileParser {
 
                         } catch (Exception e) {
                         }
-                    }
                 }
             }
             return true;
@@ -244,11 +242,9 @@ public class FileParser {
             while ((line = reader.readLine()) != null) {
                 String[] dataRow = line.split(",");
 
-                if (dataRow.length == 6) { // TODO verify there will not be missing fields in data
-
-                    if (!dataRow[0].isEmpty() || !dataRow[1].isEmpty() || !dataRow[2].isEmpty()
-                            || !dataRow[3].isEmpty() || !dataRow[4].isEmpty()
-                            || !dataRow[5].isEmpty()) {
+                if (dataRow.length == 6 && !dataRow[0].isEmpty() && !dataRow[1].isEmpty()
+                        && !dataRow[2].isEmpty() && !dataRow[3].isEmpty() && !dataRow[4].isEmpty()
+                        && !dataRow[5].isEmpty()) { // TODO verify there will not be missing fields in data
                         name = dataRow[0];
                         abb = dataRow[1];
                         tag = dataRow[2];
@@ -276,7 +272,6 @@ public class FileParser {
 
                         Actor actor = new Actor(name, abb, tag_parsed, col, sex_parsed, age_parsed);
                         GlobalVariables.actors.add(actor);
-                    }
                 }
             }
 
