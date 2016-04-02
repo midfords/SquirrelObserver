@@ -256,6 +256,14 @@ public  class RecordActorTabActivity
 
             list.get(i).setEnabled(true);
         }
+
+        final GridView gridView = (GridView) findViewById(R.id.actor_grid_id);
+        final GridView gridViewRecent = (GridView) findViewById(R.id.actor_grid_recent_id);
+
+        if (gridView != null && gridViewRecent != null) {
+            gridView.invalidateViews();
+            gridViewRecent.invalidateViews();
+        }
     }
 
     public void uncheckButton(ToggleButton button) {
