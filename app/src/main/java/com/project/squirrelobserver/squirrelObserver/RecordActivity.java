@@ -102,6 +102,7 @@ public  class RecordActivity
                         GlobalVariables.scanInterval++;
                         if(actorTabActivity != null) {
                             actorTabActivity.reenableAllButtons();
+
                         }
                         chronometer.setBase(SystemClock.elapsedRealtime());
                         Vibrator vibe = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
