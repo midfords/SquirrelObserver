@@ -23,7 +23,8 @@
         <activity
             android:name=".squirrelObserver.RecordActivity"
             android:label="Tab Activity"
-            android:parentActivityName=".squirrelObserver.MainActivity" >
+            android:parentActivityName=".squirrelObserver.MainActivity"
+            android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".squirrelObserver.MainActivity" />
