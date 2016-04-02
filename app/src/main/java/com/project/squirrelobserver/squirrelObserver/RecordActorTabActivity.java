@@ -257,6 +257,12 @@ public  class RecordActorTabActivity
             list.get(i).setEnabled(true);
         }
 
+        for (int i=0; i < disabledList.size(); i++) {
+
+            disabledList.get(i).setEnabled(true);
+        }
+        disabledList.clear();
+
         final GridView gridView = (GridView) findViewById(R.id.actor_grid_id);
         final GridView gridViewRecent = (GridView) findViewById(R.id.actor_grid_recent_id);
 
