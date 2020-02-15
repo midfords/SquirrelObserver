@@ -1,10 +1,38 @@
+# App files
+*.apk
+*.ap_
+*.aab
+
+# Java files
+*.class
+
+# Generated files
+bin/
+gen/
+out/
+captures/
+app/release/
+app/build/
+
+# Gradle files
+.gradle/
+build/
+
+# Local config file
+local.properties
+
+# IntelliJ
 *.iml
-/.idea
-/.idea/*
-.gradle
-/local.properties
-/.idea/workspace.xml
-/.idea/libraries
+.idea/workspace.xml
+.idea/tasks.xml
+.idea/gradle.xml
+.idea/assetWizardSettings.xml
+.idea/dictionaries
+.idea/libraries
+.idea/caches
+.idea/modules.xml
+.idea/navEditor.xml
+
+# File system
 .DS_Store
-/build
-/captures
+
