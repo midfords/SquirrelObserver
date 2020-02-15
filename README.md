@@ -1,6 +1,6 @@
-![Alt](/screenshots/banner.png "Banner")
+![Alt](/images/banner.png "Banner")
 
-![Alt](/screenshots/logo.png "Logo")
+![Alt](/images/logo.png "Logo")
 
 # Squirrel Observer
 Version 1.0
@@ -64,17 +64,17 @@ The behaviors csv file defines all information about the observable behaviors. I
 2. Select the 'Import' button for whichever csv file you are importing (Location, Actors or Behaviors). [Fig. 1.2]
 3. Choose a source to import from and select your desired csv file. [Fig. 1.3]
 
-![Alt](/screenshots/screenshot-1.1.png "Screenshot")
+![Alt](/images/screenshot-1.1.png "Screenshot")
 
 *Fig. 1.1*
 
 
-![Alt](/screenshots/screenshot-1.2.png "Screenshot")
+![Alt](/images/screenshot-1.2.png "Screenshot")
 
 *Fig. 1.2*
 
 
-![Alt](/screenshots/screenshot-1.3.png "Screenshot")
+![Alt](/images/screenshot-1.3.png "Screenshot")
 
 *Fig. 1.3*
 
@@ -88,7 +88,7 @@ The behaviors csv file defines all information about the observable behaviors. I
 >Note: Exported data is NOT deleted from the app. Any further recorded observations are simply added to the bottom of the current file. To clear your records file, see 'Clearing CSV File'.
 >Note: To view your exported files from a PC or Mac, you may need to restart the device.
 
-![Alt](/screenshots/screenshot-2.1.png "Screenshot")
+![Alt](/images/screenshot-2.1.png "Screenshot")
 
 *Fig. 2.1*
 
@@ -113,12 +113,12 @@ To start an All Occurrences Session, select the '+' button at the top right corn
 
 The flow of observations in Scan mode and All Occurrences mode are virtually the same. The only difference is in Scan mode you have the option to switch to All Occurrences mode temporarily. There is also a scan timer in Scan mode that will vibrate the device when an interval is completed.
 
-![Alt](/screenshots/screenshot-4.1.png "Screenshot")
+![Alt](/images/screenshot-4.1.png "Screenshot")
 
 *Fig. 4.1*
 
 
-![Alt](/screenshots/screenshot-4.2.png "Screenshot")
+![Alt](/images/screenshot-4.2.png "Screenshot")
 
 *Fig. 4.2*
 
@@ -136,32 +136,32 @@ The steps for making an observation are as follows:
 6. If you are in Scan mode, recorded Actor's buttons will disabled until the current interval has ended.
 7. End your current session by using the device's 'Back' button or the 'End' button.
 
-![Alt](/screenshots/screenshot-4.3.png "Screenshot")
+![Alt](/images/screenshot-4.3.png "Screenshot")
 
 *Fig. 4.3*
 
 
-![Alt](/screenshots/screenshot-4.4.png "Screenshot")
+![Alt](/images/screenshot-4.4.png "Screenshot")
 
 *Fig. 4.4*
 
 
-![Alt](/screenshots/screenshot-4.5.png "Screenshot")
+![Alt](/images/screenshot-4.5.png "Screenshot")
 
 *Fig. 4.5*
 
 
-![Alt](/screenshots/screenshot-4.6.png "Screenshot")
+![Alt](/images/screenshot-4.6.png "Screenshot")
 
 *Fig. 4.6*
 
 
-![Alt](/screenshots/screenshot-4.7.png "Screenshot")
+![Alt](/images/screenshot-4.7.png "Screenshot")
 
 *Fig. 4.7*
 
 
-![Alt](/screenshots/screenshot-4.8.png "Screenshot")
+![Alt](/images/screenshot-4.8.png "Screenshot")
 
 *Fig. 4.8*
 
