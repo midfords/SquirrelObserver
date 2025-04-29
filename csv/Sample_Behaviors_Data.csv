@@ -1,0 +1,13 @@
+Behavior Code (int),Behavior Description,Requires Actee,Is All Occurrence,Modifiers,
+1,Feed,1,1,,
+2,Run,0,0,>5m,<5m
+3,Walk,1,0,>5m,<5m
+4,Lope,0,0,,
+1,Feed,1,1,,
+2,Run,0,0,>5m,<5m
+3,Walk,1,0,>5m,<5m
+4,Lope,0,0,,
+1,Feed,1,1,,
+2,Run,0,0,>5m,<5m
+3,Walk,1,0,>5m,<5m
+4,Lope,0,0,,
